@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="KEKKOLANDA">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#E05F00">
+<title>KEKKOLANDA 🇳🇱</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{height:100%;-webkit-text-size-adjust:100%}
+body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#F2F0EB;color:#1A1A1A;overflow:hidden}
+#app{height:100dvh;height:100vh;display:flex;flex-direction:column;max-width:480px;margin:0 auto;background:#fff;position:relative;overflow:hidden}
+
+/* ── TOP BAR ── */
+#topbar{background:#E05F00;color:#fff;padding:10px 14px 8px;display:flex;align-items:center;gap:10px;flex-shrink:0;z-index:10}
+#topbar .logo{font-size:16px;font-weight:800;letter-spacing:.5px;flex:1}
+.tb-pill{display:flex;align-items:center;gap:3px;background:rgba(255,255,255,.18);border-radius:20px;padding:4px 10px;font-size:13px;font-weight:700}
+
+/* ── SCREENS ── */
+.screen{flex:1;overflow-y:auto;overflow-x:hidden;display:none;flex-direction:column;-webkit-overflow-scrolling:touch}
+.screen.on{display:flex}
+
+/* ── HOME MAP ── */
+#map-hero{background:#E05F00;padding:16px 16px 20px;color:#fff;text-align:center}
+#map-hero h2{font-size:19px;font-weight:800;margin-bottom:3px}
+#map-hero p{font-size:12px;opacity:.8}
+#xp-bar-wrap{background:rgba(255,255,255,.25);border-radius:10px;height:8px;margin-top:10px;overflow:hidden}
+#xp-bar-fill{height:100%;background:#fff;border-radius:10px;transition:width .4s}
+#xp-bar-label{font-size:11px;opacity:.8;margin-top:4px}
+#level-map{padding:16px 14px 32px;display:flex;flex-direction:column;align-items:center;gap:0}
+.lv-connector{width:3px;height:20px;background:#E0DDD8;margin:0 auto}
+.lv-connector.done{background:#E05F00}
+.lv-node{width:100%;max-width:360px;display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:16px;border:2px solid #E0DDD8;background:#fff;cursor:pointer;position:relative;transition:transform .1s}
+.lv-node:active{transform:scale(.97)}
+.lv-node.done{border-color:#E05F00;background:#FFF5EE}
+.lv-node.current{border-color:#E05F00;border-width:2.5px;box-shadow:0 2px 14px rgba(224,95,0,.22)}
+.lv-node.locked{opacity:.4;cursor:default;background:#F8F7F5}
+.lv-icon{width:50px;height:50px;border-radius:14px;background:#F8F7F5;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
+.lv-node.done .lv-icon,.lv-node.current .lv-icon{background:#FFF5EE}
+.lv-info{flex:1;min-width:0}
+.lv-tag{font-size:10px;font-weight:700;color:#E05F00;text-transform:uppercase;letter-spacing:.08em}
+.lv-title{font-size:15px;font-weight:700;color:#1A1A1A;margin-top:1px}
+.lv-sub{font-size:11px;color:#888;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lv-stars{font-size:13px;margin-top:3px}
+.lv-arr{font-size:16px;color:#E05F00;flex-shrink:0}
+.lv-lock{font-size:18px;flex-shrink:0}
+.new-badge{position:absolute;top:-7px;right:12px;background:#E05F00;color:#fff;font-size:9px;font-weight:800;padding:2px 8px;border-radius:10px;letter-spacing:.06em}
+
+/* ── SESSION HEADER ── */
+.s-header{padding:10px 14px;border-bottom:1px solid #F0EDE8;display:flex;align-items:center;gap:10px;flex-shrink:0;background:#fff}
+.s-close{width:32px;height:32px;border-radius:50%;border:none;background:#F2F0EB;cursor:pointer;font-size:17px;color:#666;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.s-prog-wrap{flex:1;display:flex;flex-direction:column;gap:3px}
+.s-phase-label{font-size:10px;color:#888;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.s-prog{height:5px;background:#F0EDE8;border-radius:3px;overflow:hidden}
+.s-prog-fill{height:100%;background:#E05F00;border-radius:3px;transition:width .3s}
+.s-right{font-size:12px;font-weight:700;color:#E05F00;white-space:nowrap;flex-shrink:0}
+
+/* ── INTRO ── */
+.intro-body{flex:1;padding:20px 18px;display:flex;flex-direction:column;align-items:center;gap:14px}
+.intro-emo{font-size:68px;line-height:1;margin-bottom:4px}
+.intro-pill{font-size:10px;font-weight:800;color:#E05F00;background:#FFF5EE;padding:4px 12px;border-radius:20px;text-transform:uppercase;letter-spacing:.1em}
+.intro-h{font-size:24px;font-weight:800;color:#1A1A1A;text-align:center;line-height:1.2}
+.intro-sub{font-size:13px;color:#888;text-align:center;line-height:1.6}
+.intro-card{width:100%;background:#F8F7F5;border-radius:16px;padding:14px 16px}
+.intro-card h4{font-size:11px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px}
+.intro-row{display:flex;align-items:center;gap:10px;padding:5px 0;font-size:13px;color:#1A1A1A}
+.intro-row-ico{width:28px;height:28px;border-radius:8px;background:#FFF5EE;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.timer-note{font-size:12px;color:#AAA;text-align:center}
+.btn-start{width:100%;padding:15px;border-radius:14px;border:none;background:#E05F00;color:#fff;font-size:16px;font-weight:800;cursor:pointer;letter-spacing:.2px}
+.btn-start:active{background:#C45000}
+.session-done-note{width:100%;background:#F0FDF4;border-radius:12px;padding:10px 14px;font-size:12px;color:#16A34A;text-align:center}
+
+/* ── FLASHCARD ── */
+.flash-body{flex:1;padding:16px 16px 20px;display:flex;flex-direction:column;align-items:center;gap:16px}
+.flash-dots{display:flex;gap:5px}
+.f-dot{width:8px;height:8px;border-radius:50%;background:#E0DDD8;transition:all .2s}
+.f-dot.active{background:#E05F00;transform:scale(1.25)}
+.f-dot.done{background:#E05F00}
+.flash-card{width:100%;border-radius:20px;border:2px solid #E0DDD8;padding:32px 20px;text-align:center;cursor:pointer;min-height:210px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:border-color .2s,background .2s;background:#fff}
+.flash-card.flipped{border-color:#E05F00;background:#FFF9F5}
+.f-nl{font-size:30px;font-weight:800;color:#1A1A1A;line-height:1.2}
+.f-pron{font-size:13px;color:#AAA;font-style:italic;margin-top:2px}
+.f-it{font-size:20px;font-weight:700;color:#E05F00;display:none}
+.f-ex{font-size:12px;color:#999;font-style:italic;display:none;margin-top:4px;line-height:1.5}
+.f-tap{font-size:11px;color:#CCC;margin-top:6px}
+.flash-nav{display:flex;gap:10px;width:100%;margin-top:auto}
+.btn-back{padding:13px 18px;border-radius:12px;border:1.5px solid #E0DDD8;background:#fff;font-size:14px;color:#888;cursor:pointer;font-weight:600}
+.btn-fwd{flex:1;padding:13px;border-radius:12px;border:none;background:#E05F00;color:#fff;font-size:15px;font-weight:800;cursor:pointer}
+.btn-fwd:active,.btn-start:active{opacity:.88}
+
+/* ── MULTIPLE CHOICE ── */
+.mc-body{flex:1;padding:16px 16px 20px;display:flex;flex-direction:column;gap:14px}
+.mc-q-label{font-size:12px;color:#888;font-weight:600}
+.mc-word{font-size:28px;font-weight:800;color:#1A1A1A;line-height:1.2}
+.mc-pron{font-size:12px;color:#BBB;font-style:italic;margin-top:1px}
+.mc-opts{display:flex;flex-direction:column;gap:9px;margin-top:4px}
+.mc-opt{padding:15px 16px;border-radius:13px;border:2px solid #E0DDD8;background:#fff;font-size:15px;font-weight:600;color:#1A1A1A;cursor:pointer;text-align:left;transition:all .1s;line-height:1.3}
+.mc-opt:active:not(:disabled){transform:scale(.98)}
+.mc-opt.ok{border-color:#22C55E!important;background:#F0FDF4!important;color:#16A34A!important}
+.mc-opt.no{border-color:#EF4444!important;background:#FEF2F2!important;color:#DC2626!important}
+.mc-opt:disabled{cursor:default}
+.mc-fb{padding:12px 14px;border-radius:11px;font-size:13px;font-weight:600;display:none;line-height:1.5}
+.mc-fb.show{display:block}
+.mc-fb.ok{background:#F0FDF4;color:#16A34A}
+.mc-fb.no{background:#FEF2F2;color:#DC2626}
+.btn-continue{width:100%;padding:13px;border-radius:12px;border:none;background:#E05F00;color:#fff;font-size:15px;font-weight:800;cursor:pointer;display:none;margin-top:4px}
+.btn-continue.show{display:block}
+.btn-continue:active{background:#C45000}
+
+/* ── FILL BLANK ── */
+.fill-sentence{font-size:18px;font-weight:600;color:#1A1A1A;line-height:1.6;padding:16px;background:#F8F7F5;border-radius:14px;text-align:center}
+.fill-blank{display:inline-block;border-bottom:2.5px solid #E05F00;min-width:80px;color:#E05F00;font-weight:800}
+
+/* ── PHRASES ── */
+.phrase-body{flex:1;padding:16px 16px 20px;display:flex;flex-direction:column;gap:12px}
+.phrase-num{font-size:11px;color:#BBB;font-weight:600;text-align:center}
+.phrase-ctx{font-size:10px;font-weight:800;color:#E05F00;text-transform:uppercase;letter-spacing:.09em;background:#FFF5EE;display:inline-block;padding:3px 10px;border-radius:10px;align-self:flex-start}
+.phrase-nl{font-size:19px;font-weight:700;color:#1A1A1A;line-height:1.4}
+.phrase-pron-box{background:#F8F7F5;border-radius:10px;padding:9px 12px;font-size:12px;color:#888;font-style:italic;border-left:3px solid #E05F00}
+.btn-reveal{padding:13px;border-radius:12px;border:2px solid #E05F00;background:#fff;color:#E05F00;font-size:14px;font-weight:800;cursor:pointer;text-align:center}
+.phrase-it-box{background:#FFF5EE;border-radius:12px;padding:14px 16px;display:none}
+.phrase-it-box.show{display:block}
+.phrase-it-label{font-size:10px;font-weight:800;color:#E05F00;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px}
+.phrase-it-text{font-size:17px;font-weight:600;color:#1A1A1A;line-height:1.4}
+
+/* ── RESULTS ── */
+.result-body{flex:1;padding:20px 18px 28px;display:flex;flex-direction:column;align-items:center;gap:16px}
+.result-stars{font-size:48px;line-height:1;letter-spacing:4px}
+.result-h{font-size:23px;font-weight:800;color:#1A1A1A;text-align:center}
+.result-sub{font-size:13px;color:#888;text-align:center;line-height:1.6}
+.result-xp-box{background:#FFF5EE;border-radius:16px;padding:14px 28px;text-align:center;width:100%}
+.result-xp-num{font-size:36px;font-weight:800;color:#E05F00}
+.result-xp-label{font-size:12px;color:#888;margin-top:2px}
+.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%}
+.result-stat{background:#F8F7F5;border-radius:12px;padding:12px;text-align:center}
+.result-stat-num{font-size:22px;font-weight:800;color:#1A1A1A}
+.result-stat-lbl{font-size:11px;color:#888;margin-top:2px}
+.btn-next{width:100%;padding:15px;border-radius:14px;border:none;background:#E05F00;color:#fff;font-size:16px;font-weight:800;cursor:pointer}
+.btn-retry{width:100%;padding:13px;border-radius:14px;border:1.5px solid #E0DDD8;background:#fff;font-size:14px;font-weight:600;color:#888;cursor:pointer;margin-top:4px}
+.btn-next:active{background:#C45000}
+
+/* ── MODAL CONFIRM ── */
+#modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end;justify-content:center;z-index:999;padding-bottom:env(safe-area-inset-bottom)}
+#modal-overlay.show{display:flex}
+#modal-box{background:#fff;border-radius:20px 20px 0 0;padding:20px 18px 28px;width:100%;max-width:480px}
+#modal-box h3{font-size:17px;font-weight:800;margin-bottom:6px}
+#modal-box p{font-size:13px;color:#888;margin-bottom:18px;line-height:1.6}
+.modal-btns{display:flex;flex-direction:column;gap:9px}
+.btn-modal-exit{padding:14px;border-radius:13px;border:none;background:#F2F0EB;color:#1A1A1A;font-size:15px;font-weight:700;cursor:pointer}
+.btn-modal-stay{padding:14px;border-radius:13px;border:none;background:#E05F00;color:#fff;font-size:15px;font-weight:700;cursor:pointer}
+
+/* ── COMPLETE SCREEN ── */
+.congrats-body{flex:1;padding:28px 20px;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center}
+.congrats-emo{font-size:72px;line-height:1}
+.congrats-h{font-size:26px;font-weight:800;color:#1A1A1A}
+.congrats-sub{font-size:14px;color:#888;line-height:1.7}
+.congrats-stat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;width:100%}
+.c-stat{background:#F8F7F5;border-radius:12px;padding:12px 8px;text-align:center}
+.c-stat-num{font-size:22px;font-weight:800;color:#E05F00}
+.c-stat-lbl{font-size:10px;color:#888;margin-top:2px}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- ═══ TOPBAR ═══ -->
+  <div id="topbar">
+    <div class="logo">🇳🇱 KEKKOLANDA</div>
+    <div class="tb-pill" id="tb-streak">🔥 <span id="s-num">0</span></div>
+    <div class="tb-pill" id="tb-xp">⭐ <span id="xp-num">0</span></div>
+  </div>
+
+  <!-- ═══ SCREEN: HOME ═══ -->
+  <div class="screen on" id="screen-home">
+    <div id="map-hero">
+      <h2>Il tuo percorso 🇳🇱</h2>
+      <p>Completa ogni sessione per sbloccare il livello successivo</p>
+      <div id="xp-bar-wrap"><div id="xp-bar-fill" style="width:0%"></div></div>
+      <div id="xp-bar-label">0 / 100 XP — Livello 1</div>
+    </div>
+    <div id="level-map"></div>
+  </div>
+
+  <!-- ═══ SCREEN: INTRO ═══ -->
+  <div class="screen" id="screen-intro">
+    <div class="s-header">
+      <button class="s-close" onclick="askClose()">✕</button>
+      <div class="s-prog-wrap">
+        <div class="s-phase-label">Pronto per iniziare?</div>
+        <div class="s-prog"><div class="s-prog-fill" style="width:0%"></div></div>
+      </div>
+      <div class="s-right">⏱ 10 min</div>
+    </div>
+    <div class="intro-body">
+      <div class="intro-emo" id="i-icon"></div>
+      <div class="intro-pill" id="i-tag"></div>
+      <div class="intro-h" id="i-title"></div>
+      <div class="intro-sub" id="i-sub"></div>
+      <div class="intro-card">
+        <h4>Cosa imparerai oggi</h4>
+        <div class="intro-row"><div class="intro-row-ico">📖</div><span id="i-wcount"></span></div>
+        <div class="intro-row"><div class="intro-row-ico">💬</div><span id="i-pcount"></span></div>
+        <div class="intro-row"><div class="intro-row-ico">🔍</div><span>4 esercizi di riconoscimento</span></div>
+        <div class="intro-row"><div class="intro-row-ico">🎯</div><span>Quiz finale — 5 domande</span></div>
+      </div>
+      <div id="i-done-note" class="session-done-note" style="display:none">✓ Hai già completato questo livello. Ripetilo per migliorare il punteggio!</div>
+      <div class="timer-note">La sessione dura circa 10 minuti</div>
+      <button class="btn-start" onclick="startSession()">Inizia la sessione →</button>
+    </div>
+  </div>
+
+  <!-- ═══ SCREEN: FLASHCARD ═══ -->
+  <div class="screen" id="screen-flash">
+    <div class="s-header">
+      <button class="s-close" onclick="askClose()">✕</button>
+      <div class="s-prog-wrap">
+        <div class="s-phase-label">📖 Vocabolario nuovo</div>
+        <div class="s-prog"><div class="s-prog-fill" id="fp-bar" style="width:0%"></div></div>
+      </div>
+      <div class="s-right" id="fp-timer">10:00</div>
+    </div>
+    <div class="flash-body">
+      <div class="flash-dots" id="fp-dots"></div>
+      <div class="flash-card" id="fp-card" onclick="flipCard()">
+        <div class="f-nl" id="fp-nl"></div>
+        <div class="f-pron" id="fp-pron"></div>
+        <div class="f-it" id="fp-it"></div>
+        <div class="f-ex" id="fp-ex"></div>
+        <div class="f-tap" id="fp-tap">Tocca per vedere la traduzione</div>
+      </div>
+      <div class="flash-nav">
+        <button class="btn-back" onclick="flashNav(-1)">← Indietro</button>
+        <button class="btn-fwd" id="fp-fwd" onclick="flashNav(1)">Avanti →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SCREEN: MULTIPLE CHOICE ═══ -->
+  <div class="screen" id="screen-mc">
+    <div class="s-header">
+      <button class="s-close" onclick="askClose()">✕</button>
+      <div class="s-prog-wrap">
+        <div class="s-phase-label" id="mc-phase-label">🔍 Riconosci la parola</div>
+        <div class="s-prog"><div class="s-prog-fill" id="mc-bar" style="width:0%"></div></div>
+      </div>
+      <div class="s-right" id="mc-right">1/4</div>
+    </div>
+    <div class="mc-body">
+      <div class="mc-q-label" id="mc-qlabel"></div>
+      <div class="mc-word" id="mc-word"></div>
+      <div class="mc-pron" id="mc-pron"></div>
+      <div class="mc-opts" id="mc-opts"></div>
+      <div class="mc-fb" id="mc-fb"></div>
+      <button class="btn-continue" id="mc-cont" onclick="nextMC()">Continua →</button>
+    </div>
+  </div>
+
+  <!-- ═══ SCREEN: PHRASES ═══ -->
+  <div class="screen" id="screen-phrase">
+    <div class="s-header">
+      <button class="s-close" onclick="askClose()">✕</button>
+      <div class="s-prog-wrap">
+        <div class="s-phase-label">💬 Frasi pratiche</div>
+        <div class="s-prog"><div class="s-prog-fill" id="pp-bar" style="width:0%"></div></div>
+      </div>
+      <div class="s-right" id="pp-right">1/3</div>
+    </div>
+    <div class="phrase-body">
+      <div class="phrase-num" id="pp-num"></div>
+      <div class="phrase-ctx" id="pp-ctx"></div>
+      <div class="phrase-nl" id="pp-nl"></div>
+      <div class="phrase-pron-box" id="pp-pron"></div>
+      <button class="btn-reveal" id="pp-revbtn" onclick="revealPhrase()">🇮🇹 Scopri la traduzione</button>
+      <div class="phrase-it-box" id="pp-itbox">
+        <div class="phrase-it-label">In italiano</div>
+        <div class="phrase-it-text" id="pp-it"></div>
+      </div>
+      <div style="flex:1"></div>
+      <div class="flash-nav">
+        <button class="btn-back" onclick="phraseNav(-1)">← Indietro</button>
+        <button class="btn-fwd" id="pp-fwd" onclick="phraseNav(1)">Avanti →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SCREEN: QUIZ ═══ -->
+  <div class="screen" id="screen-quiz">
+    <div class="s-header">
+      <button class="s-close" onclick="askClose()">✕</button>
+      <div class="s-prog-wrap">
+        <div class="s-phase-label">🎯 Quiz finale</div>
+        <div class="s-prog"><div class="s-prog-fill" id="qz-bar" style="width:0%"></div></div>
+      </div>
+      <div class="s-right" id="qz-score">0/5</div>
+    </div>
+    <div class="mc-body">
+      <div class="mc-q-label" id="qz-qlabel">Scegli la risposta corretta</div>
+      <div class="mc-word" id="qz-word"></div>
+      <div class="mc-pron" id="qz-pron"></div>
+      <div class="mc-opts" id="qz-opts"></div>
+      <div class="mc-fb" id="qz-fb"></div>
+      <button class="btn-continue" id="qz-cont" onclick="nextQuiz()">Continua →</button>
+    </div>
+  </div>
+
+  <!-- ═══ SCREEN: RESULTS ═══ -->
+  <div class="screen" id="screen-result">
+    <div class="s-header">
+      <button class="s-close" onclick="goHome()">✕</button>
+      <div class="s-prog-wrap">
+        <div class="s-phase-label">Sessione completata!</div>
+        <div class="s-prog"><div class="s-prog-fill" style="width:100%;background:#22C55E"></div></div>
+      </div>
+      <div class="s-right" style="color:#22C55E">✓ Fine</div>
+    </div>
+    <div class="result-body">
+      <div class="result-stars" id="r-stars"></div>
+      <div class="result-h" id="r-title"></div>
+      <div class="result-sub" id="r-sub"></div>
+      <div class="result-xp-box">
+        <div class="result-xp-num" id="r-xp">+0</div>
+        <div class="result-xp-label">punti XP guadagnati</div>
+      </div>
+      <div class="result-grid">
+        <div class="result-stat"><div class="result-stat-num" id="r-score"></div><div class="result-stat-lbl">Quiz corrette</div></div>
+        <div class="result-stat"><div class="result-stat-num" id="r-streak"></div><div class="result-stat-lbl">Giorni di fila</div></div>
+      </div>
+      <button class="btn-next" id="r-btn" onclick="goHome()">Torna alla mappa →</button>
+      <button class="btn-retry" onclick="startSession()">↺ Riprova per più stelle</button>
+    </div>
+  </div>
+
+  <!-- ═══ SCREEN: COMPLETED ALL ═══ -->
+  <div class="screen" id="screen-congrats">
+    <div class="congrats-body">
+      <div class="congrats-emo">🎓</div>
+      <div class="congrats-h">Hai completato il corso A1/A2!</div>
+      <div class="congrats-sub">Complimenti Francesco! Hai imparato le basi dell'olandese. Continua a praticare con le lezioni già completate per consolidare tutto.</div>
+      <div class="congrats-stat-grid">
+        <div class="c-stat"><div class="c-stat-num" id="cg-xp"></div><div class="c-stat-lbl">XP totali</div></div>
+        <div class="c-stat"><div class="c-stat-num" id="cg-streak"></div><div class="c-stat-lbl">Streak 🔥</div></div>
+        <div class="c-stat"><div class="c-stat-num">10</div><div class="c-stat-lbl">Livelli</div></div>
+      </div>
+      <button class="btn-next" onclick="goHome()" style="width:100%">← Rivedi le lezioni</button>
+    </div>
+  </div>
+
+  <!-- ═══ MODAL CONFIRM EXIT ═══ -->
+  <div id="modal-overlay" onclick="closeModal()">
+    <div id="modal-box" onclick="event.stopPropagation()">
+      <h3>Uscire dalla sessione?</h3>
+      <p>I progressi di questa sessione non verranno salvati. Potrai ricominciare da capo.</p>
+      <div class="modal-btns">
+        <button class="btn-modal-exit" onclick="confirmExit()">Sì, esci</button>
+        <button class="btn-modal-stay" onclick="closeModal()">Continua a studiare</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end #app -->
+
+<script>
+// ════════════════════════════════════════════
+// DATI DEI LIVELLI
+// ════════════════════════════════════════════
+const LEVELS = [
+{id:1,title:"Primi Passi",sub:"Saluti di base",icon:"👋",tag:"A1.1",
+ words:[
+  {nl:"hallo",pron:"hallò",it:"ciao / salve",ex:"Hallo! Hoe gaat het?"},
+  {nl:"doei",pron:"dùi",it:"ciao (congedo)",ex:"Doei! Tot morgen!"},
+  {nl:"goedemorgen",pron:"chùde-mòrchen",it:"buongiorno (mattina)",ex:"Goedemorgen, iedereen!"},
+  {nl:"goedenavond",pron:"chùde-aavond",it:"buonasera",ex:"Goedenavond! Welkom!"},
+  {nl:"goedenacht",pron:"chùde-nàcht",it:"buonanotte",ex:"Slaap lekker! Goedenacht!"},
+  {nl:"dank je",pron:"dank ye",it:"grazie (informale)",ex:"Dank je wel voor alles!"},
+  {nl:"ja / nee",pron:"yaa / nee",it:"sì / no",ex:"Ja, dat is goed. Nee, dank je."},
+  {nl:"tot ziens",pron:"tot ziens",it:"arrivederci",ex:"Tot ziens! Tot morgen!"},
+ ],
+ phrases:[
+  {nl:"Hallo! Hoe gaat het?",pron:"Hallò! Hù chaat et?",it:"Ciao! Come stai?",ctx:"Con amici / al lavoro"},
+  {nl:"Goed, dank je! En jij?",pron:"Chut, dank ye! En yei?",it:"Bene, grazie! E tu?",ctx:"Risposta standard"},
+  {nl:"Tot ziens! Doei!",pron:"Tot ziens! Dùi!",it:"Arrivederci! Ciao!",ctx:"Congedarsi"},
+ ],
+ quiz:[
+  {q:"Come si dice 'ciao' (per salutare) in olandese?",opts:["doei","hallo","ja","nee"],ans:1,exp:"'Hallo' si usa per salutare. 'Doei' si usa per congedarsi!"},
+  {q:"'Goedemorgen' significa:",opts:["buonasera","buonanotte","buongiorno","arrivederci"],ans:2,exp:"Goedemorgen = buongiorno. Goedenavond = buonasera. Goedenacht = buonanotte."},
+  {q:"Come si dice 'grazie' (informale)?",opts:["alsjeblieft","hallo","dank je","tot ziens"],ans:2,exp:"'Dank je' = grazie (informale). 'Dank u wel' è la forma formale."},
+  {q:"Cosa risponde quando ti chiedono 'Hoe gaat het?'",opts:["Doei!","Goed, dank je!","Goedenacht!","Hallo!"],ans:1,exp:"'Goed, dank je!' = Bene, grazie! È la risposta standard alla domanda 'Come stai?'"},
+  {q:"Come si dice 'arrivederci' in olandese?",opts:["hallo","goedemorgen","doei / tot ziens","ja"],ans:2,exp:"'Doei' è informale (ciao), 'tot ziens' è più formale (arrivederci). Entrambi si usano al congedo."},
+ ]},
+
+{id:2,title:"Chi Sei?",sub:"Presentazioni",icon:"🙋",tag:"A1.2",
+ words:[
+  {nl:"ik / jij / hij / zij",pron:"ik / yei / hei / zei",it:"io / tu / lui / lei",ex:"Ik ben Francesco."},
+  {nl:"ik heet...",pron:"ik heet",it:"mi chiamo...",ex:"Ik heet Francesco."},
+  {nl:"ik ben...",pron:"ik ben",it:"sono...",ex:"Ik ben Italiaans."},
+  {nl:"ik kom uit...",pron:"ik kom àut",it:"vengo da...",ex:"Ik kom uit Italië."},
+  {nl:"ik woon in...",pron:"ik voon in",it:"abito a...",ex:"Ik woon in Amsterdam."},
+  {nl:"ik spreek...",pron:"ik spreek",it:"parlo...",ex:"Ik spreek een beetje Nederlands."},
+  {nl:"aangenaam",pron:"aanche-naam",it:"piacere (di conoscerti)",ex:"Aangenaam kennis te maken!"},
+  {nl:"waar kom jij vandaan?",pron:"vaar kom yei van-daan?",it:"da dove vieni?",ex:"Waar kom jij vandaan?"},
+ ],
+ phrases:[
+  {nl:"Ik heet Francesco.",pron:"Ik heet Francesco.",it:"Mi chiamo Francesco.",ctx:"Presentarsi"},
+  {nl:"Ik kom uit Italië.",pron:"Ik kom àut Itaalie.",it:"Vengo dall'Italia.",ctx:"Dire la provenienza"},
+  {nl:"Ik spreek een beetje Nederlands.",pron:"Ik spreek en beetye Needer-lands.",it:"Parlo un po' olandese.",ctx:"Ammettere il livello"},
+ ],
+ quiz:[
+  {q:"Come si dice 'mi chiamo' in olandese?",opts:["ik ben","ik woon","ik heet","ik kom"],ans:2,exp:"'Ik heet...' = mi chiamo. Anche 'ik ben...' è corretto ma 'ik heet' è più preciso per il nome."},
+  {q:"Come si dice 'vengo dall'Italia'?",opts:["Ik woon in Italië","Ik spreek Italiaans","Ik kom uit Italië","Ik ben Italië"],ans:2,exp:"'Ik kom uit...' = vengo da. Letteralmente 'esco da'."},
+  {q:"Cosa significa 'aangenaam'?",opts:["arrivederci","piacere di conoscerti","grazie","ciao"],ans:1,exp:"'Aangenaam' = piacere di conoscerti. Si usa quando ci si presenta."},
+  {q:"Come si chiede 'Da dove vieni?'?",opts:["Hoe heet jij?","Waar woon jij?","Hoe gaat het?","Waar kom jij vandaan?"],ans:3,exp:"'Waar kom jij vandaan?' = da dove vieni? 'Waar' = dove."},
+  {q:"Come si dice 'parlo un po' olandese'?",opts:["Ik woon in Nederland","Ik leer Nederlands","Ik spreek een beetje Nederlands","Ik heet Nederlands"],ans:2,exp:"'Ik spreek een beetje Nederlands' = parlo un po' olandese. 'Een beetje' = un po'."},
+ ]},
+
+{id:3,title:"La Famiglia",sub:"Relazioni e persone",icon:"👨‍👩‍👧",tag:"A1.3",
+ words:[
+  {nl:"de vader",pron:"de vaader",it:"il padre",ex:"Mijn vader heet Luca."},
+  {nl:"de moeder",pron:"de muuder",it:"la madre",ex:"Mijn moeder is verpleegster."},
+  {nl:"de broer",pron:"de brur",it:"il fratello",ex:"Ik heb één broer."},
+  {nl:"de zus",pron:"de zus",it:"la sorella",ex:"Mijn zus woont in Rome."},
+  {nl:"het kind",pron:"et kind",it:"il bambino / il figlio",ex:"Ze heeft twee kinderen."},
+  {nl:"de opa / de oma",pron:"de opa / de oma",it:"il nonno / la nonna",ex:"Mijn opa is 80 jaar oud."},
+  {nl:"mijn / jouw",pron:"mein / yàuw",it:"mio/mia / tuo/tua",ex:"Mijn naam is Francesco."},
+  {nl:"hoe oud ben jij?",pron:"hù àud ben yei?",it:"quanti anni hai?",ex:"Hoe oud ben jij? Ik ben 35."},
+ ],
+ phrases:[
+  {nl:"Dit is mijn vader.",pron:"Dit is mein vaader.",it:"Questo è mio padre.",ctx:"Presentare qualcuno"},
+  {nl:"Ik heb twee broers en één zus.",pron:"Ik heb tvee bruurs en een zus.",it:"Ho due fratelli e una sorella.",ctx:"Parlare della famiglia"},
+  {nl:"Hoe oud ben jij?",pron:"Hù àud ben yei?",it:"Quanti anni hai?",ctx:"Chiedere l'età"},
+ ],
+ quiz:[
+  {q:"Come si dice 'il padre'?",opts:["de moeder","de broer","de vader","de opa"],ans:2,exp:"'De vader' = il padre. 'De moeder' = la madre."},
+  {q:"Quale articolo usa 'kind' (bambino)?",opts:["de","een","het","mijn"],ans:2,exp:"'Het kind' = il bambino. 'Kind' è un het-woord (nome neutro). Il plurale è 'kinderen'."},
+  {q:"Come si dice 'mia sorella'?",opts:["mijn broer","mijn zus","mijn moeder","mijn oma"],ans:1,exp:"'Mijn zus' = mia sorella. 'Mijn broer' = mio fratello."},
+  {q:"'Ik heb één broer' significa:",opts:["Ho una sorella","Ho un fratello","Ho un figlio","Ho un nonno"],ans:1,exp:"'Broer' = fratello. 'Ik heb één broer' = ho un fratello."},
+  {q:"Come si dice 'quanti anni hai?'?",opts:["Hoe heet jij?","Waar woon jij?","Hoe oud ben jij?","Hoe gaat het?"],ans:2,exp:"'Hoe oud ben jij?' = quanti anni hai? Letteralmente 'quanto vecchio sei?'"},
+ ]},
+
+{id:4,title:"Numeri e Tempo",sub:"Contare, ore e giorni",icon:"🕐",tag:"A1.4",
+ words:[
+  {nl:"1–5: één twee drie vier vijf",pron:"een tvee drie veer veif",it:"uno due tre quattro cinque",ex:"Ik heb vijf broers!"},
+  {nl:"6–10: zes zeven acht negen tien",pron:"zes zeeven acht neecheen tien",it:"sei sette otto nove dieci",ex:"De trein komt om tien uur."},
+  {nl:"20 / 30 / 100",pron:"tvintich / dertich / hondert",it:"venti / trenta / cento",ex:"Ik ben dertig jaar oud."},
+  {nl:"hoe laat is het?",pron:"hù laat is et?",it:"che ore sono?",ex:"Hoe laat is het? Het is drie uur."},
+  {nl:"half + uur",pron:"half",it:"mezza — ATTENZIONE: half drie = 2:30!",ex:"Het is half drie. (= 2:30!)"},
+  {nl:"maandag / dinsdag",pron:"maandag / dinsdag",it:"lunedì / martedì",ex:"De vergadering is maandag."},
+  {nl:"vrijdag / zaterdag / zondag",pron:"vreidag / zaaterdag / zondag",it:"venerdì / sabato / domenica",ex:"Op vrijdag werken we."},
+  {nl:"morgen / gisteren / vandaag",pron:"mòrchen / chisteren / vandaach",it:"domani / ieri / oggi",ex:"Vandaag is het maandag."},
+ ],
+ phrases:[
+  {nl:"Hoe laat is het?",pron:"Hù laat is et?",it:"Che ore sono?",ctx:"Chiedere l'ora"},
+  {nl:"Het is half drie.",pron:"Et is half drie.",it:"Sono le due e mezza.",ctx:"Attenzione: 'half' = mezzo PRIMA dell'ora!"},
+  {nl:"Ik ben 35 jaar oud.",pron:"Ik ben dertich-veif yaar àud.",it:"Ho 35 anni.",ctx:"Dire la propria età"},
+ ],
+ quiz:[
+  {q:"Quanto vale 'vijf'?",opts:["3","4","5","6"],ans:2,exp:"Vijf = 5. Één, twee, drie, vier, vijf = 1,2,3,4,5."},
+  {q:"'Half drie' in olandese significa:",opts:["Le tre e mezza","Le due e mezza","Le tre in punto","Le due in punto"],ans:1,exp:"ATTENZIONE! 'Half drie' = metà prima delle tre = 2:30. Il sistema è opposto all'italiano!"},
+  {q:"Come si dice 'lunedì'?",opts:["vrijdag","zondag","maandag","dinsdag"],ans:2,exp:"Maandag = lunedì. Vrijdag = venerdì. Zondag = domenica."},
+  {q:"Cosa significa 'vandaag'?",opts:["domani","ieri","oggi","adesso"],ans:2,exp:"'Vandaag' = oggi. 'Morgen' = domani. 'Gisteren' = ieri."},
+  {q:"Come si dice 'Che ore sono?'?",opts:["Hoeveel kost het?","Hoe laat is het?","Hoe oud ben jij?","Hoe gaat het?"],ans:1,exp:"'Hoe laat is het?' = che ore sono? Letteralmente 'come tardi è?'"},
+ ]},
+
+{id:5,title:"Cibo e Bar",sub:"Ordinare e mangiare",icon:"🍽️",tag:"A1.5",
+ words:[
+  {nl:"het brood / de kaas",pron:"et broot / de kaas",it:"il pane / il formaggio",ex:"Ik eet brood met kaas."},
+  {nl:"de koffie / het bier",pron:"de kòffie / et bier",it:"il caffè / la birra",ex:"Een koffie en een biertje!"},
+  {nl:"het water / de wijn",pron:"et vaater / de vein",it:"l'acqua / il vino",ex:"Mag ik water, alstublieft?"},
+  {nl:"de vis / het vlees",pron:"de vis / et vlees",it:"il pesce / la carne",ex:"Ik eet geen vlees."},
+  {nl:"lekker",pron:"lekker",it:"buono / delizioso (usatissimo!)",ex:"Dit is heel erg lekker!"},
+  {nl:"ik wil graag...",pron:"ik vil chraach",it:"vorrei...",ex:"Ik wil graag een koffie."},
+  {nl:"de rekening",pron:"de reekening",it:"il conto",ex:"De rekening, alstublieft!"},
+  {nl:"eet smakelijk!",pron:"eet smaak-elik",it:"buon appetito!",ex:"Eet smakelijk!"},
+ ],
+ phrases:[
+  {nl:"Ik wil graag een kop koffie.",pron:"Ik vil chraach en kop koffie.",it:"Vorrei una tazza di caffè.",ctx:"Al bar"},
+  {nl:"De rekening, alstublieft.",pron:"De reekening, alstu-bleeft.",it:"Il conto, per favore.",ctx:"Al ristorante"},
+  {nl:"Eet smakelijk! Proost!",pron:"Eet smaak-elik! Proost!",it:"Buon appetito! Salute!",ctx:"A tavola"},
+ ],
+ quiz:[
+  {q:"Cosa significa 'lekker'?",opts:["caro","delizioso / buono","piccante","salato"],ans:1,exp:"'Lekker' è una delle parole più usate in olandese. Significa buono, delizioso, ma anche 'bello' in senso generico!"},
+  {q:"Come si ordina 'vorrei una birra'?",opts:["Ik heb een bier","Ik eet een bier","Ik wil graag een bier","Ik drink een bier"],ans:2,exp:"'Ik wil graag...' = vorrei... Letteralmente 'voglio volentieri'. Essenziale al bar!"},
+  {q:"'De rekening, alstublieft' significa:",opts:["Un tavolo per due, prego","Il menù, prego","Il conto, per favore","Ancora un giro, prego"],ans:2,exp:"'De rekening' = il conto. 'Alstublieft' = per favore (formale)."},
+  {q:"Come si dice 'buon appetito'?",opts:["Proost!","Slaap lekker!","Eet smakelijk!","Welkom!"],ans:2,exp:"'Eet smakelijk!' = buon appetito! 'Proost!' = salute (brindisi). Entrambi utilissimi!"},
+  {q:"Quale articolo usa 'bier' (birra)?",opts:["de","een","het","di"],ans:2,exp:"'Het bier' = la birra. Ma nel parlato si dice spesso 'een biertje' (il diminutivo!)."},
+ ]},
+
+{id:6,title:"In Città",sub:"Orientarsi e spostarsi",icon:"🏙️",tag:"A1.6",
+ words:[
+  {nl:"de stad / het centrum",pron:"de stad / et sèntrum",it:"la città / il centro",ex:"Ik woon in het centrum."},
+  {nl:"de fiets",pron:"de fiets",it:"la bicicletta",ex:"Ik ga met de fiets naar werk."},
+  {nl:"de bus / de trein",pron:"de bus / de trein",it:"l'autobus / il treno",ex:"De trein naar Utrecht."},
+  {nl:"links / rechts",pron:"links / rechts",it:"a sinistra / a destra",ex:"Sla links af bij het licht."},
+  {nl:"rechtdoor",pron:"recht-door",it:"dritto / sempre dritto",ex:"Ga rechtdoor en dan rechts."},
+  {nl:"dichtbij / ver",pron:"dicht-bei / ver",it:"vicino / lontano",ex:"Het station is dichtbij!"},
+  {nl:"waar is...?",pron:"vaar is...?",it:"dov'è...?",ex:"Waar is het station?"},
+  {nl:"de winkel",pron:"de vinkel",it:"il negozio",ex:"De supermarkt is op de hoek."},
+ ],
+ phrases:[
+  {nl:"Waar is het centraal station?",pron:"Vaar is et sen-traal sta-syon?",it:"Dov'è la stazione centrale?",ctx:"Orientarsi in città"},
+  {nl:"Rechtdoor en dan links.",pron:"Recht-door en dan links.",it:"Dritto e poi a sinistra.",ctx:"Dare indicazioni"},
+  {nl:"Is het ver? Nee, dichtbij!",pron:"Is et ver? Nee, dicht-bei!",it:"È lontano? No, è vicino!",ctx:"Chiedere la distanza"},
+ ],
+ quiz:[
+  {q:"Come si dice 'la bicicletta'?",opts:["de bus","de trein","de fiets","de auto"],ans:2,exp:"'De fiets' = la bicicletta. In Olanda ci sono più bici che persone — impara subito questa parola!"},
+  {q:"'Rechtdoor' significa:",opts:["a destra","a sinistra","dritto","indietro"],ans:2,exp:"'Rechtdoor' = diritto/sempre dritto. 'Rechts' = a destra (simile!), 'links' = a sinistra."},
+  {q:"Come si chiede 'Dov'è la stazione?'?",opts:["Is het ver?","Mag ik rijden?","Waar is het station?","Hoe kom ik hier?"],ans:2,exp:"'Waar is het station?' = dov'è la stazione? 'Waar' = dove."},
+  {q:"Cosa significa 'dichtbij'?",opts:["lontano","vicino","al semaforo","a destra"],ans:1,exp:"'Dichtbij' = vicino. 'Ver' = lontano. Utili entrambi quando chiedi indicazioni!"},
+  {q:"Come si dice 'il negozio'?",opts:["de stad","de winkel","de straat","de bus"],ans:1,exp:"'De winkel' = il negozio. 'Supermarkt' = supermercato. 'Bakker' = panettiere."},
+ ]},
+
+{id:7,title:"La Casa",sub:"Trovare un appartamento",icon:"🏠",tag:"A1.7",
+ words:[
+  {nl:"het huis / het appartement",pron:"et hàus / et appartement",it:"la casa / l'appartamento",ex:"Ik zoek een appartement."},
+  {nl:"de kamer / de slaapkamer",pron:"de kaamer / de slaap-kaamer",it:"la stanza / la camera da letto",ex:"Ik zoek een kamer."},
+  {nl:"de keuken / de badkamer",pron:"de keukhen / de bad-kaamer",it:"la cucina / il bagno",ex:"Er is één badkamer."},
+  {nl:"de huur",pron:"de hüür",it:"l'affitto",ex:"Hoeveel is de huur per maand?"},
+  {nl:"vrij / beschikbaar",pron:"vrei / be-schikbaar",it:"libero / disponibile",ex:"Is de kamer nog vrij?"},
+  {nl:"per maand",pron:"per maand",it:"al mese",ex:"De huur is 900 euro per maand."},
+  {nl:"zijn de kosten inbegrepen?",pron:"zein de kosten inbegrepen?",it:"le spese sono incluse?",ex:"Zijn gas en water inbegrepen?"},
+  {nl:"ik wil het huren",pron:"ik vil et hüren",it:"voglio affittarlo",ex:"Ik wil het appartement huren."},
+ ],
+ phrases:[
+  {nl:"Ik zoek een appartement.",pron:"Ik zuk en appartement.",it:"Cerco un appartamento.",ctx:"Agenzia / annunci"},
+  {nl:"Hoeveel is de huur per maand?",pron:"Huveel is de hüür per maand?",it:"Quanto è l'affitto al mese?",ctx:"Informarsi sull'affitto"},
+  {nl:"Zijn gas en water inbegrepen?",pron:"Zein chas en vaater inbegrepen?",it:"Gas e acqua sono inclusi?",ctx:"Prima di firmare"},
+ ],
+ quiz:[
+  {q:"Come si dice 'cerco un appartamento'?",opts:["Ik heb een appartement","Ik koop een appartement","Ik zoek een appartement","Ik verkoop een huis"],ans:2,exp:"'Zoeken' = cercare. 'Ik zoek' = cerco. Fondamentale appena arrivi in Olanda!"},
+  {q:"Cosa significa 'de huur'?",opts:["il garage","il proprietario","l'affitto","il contratto"],ans:2,exp:"'De huur' = l'affitto. 'Huren' = affittare (verbo). 'De huurder' = l'inquilino."},
+  {q:"Come si chiede 'le spese sono incluse?'?",opts:["Is de kamer vrij?","Zijn de kosten inbegrepen?","Hoeveel is de huur?","Wanneer is het beschikbaar?"],ans:1,exp:"'Zijn de kosten inbegrepen?' = le spese sono incluse? Sempre da chiedere prima di firmare!"},
+  {q:"Quale articolo usa 'huis'?",opts:["de","een","het","geen"],ans:2,exp:"'Het huis' = la casa. 'Huis' è un het-woord (nome neutro)."},
+  {q:"Cosa significa 'vrij'?",opts:["caro","piccolo","libero / disponibile","nuovo"],ans:2,exp:"'Vrij' = libero/disponibile. 'Is de kamer nog vrij?' = la stanza è ancora disponibile?"},
+ ]},
+
+{id:8,title:"Grammatica: de/het",sub:"Il segreto degli articoli",icon:"📐",tag:"A1.8",
+ words:[
+  {nl:"de → nome comune (~75%)",pron:"de",it:"Persone, mestieri, piante, animali",ex:"de man, de vrouw, de auto, de fiets"},
+  {nl:"het → nome neutro (~25%)",pron:"et",it:"Nomi neutri — memorizza!",ex:"het huis, het kind, het boek, het werk"},
+  {nl:"een → articolo indet.",pron:"en",it:"Un/una — uguale per tutti",ex:"een man, een huis, een kind"},
+  {nl:"plurale → sempre DE",pron:"de",it:"Tutti i plurali usano 'de'!",ex:"de mannen, de huizen, de kinderen"},
+  {nl:"naam → namen (plurale -en)",pron:"naamen",it:"plurale più comune: aggiungi -en",ex:"de naam → de namen"},
+  {nl:"tafel → tafels (plurale -s)",pron:"taafels",it:"plurale -s per parole in -el, -er, -en",ex:"de tafel → de tafels"},
+  {nl:"kind → kinderen (irr.)",pron:"kinderen",it:"plurale irregolare — impara a memoria",ex:"het kind → de kinderen"},
+  {nl:"adjettivo + -e",pron:"-e",it:"Aggettivo prende -e tranne: een + het-nome",ex:"de grote man / een groot huis"},
+ ],
+ phrases:[
+  {nl:"De vrouw koopt het boek.",pron:"De vràuw koopt et buk.",it:"La donna compra il libro.",ctx:"de (donna) + het (libro)"},
+  {nl:"De kinderen spelen in het park.",pron:"De kinderen speelen in et park.",it:"I bambini giocano nel parco.",ctx:"Plurale = sempre 'de'!"},
+  {nl:"Het is een groot huis.",pron:"Et is en croot hàus.",it:"È una grande casa.",ctx:"een + het-nome → aggettivo senza -e!"},
+ ],
+ quiz:[
+  {q:"Quale articolo si usa con 'auto' (macchina)?",opts:["het","een","de","di"],ans:2,exp:"'De auto' = la macchina. Auto è un de-woord."},
+  {q:"Quale articolo si usa con 'boek' (libro)?",opts:["de","een","het","gli"],ans:2,exp:"'Het boek' = il libro. 'Boek' è un het-woord — memorizzalo!"},
+  {q:"Qual è il plurale di 'het kind'?",opts:["de kinds","de kinden","de kinderen","het kinderen"],ans:2,exp:"'Kind → kinderen' è irregolare. E nota: al plurale si usa sempre 'de', mai 'het'!"},
+  {q:"Tutti i plurali in olandese usano:",opts:["het","de","een","dipende"],ans:1,exp:"Tutti i plurali olandesi usano sempre 'de', anche se il singolare era 'het'. Grande semplificazione!"},
+  {q:"Come si dice 'una grande casa'?",opts:["een grote huis","een groot huis","het grote huis","de groot huis"],ans:1,exp:"'Een groot huis' — con een + het-nome, l'aggettivo NON prende la -e finale. Eccezione importante!"},
+ ]},
+
+{id:9,title:"La Routine",sub:"La giornata quotidiana",icon:"⏰",tag:"A2.1",
+ words:[
+  {nl:"opstaan",pron:"op-staan",it:"alzarsi",ex:"Ik sta op om 7 uur."},
+  {nl:"douchen",pron:"dùschen",it:"fare la doccia",ex:"Elke dag douche ik."},
+  {nl:"het ontbijt",pron:"et ont-beit",it:"la colazione",ex:"Ik ontbijt om 8 uur."},
+  {nl:"werken / thuis werken",pron:"verken / tàus verken",it:"lavorare / lavorare da casa",ex:"Vandaag werk ik thuis."},
+  {nl:"het avondeten",pron:"et aavond-eeten",it:"la cena",ex:"We eten om 18 uur."},
+  {nl:"slapen",pron:"slaapen",it:"dormire",ex:"Ik slaap 8 uur per nacht."},
+  {nl:"elke dag / altijd",pron:"elke dach / alteid",it:"ogni giorno / sempre",ex:"Ik fiets elke dag naar kantoor."},
+  {nl:"wat doe jij vanavond?",pron:"vat du yei van-aavond?",it:"cosa fai stasera?",ex:"Wat doe jij vanavond?"},
+ ],
+ phrases:[
+  {nl:"Ik sta op om 7 uur.",pron:"Ik staa op om zeeven üür.",it:"Mi alzo alle 7.",ctx:"Parlare della routine"},
+  {nl:"Vandaag werk ik thuis.",pron:"Vandaach verk ik tàus.",it:"Oggi lavoro da casa.",ctx:"Comunicare ai colleghi"},
+  {nl:"Wat doe jij vanavond?",pron:"Vat du yei van-aavond?",it:"Cosa fai stasera?",ctx:"Conversazione informale"},
+ ],
+ quiz:[
+  {q:"Cosa significa 'opstaan'?",opts:["dormire","mangiare","alzarsi","lavorare"],ans:2,exp:"'Opstaan' = alzarsi. 'Ik sta op' = mi alzo. I verbi separabili si dividono nella frase!"},
+  {q:"Come si dice 'lavoro da casa'?",opts:["Ik werk in kantoor","Ik werk thuis","Ik slaap thuis","Ik eet thuis"],ans:1,exp:"'Ik werk thuis' = lavoro da casa. Molto comune in Olanda dove lo smart working è diffusissimo!"},
+  {q:"Cosa significa 'elke dag'?",opts:["ogni settimana","ogni ora","ogni giorno","ogni mese"],ans:2,exp:"'Elke dag' = ogni giorno. 'Elke week' = ogni settimana. 'Elke maand' = ogni mese."},
+  {q:"Come si dice 'la colazione'?",opts:["avondeten","ontbijt","lunch","diner"],ans:1,exp:"'Ontbijt' = colazione. 'Avondeten' = cena. 'Lunch' = pranzo (uguale all'inglese!)."},
+  {q:"Come si chiede 'cosa fai stasera?'?",opts:["Hoe gaat het vanavond?","Wat doe jij vanavond?","Waar ben jij vanavond?","Kom jij vanavond?"],ans:1,exp:"'Wat doe jij vanavond?' = cosa fai stasera? 'Wat' = cosa, 'doe' = fai, 'vanavond' = stasera."},
+ ]},
+
+{id:10,title:"Il Lavoro",sub:"Professioni e ufficio",icon:"💼",tag:"A2.2",
+ words:[
+  {nl:"het werk / de baan",pron:"et verk / de baan",it:"il lavoro / il posto di lavoro",ex:"Ik zoek een nieuwe baan."},
+  {nl:"het kantoor",pron:"et kan-toor",it:"l'ufficio",ex:"Ik ga naar kantoor."},
+  {nl:"de collega / de baas",pron:"de kollega / de baas",it:"il/la collega / il capo",ex:"Mijn collega's zijn aardig."},
+  {nl:"de vergadering",pron:"de ver-chadering",it:"la riunione",ex:"Ik heb een vergadering."},
+  {nl:"het salaris",pron:"et salaaris",it:"lo stipendio",ex:"Wat is het salaris?"},
+  {nl:"solliciteren",pron:"sollis-i-teren",it:"candidarsi / fare domanda",ex:"Ik wil solliciteren."},
+  {nl:"de deadline / het cv",pron:"de dedlein / et see-vee",it:"la scadenza / il curriculum",ex:"Stuur je cv naar ons."},
+  {nl:"wanneer kan ik beginnen?",pron:"vaneer kan ik be-chinnen?",it:"quando posso iniziare?",ex:"Wanneer kan ik beginnen?"},
+ ],
+ phrases:[
+  {nl:"Ik zoek een nieuwe baan.",pron:"Ik zuk en nieuwe baan.",it:"Cerco un nuovo lavoro.",ctx:"Colloquio / LinkedIn"},
+  {nl:"Wat is het salaris?",pron:"Vat is et salaaris?",it:"Qual è lo stipendio?",ctx:"Colloquio di lavoro"},
+  {nl:"Ik heb een vergadering om 10 uur.",pron:"Ik heb en ver-chadering om tien üür.",it:"Ho una riunione alle 10.",ctx:"Sul posto di lavoro"},
+ ],
+ quiz:[
+  {q:"Come si dice 'cerco un lavoro'?",opts:["Ik heb een baan","Ik zoek een baan","Ik verlaat de baan","Ik werk goed"],ans:1,exp:"'Ik zoek een baan' = cerco un lavoro. 'Zoeken' = cercare."},
+  {q:"Cosa significa 'de vergadering'?",opts:["lo stipendio","la pausa pranzo","la riunione","il contratto"],ans:2,exp:"'De vergadering' = la riunione. 'Ik heb een vergadering' = ho una riunione."},
+  {q:"Come si dice 'lo stipendio'?",opts:["het cv","het salaris","de baan","het kantoor"],ans:1,exp:"'Het salaris' = lo stipendio. Simile all'italiano! 'Wat is het salaris?' = qual è lo stipendio?"},
+  {q:"Cosa significa 'solliciteren'?",opts:["lavorare","candidarsi / fare domanda","licenziarsi","promuoversi"],ans:1,exp:"'Solliciteren' = candidarsi/fare domanda di lavoro. 'Een sollicitatiegesprek' = un colloquio."},
+  {q:"Come si chiede 'quando posso iniziare?'?",opts:["Wat is het salaris?","Hoeveel uur per week?","Wanneer kan ik beginnen?","Is er een proeftijd?"],ans:2,exp:"'Wanneer kan ik beginnen?' = quando posso iniziare? 'Wanneer' = quando."},
+ ]},
+];
+
+// ════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════
+function load(){try{return JSON.parse(localStorage.getItem('kk_v2')||'{}')}catch(e){return{}}}
+function save(){localStorage.setItem('kk_v2',JSON.stringify(S))}
+
+const _s = load();
+const S = {
+  xp: _s.xp||0,
+  streak: _s.streak||0,
+  lastStudy: _s.lastStudy||null,
+  completed: _s.completed||{},  // {id: stars}
+  lvIdx: null,
+  // session
+  phase:0, step:0,
+  flipped:false,
+  revealed:false,
+  answered:false,
+  quizScore:0,
+  mcQs:[],
+  timerSec:600,
+  timerInt:null,
+};
+
+// ════════════════════════════════════════════
+// UTILITY
+// ════════════════════════════════════════════
+function $id(id){return document.getElementById(id)}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));$id(id).classList.add('on')}
+function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
+function stars(n){return n>=3?'⭐⭐⭐':n===2?'⭐⭐':n===1?'⭐':'☆☆☆'}
+function starsOf(lvId){return S.completed[lvId]||0}
+function isUnlocked(i){return i===0||!!S.completed[LEVELS[i-1].id]}
+function isDone(i){return !!S.completed[LEVELS[i].id]}
+function xpLevel(){return Math.floor(S.xp/100)+1}
+function xpPct(){return (S.xp%100)}
+
+function updateTopBar(){
+  $id('s-num').textContent=S.streak;
+  $id('xp-num').textContent=S.xp;
+  const pct=xpPct();
+  $id('xp-bar-fill').style.width=pct+'%';
+  $id('xp-bar-label').textContent=`${S.xp%100}/100 XP — Livello ${xpLevel()}`;
+}
+
+// ════════════════════════════════════════════
+// HOME / MAP
+// ════════════════════════════════════════════
+function goHome(){
+  clearTimer();
+  updateTopBar();
+  renderMap();
+  show('screen-home');
+}
+
+function renderMap(){
+  const map=$id('level-map');
+  map.innerHTML='';
+  LEVELS.forEach((lv,i)=>{
+    const done=isDone(i), unlocked=isUnlocked(i), cur=unlocked&&!done;
+    const st=starsOf(lv.id);
+    if(i>0){
+      const c=document.createElement('div');
+      c.className='lv-connector'+(isDone(i-1)||done?' done':'');
+      map.appendChild(c);
+    }
+    const node=document.createElement('div');
+    node.className='lv-node'+(done?' done':cur?' current':!unlocked?' locked':'');
+    let badge=cur&&i>0?'<div class="new-badge">NUOVO</div>':'';
+    let stHtml=done?`<div class="lv-stars">${stars(st)}</div>`:'';
+    let right=!unlocked?`<div class="lv-lock">🔒</div>`:`<div class="lv-arr">→</div>`;
+    node.innerHTML=`${badge}
+      <div class="lv-icon">${lv.icon}</div>
+      <div class="lv-info">
+        <div class="lv-tag">${lv.tag}</div>
+        <div class="lv-title">${lv.title}</div>
+        <div class="lv-sub">${lv.sub}</div>
+        ${stHtml}
+      </div>${right}`;
+    if(unlocked) node.onclick=()=>openLevel(i);
+    map.appendChild(node);
+  });
+  setTimeout(()=>{const cur=document.querySelector('.lv-node.current');if(cur)cur.scrollIntoView({behavior:'smooth',block:'center'})},80);
+}
+
+// ════════════════════════════════════════════
+// OPEN LEVEL INTRO
+// ════════════════════════════════════════════
+function openLevel(i){
+  S.lvIdx=i;
+  const lv=LEVELS[i];
+  $id('i-icon').textContent=lv.icon;
+  $id('i-tag').textContent=lv.tag+' — Lezione '+(i+1)+' di '+LEVELS.length;
+  $id('i-title').textContent=lv.title;
+  $id('i-sub').textContent=lv.sub;
+  $id('i-wcount').textContent=lv.words.length+' nuove parole con pronuncia';
+  $id('i-pcount').textContent=lv.phrases.length+' frasi pratiche contestualizzate';
+  const dn=$id('i-done-note');
+  dn.style.display=isDone(i)?'block':'none';
+  show('screen-intro');
+}
+
+// ════════════════════════════════════════════
+// SESSION
+// ════════════════════════════════════════════
+function startSession(){
+  S.phase=0; S.step=0; S.flipped=false; S.revealed=false;
+  S.answered=false; S.quizScore=0; S.timerSec=600;
+  S.mcQs=buildMCQ();
+  startFlash();
+}
+
+// Timer
+function startTimer(elId){
+  clearTimer();
+  S.timerInt=setInterval(()=>{
+    S.timerSec--;
+    const m=Math.floor(S.timerSec/60), sc=S.timerSec%60;
+    const el=$id(elId);
+    if(el) el.textContent=m+':'+(sc<10?'0':'')+sc;
+    if(S.timerSec<=0){clearTimer();if(el)el.textContent='⏰';}
+  },1000);
+}
+function clearTimer(){if(S.timerInt){clearInterval(S.timerInt);S.timerInt=null;}}
+
+// ── PHASE 0: FLASHCARDS ──
+function startFlash(){
+  S.phase=0; S.step=0; S.flipped=false;
+  show('screen-flash');
+  startTimer('fp-timer');
+  renderFlash();
+}
+function renderFlash(){
+  const ws=LEVELS[S.lvIdx].words, w=ws[S.step];
+  $id('fp-bar').style.width=Math.round(S.step/ws.length*100)+'%';
+  // dots
+  const d=$id('fp-dots');
+  d.innerHTML=ws.map((_,i)=>`<div class="f-dot${i===S.step?' active':i<S.step?' done':''}"></div>`).join('');
+  // card
+  $id('fp-card').className='flash-card';
+  $id('fp-nl').textContent=w.nl;
+  $id('fp-pron').textContent='/ '+w.pron+' /';
+  $id('fp-it').textContent='🇮🇹 '+w.it;
+  $id('fp-ex').textContent='📌 Es: '+w.ex;
+  $id('fp-it').style.display='none';
+  $id('fp-ex').style.display='none';
+  $id('fp-tap').style.display='block';
+  S.flipped=false;
+  const last=S.step>=ws.length-1;
+  $id('fp-fwd').textContent=last?'Agli esercizi →':'Avanti →';
+}
+function flipCard(){
+  if(S.flipped) return;
+  S.flipped=true;
+  $id('fp-card').classList.add('flipped');
+  $id('fp-it').style.display='block';
+  $id('fp-ex').style.display='block';
+  $id('fp-tap').style.display='none';
+}
+function flashNav(d){
+  const ws=LEVELS[S.lvIdx].words;
+  if(d>0){
+    S.step++;
+    if(S.step>=ws.length){startMC();return;}
+  } else {
+    if(S.step>0) S.step--;
+  }
+  renderFlash();
+}
+
+// ── PHASE 1: MULTIPLE CHOICE (dynamic) ──
+function buildMCQ(){
+  const ws=LEVELS[S.lvIdx].words;
+  const pool=shuffle(ws).slice(0,Math.min(4,ws.length));
+  return pool.map(w=>{
+    const wrong=shuffle(ws.filter(x=>x.it!==w.it)).slice(0,3).map(x=>x.it);
+    const opts=shuffle([w.it,...wrong]);
+    return {type:'nl_it',word:w.nl,pron:w.pron,opts,correct:w.it,q:'Cosa significa questa parola?'};
+  });
+}
+function startMC(){
+  S.phase=1; S.step=0; S.answered=false;
+  show('screen-mc');
+  $id('mc-phase-label').textContent='🔍 Riconosci la parola';
+  renderMC();
+}
+function renderMC(){
+  const q=S.mcQs[S.step], tot=S.mcQs.length;
+  $id('mc-bar').style.width=Math.round(S.step/tot*100)+'%';
+  $id('mc-right').textContent=(S.step+1)+'/'+tot;
+  $id('mc-qlabel').textContent=q.q;
+  $id('mc-word').textContent=q.word;
+  $id('mc-pron').textContent='/ '+q.pron+' /';
+  $id('mc-opts').innerHTML=q.opts.map((o,i)=>`<button class="mc-opt" onclick="selectMC(${i})">${o}</button>`).join('');
+  $id('mc-fb').className='mc-fb';
+  $id('mc-cont').className='btn-continue';
+  S.answered=false;
+}
+function selectMC(i){
+  if(S.answered) return; S.answered=true;
+  const q=S.mcQs[S.step];
+  const btns=document.querySelectorAll('#mc-opts .mc-opt');
+  btns.forEach(b=>b.disabled=true);
+  const ok=q.opts[i]===q.correct;
+  btns[i].classList.add(ok?'ok':'no');
+  if(!ok){const ci=q.opts.indexOf(q.correct);if(ci>=0)btns[ci].classList.add('ok');}
+  const fb=$id('mc-fb');
+  fb.className='mc-fb show '+(ok?'ok':'no');
+  fb.textContent=(ok?'✓ Esatto! ':'✗ Sbagliato. ')+q.word+' = '+q.correct;
+  $id('mc-cont').className='btn-continue show';
+}
+function nextMC(){
+  S.step++;
+  if(S.step>=S.mcQs.length){startPhrase();return;}
+  renderMC();
+}
+
+// ── PHASE 2: PHRASES ──
+function startPhrase(){
+  S.phase=2; S.step=0; S.revealed=false;
+  show('screen-phrase');
+  renderPhrase();
+}
+function renderPhrase(){
+  const ps=LEVELS[S.lvIdx].phrases, p=ps[S.step];
+  $id('pp-bar').style.width=Math.round(S.step/ps.length*100)+'%';
+  $id('pp-right').textContent=(S.step+1)+'/'+ps.length;
+  $id('pp-num').textContent='Frase '+(S.step+1)+' di '+ps.length;
+  $id('pp-ctx').textContent=p.ctx;
+  $id('pp-nl').textContent=p.nl;
+  $id('pp-pron').textContent='/ '+p.pron+' /';
+  $id('pp-it').textContent=p.it;
+  $id('pp-itbox').className='phrase-it-box';
+  $id('pp-revbtn').style.display='block';
+  S.revealed=false;
+  $id('pp-fwd').textContent=S.step>=ps.length-1?'Al quiz →':'Avanti →';
+}
+function revealPhrase(){
+  $id('pp-itbox').className='phrase-it-box show';
+  $id('pp-revbtn').style.display='none';
+  S.revealed=true;
+}
+function phraseNav(d){
+  const ps=LEVELS[S.lvIdx].phrases;
+  if(d>0){
+    S.step++;
+    if(S.step>=ps.length){startQuiz();return;}
+  } else {
+    if(S.step>0) S.step--;
+  }
+  renderPhrase();
+}
+
+// ── PHASE 3: QUIZ ──
+function startQuiz(){
+  S.phase=3; S.step=0; S.quizScore=0; S.answered=false;
+  show('screen-quiz');
+  renderQuiz();
+}
+function renderQuiz(){
+  const qs=LEVELS[S.lvIdx].quiz, q=qs[S.step], tot=qs.length;
+  $id('qz-bar').style.width=Math.round(S.step/tot*100)+'%';
+  $id('qz-score').textContent=S.quizScore+'/'+tot;
+  $id('qz-qlabel').textContent=q.q;
+  $id('qz-word').textContent=q.show||'';
+  $id('qz-pron').textContent='';
+  $id('qz-opts').innerHTML=q.opts.map((o,i)=>`<button class="mc-opt" onclick="selectQuiz(${i})">${o}</button>`).join('');
+  $id('qz-fb').className='mc-fb';
+  $id('qz-cont').className='btn-continue';
+  $id('qz-cont').textContent=S.step<qs.length-1?'Continua →':'Vedi risultati →';
+  S.answered=false;
+}
+function selectQuiz(i){
+  if(S.answered) return; S.answered=true;
+  const q=LEVELS[S.lvIdx].quiz[S.step];
+  const btns=document.querySelectorAll('#qz-opts .mc-opt');
+  btns.forEach(b=>b.disabled=true);
+  const ok=i===q.ans;
+  if(ok) S.quizScore++;
+  btns[i].classList.add(ok?'ok':'no');
+  if(!ok) btns[q.ans].classList.add('ok');
+  $id('qz-score').textContent=S.quizScore+'/'+(S.step+1);
+  const fb=$id('qz-fb');
+  fb.className='mc-fb show '+(ok?'ok':'no');
+  fb.textContent=(ok?'✓ Corretto! ':'✗ Risposta errata. ')+q.exp;
+  $id('qz-cont').className='btn-continue show';
+}
+function nextQuiz(){
+  S.step++;
+  if(S.step>=LEVELS[S.lvIdx].quiz.length){showResult();return;}
+  renderQuiz();
+}
+
+// ════════════════════════════════════════════
+// RESULTS
+// ════════════════════════════════════════════
+function showResult(){
+  clearTimer();
+  const lv=LEVELS[S.lvIdx], tot=lv.quiz.length, sc=S.quizScore;
+  const pct=sc/tot;
+  let st=pct>=1?3:pct>=0.8?2:pct>=0.6?1:0;
+  let xpGain=st===3?100:st===2?75:st===1?50:0;
+  const prev=starsOf(lv.id);
+  if(st>prev){S.completed[lv.id]=st; S.xp+=xpGain;}
+  // streak
+  const today=new Date().toDateString();
+  if(S.lastStudy!==today){
+    const yest=new Date(Date.now()-86400000).toDateString();
+    S.streak=S.lastStudy===yest?S.streak+1:1;
+    S.lastStudy=today;
+  }
+  save(); updateTopBar();
+  const titles=['Riprova!','Bene!','Ottimo!','Perfetto! 🎉'];
+  const subs=[
+    `${sc}/${tot} corrette — serve almeno 3/5 per sbloccare il livello successivo.`,
+    `${sc}/${tot} corrette — hai sbloccato il livello successivo!`,
+    `${sc}/${tot} corrette — quasi perfetto! Riprova per 3 stelle.`,
+    `${sc}/${tot} corrette — lezione dominata! ⭐⭐⭐`,
+  ];
+  $id('r-stars').textContent=st===0?'😅':st===1?'⭐':st===2?'⭐⭐':'⭐⭐⭐';
+  $id('r-title').textContent=titles[st];
+  $id('r-sub').textContent=subs[st];
+  $id('r-xp').textContent='+'+(xpGain>0||st>prev?xpGain:0);
+  $id('r-score').textContent=sc+'/'+tot;
+  $id('r-streak').textContent=S.streak+'🔥';
+  const nextI=S.lvIdx+1;
+  const btn=$id('r-btn');
+  if(st>0&&nextI<LEVELS.length){
+    btn.textContent='Prossimo: '+LEVELS[nextI].title+' →';
+    btn.onclick=()=>openLevel(nextI);
+  } else if(st>0&&nextI>=LEVELS.length){
+    btn.textContent='Vedi completamento →';
+    btn.onclick=showCongrats;
+  } else {
+    btn.textContent='Torna alla mappa →';
+    btn.onclick=goHome;
+  }
+  show('screen-result');
+}
+
+function showCongrats(){
+  $id('cg-xp').textContent=S.xp;
+  $id('cg-streak').textContent=S.streak;
+  show('screen-congrats');
+}
+
+// ════════════════════════════════════════════
+// MODAL CLOSE CONFIRM
+// ════════════════════════════════════════════
+function askClose(){$id('modal-overlay').classList.add('show')}
+function closeModal(){$id('modal-overlay').classList.remove('show')}
+function confirmExit(){closeModal();goHome();}
+
+// ════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════
+updateTopBar();
+renderMap();
+</script>
+</body>
+</html>
