@@ -4,233 +4,456 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="KEKKOLANDA">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#E05F00">
-<title>KEKKOLANDA 🇳🇱</title>
+<meta name="theme-color" content="#0D0B1A">
+<title>⚔️ KEKKOLANDA</title>
+<link rel="manifest" href="data:application/manifest+json,{%22name%22:%22KEKKOLANDA%22,%22short_name%22:%22KEKKOLANDA%22,%22start_url%22:%22.%22,%22display%22:%22standalone%22,%22background_color%22:%22%230D0B1A%22,%22theme_color%22:%22%230D0B1A%22,%22orientation%22:%22portrait%22,%22icons%22:[{%22src%22:%22data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='80'%20fill='%230D0B1A'/%3E%3Ctext%20y='380'%20font-size='380'%20text-anchor='middle'%20x='256'%3E%E2%9A%94%EF%B8%8F%3C/text%3E%3C/svg%3E%22,%22sizes%22:%22512x512%22,%22type%22:%22image/svg+xml%22}]}" crossorigin="use-credentials">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='80'%20fill='%230D0B1A'/%3E%3Ctext%20y='380'%20font-size='380'%20text-anchor='middle'%20x='256'%3E%E2%9A%94%EF%B8%8F%3C/text%3E%3C/svg%3E">
 <style>
+:root{
+  --bg:#0D0B1A;
+  --bg2:#120F24;
+  --surface:#1A1535;
+  --surface2:#231D47;
+  --surface3:#2D2558;
+  --gold:#FFD23F;
+  --gold2:#F5A623;
+  --gold-dim:rgba(255,210,63,0.12);
+  --gold-border:rgba(255,210,63,0.25);
+  --purple:#9B6FD4;
+  --purple2:#C4A8F0;
+  --purple-dim:rgba(155,111,212,0.12);
+  --purple-border:rgba(155,111,212,0.3);
+  --text:#F0EAF8;
+  --text-muted:#8B7EA8;
+  --text-dim:#5A527A;
+  --green:#4ADE80;
+  --green-dim:rgba(74,222,128,0.12);
+  --red:#F87171;
+  --red-dim:rgba(248,113,113,0.12);
+  --border:rgba(255,255,255,0.07);
+  --shadow:0 8px 32px rgba(0,0,0,0.6);
+  --glow-gold:0 0 24px rgba(255,210,63,0.3);
+  --glow-purple:0 0 24px rgba(155,111,212,0.4);
+  --radius:16px;
+  --radius-sm:10px;
+}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html{height:100%;-webkit-text-size-adjust:100%}
-body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#F2F0EB;color:#1A1A1A;overflow:hidden}
-#app{height:100dvh;height:100vh;display:flex;flex-direction:column;max-width:480px;margin:0 auto;background:#fff;position:relative;overflow:hidden}
+body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);overflow:hidden}
 
-/* ── TOP BAR ── */
-#topbar{background:#E05F00;color:#fff;padding:10px 14px 8px;display:flex;align-items:center;gap:10px;flex-shrink:0;z-index:10}
-#topbar .logo{font-size:16px;font-weight:800;letter-spacing:.5px;flex:1}
-.tb-pill{display:flex;align-items:center;gap:3px;background:rgba(255,255,255,.18);border-radius:20px;padding:4px 10px;font-size:13px;font-weight:700}
+/* ── STARS BACKGROUND ── */
+body::before{content:'';position:fixed;inset:0;background:
+  radial-gradient(ellipse at 20% 20%,rgba(155,111,212,0.08) 0%,transparent 50%),
+  radial-gradient(ellipse at 80% 80%,rgba(255,210,63,0.05) 0%,transparent 50%);
+  pointer-events:none;z-index:0}
+
+#app{height:100dvh;height:100vh;display:flex;flex-direction:column;max-width:480px;margin:0 auto;position:relative;overflow:hidden;z-index:1}
+
+/* ── TOPBAR ── */
+#topbar{background:linear-gradient(135deg,#1A1535,#231D47);border-bottom:1px solid var(--gold-border);color:var(--text);padding:10px 14px 10px;display:flex;align-items:center;gap:8px;flex-shrink:0;z-index:10}
+#topbar .logo{font-size:15px;font-weight:900;letter-spacing:.8px;flex:1;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.tb-pill{display:flex;align-items:center;gap:3px;background:rgba(255,100,0,0.15);border:1px solid rgba(255,100,0,0.3);border-radius:20px;padding:4px 10px;font-size:13px;font-weight:700;color:#FF8C42}
+.rank-pill{display:flex;align-items:center;gap:3px;background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:20px;padding:4px 10px;font-size:12px;font-weight:800;color:var(--gold)}
+.user-badge{display:flex;align-items:center;gap:4px;background:var(--surface2);border:1px solid var(--border);border-radius:16px;padding:4px 10px;font-size:12px;font-weight:800;color:var(--text);cursor:pointer;border:none;flex-shrink:0}
+.cmp-icon-btn{background:var(--surface2);border:1px solid var(--gold-border);border-radius:10px;padding:4px 8px;font-size:13px;cursor:pointer;color:var(--gold);flex-shrink:0}
 
 /* ── SCREENS ── */
-.screen{flex:1;overflow-y:auto;overflow-x:hidden;display:none;flex-direction:column;-webkit-overflow-scrolling:touch}
+.screen{flex:1;overflow-y:auto;overflow-x:hidden;display:none;flex-direction:column;-webkit-overflow-scrolling:touch;background:var(--bg)}
 .screen.on{display:flex}
 
-/* ── HOME MAP ── */
-#map-hero{background:#E05F00;padding:16px 16px 20px;color:#fff;text-align:center}
-#map-hero h2{font-size:19px;font-weight:800;margin-bottom:3px}
-#map-hero p{font-size:12px;opacity:.8}
-#xp-bar-wrap{background:rgba(255,255,255,.25);border-radius:10px;height:8px;margin-top:10px;overflow:hidden}
-#xp-bar-fill{height:100%;background:#fff;border-radius:10px;transition:width .4s}
-#xp-bar-label{font-size:11px;opacity:.8;margin-top:4px}
-#level-map{padding:16px 14px 32px;display:flex;flex-direction:column;align-items:center;gap:0}
-.lv-connector{width:3px;height:20px;background:#E0DDD8;margin:0 auto}
-.lv-connector.done{background:#E05F00}
-.lv-node{width:100%;max-width:360px;display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:16px;border:2px solid #E0DDD8;background:#fff;cursor:pointer;position:relative;transition:transform .1s}
-.lv-node:active{transform:scale(.97)}
-.lv-node.done{border-color:#E05F00;background:#FFF5EE}
-.lv-node.current{border-color:#E05F00;border-width:2.5px;box-shadow:0 2px 14px rgba(224,95,0,.22)}
-.lv-node.locked{opacity:.4;cursor:default;background:#F8F7F5}
-.lv-icon{width:50px;height:50px;border-radius:14px;background:#F8F7F5;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
-.lv-node.done .lv-icon,.lv-node.current .lv-icon{background:#FFF5EE}
-.lv-info{flex:1;min-width:0}
-.lv-tag{font-size:10px;font-weight:700;color:#E05F00;text-transform:uppercase;letter-spacing:.08em}
-.lv-title{font-size:15px;font-weight:700;color:#1A1A1A;margin-top:1px}
-.lv-sub{font-size:11px;color:#888;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.lv-stars{font-size:13px;margin-top:3px}
-.lv-arr{font-size:16px;color:#E05F00;flex-shrink:0}
-.lv-lock{font-size:18px;flex-shrink:0}
-.new-badge{position:absolute;top:-7px;right:12px;background:#E05F00;color:#fff;font-size:9px;font-weight:800;padding:2px 8px;border-radius:10px;letter-spacing:.06em}
+/* ══════════════════════════════════════
+   USER SELECTION — RPG STYLE
+══════════════════════════════════════ */
+#screen-user{
+  background:linear-gradient(160deg,#0D0B1A 0%,#1A1035 50%,#0D0B1A 100%);
+  justify-content:center;align-items:center;padding:32px 20px;gap:20px;overflow:hidden;position:relative
+}
+#screen-user::before{
+  content:'✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦';
+  position:absolute;top:16px;left:0;right:0;text-align:center;
+  font-size:11px;color:rgba(255,210,63,0.3);letter-spacing:4px
+}
+#screen-user::after{
+  content:'✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦';
+  position:absolute;bottom:16px;left:0;right:0;text-align:center;
+  font-size:11px;color:rgba(255,210,63,0.3);letter-spacing:4px
+}
+.usr-logo{font-size:28px;font-weight:900;letter-spacing:1.5px;text-align:center;background:linear-gradient(135deg,var(--gold),var(--gold2),var(--purple2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 12px rgba(255,210,63,0.4))}
+.usr-tagline{font-size:13px;color:var(--text-muted);text-align:center;letter-spacing:.5px;margin-top:-8px}
+.usr-cards{display:flex;flex-direction:column;gap:14px;width:100%;max-width:340px}
+.usr-card{
+  background:var(--surface);
+  border-radius:20px;padding:20px 18px;
+  display:flex;align-items:center;gap:16px;
+  cursor:pointer;
+  transition:transform .15s,box-shadow .15s;
+  position:relative;overflow:hidden;
+  border:2px solid var(--border)
+}
+.usr-card:active{transform:scale(.97)}
+.usr-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .2s}
+.usr-card.gold-card{border-color:var(--gold-border)}
+.usr-card.gold-card:active{box-shadow:var(--glow-gold)}
+.usr-card.purple-card{border-color:var(--purple-border)}
+.usr-card.purple-card:active{box-shadow:var(--glow-purple)}
+.usr-card-av{font-size:48px;line-height:1;flex-shrink:0;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5))}
+.usr-card-info{flex:1;min-width:0}
+.usr-card-class{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.15em;margin-bottom:3px}
+.usr-card-name{font-size:22px;font-weight:900;letter-spacing:.5px}
+.usr-card-rank{font-size:12px;font-weight:700;margin-top:4px;opacity:.85}
+.usr-card-xp{font-size:11px;color:var(--text-muted);margin-top:2px}
+.usr-card-arr{font-size:20px;flex-shrink:0;opacity:.6}
+.usr-sep{font-size:10px;color:var(--text-dim);text-align:center;font-weight:700;letter-spacing:.15em;text-transform:uppercase}
 
-/* ── SESSION HEADER ── */
-.s-header{padding:10px 14px;border-bottom:1px solid #F0EDE8;display:flex;align-items:center;gap:10px;flex-shrink:0;background:#fff}
-.s-close{width:32px;height:32px;border-radius:50%;border:none;background:#F2F0EB;cursor:pointer;font-size:17px;color:#666;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+/* ══════════════════════════════════════
+   HOME — MAP
+══════════════════════════════════════ */
+#map-hero{
+  background:linear-gradient(180deg,#1A1535 0%,#231D47 100%);
+  padding:18px 16px 20px;
+  border-bottom:1px solid var(--gold-border)
+}
+.fantasy-hero-top{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.fantasy-avatar{font-size:48px;line-height:1;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5));flex-shrink:0}
+.fantasy-hero-info{flex:1}
+.fantasy-rank-title{font-size:17px;font-weight:800;color:var(--text);letter-spacing:.3px;line-height:1.2}
+.fantasy-rank-sub{font-size:11px;color:var(--text-muted);margin-top:3px}
+.xp-meta{display:flex;justify-content:space-between;margin-top:8px;margin-bottom:4px}
+.xp-meta-l{font-size:11px;font-weight:700;color:var(--gold)}
+.xp-meta-r{font-size:10px;color:var(--text-muted)}
+#xp-bar-wrap{background:rgba(255,255,255,.08);border-radius:10px;height:7px;overflow:hidden}
+#xp-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:10px;transition:width .5s}
+.daily-quest-strip{background:rgba(255,210,63,0.07);border:1px solid var(--gold-border);border-radius:12px;padding:9px 13px;margin-top:10px;display:flex;align-items:center;gap:9px}
+.dq-icon{font-size:16px}
+.dq-text{flex:1;font-size:11px;color:var(--text-muted);font-weight:600;line-height:1.3}
+.dq-bar-wrap{width:48px;background:rgba(255,255,255,.1);border-radius:8px;height:5px;flex-shrink:0}
+.dq-bar-fill{height:100%;background:var(--gold);border-radius:8px;transition:width .5s}
+
+/* ── LEVEL MAP ── */
+#level-map{padding:18px 14px 28px;display:flex;flex-direction:column;align-items:center;gap:0}
+.lv-connector{width:3px;height:22px;background:rgba(255,255,255,.08);margin:0 auto}
+.lv-connector.done{background:var(--gold)}
+.lv-node{
+  width:100%;max-width:360px;display:flex;align-items:center;gap:14px;
+  padding:14px 16px;border-radius:var(--radius);
+  border:2px solid rgba(255,255,255,.08);
+  background:var(--surface);cursor:pointer;position:relative;
+  transition:transform .1s,box-shadow .15s
+}
+.lv-node:active{transform:scale(.97)}
+.lv-node.done{border-color:var(--gold-border);background:linear-gradient(135deg,var(--surface),rgba(255,210,63,0.06))}
+.lv-node.current{border-color:var(--gold);border-width:2px;box-shadow:var(--glow-gold)}
+.lv-node.locked{opacity:.35;cursor:default;filter:grayscale(.5)}
+.lv-icon{width:52px;height:52px;border-radius:14px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;border:1px solid var(--border)}
+.lv-node.done .lv-icon{background:var(--gold-dim);border-color:var(--gold-border)}
+.lv-node.current .lv-icon{background:var(--gold-dim);border-color:var(--gold)}
+.lv-info{flex:1;min-width:0}
+.lv-tag{font-size:10px;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.1em}
+.lv-title{font-size:15px;font-weight:800;color:var(--text);margin-top:1px}
+.lv-sub{font-size:11px;color:var(--text-muted);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lv-stars{font-size:13px;margin-top:3px}
+.lv-arr{font-size:16px;color:var(--gold);flex-shrink:0;opacity:.7}
+.lv-lock{font-size:18px;flex-shrink:0;opacity:.4}
+.new-badge{position:absolute;top:-8px;right:12px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0D0B1A;font-size:9px;font-weight:900;padding:2px 9px;border-radius:10px;letter-spacing:.08em}
+
+/* ── ACHIEVEMENTS ── */
+#achievements-section{padding:0 14px 32px}
+.ach-title{font-size:11px;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;margin-top:4px}
+.ach-grid{display:flex;flex-wrap:wrap;gap:8px}
+.ach-badge{display:flex;flex-direction:column;align-items:center;gap:3px;width:calc(20% - 7px);min-width:52px}
+.ach-icon{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:20px;border:2px solid var(--border);background:var(--surface2);transition:all .25s}
+.ach-badge.unlocked .ach-icon{border-color:var(--gold-border);background:var(--gold-dim);box-shadow:0 2px 12px rgba(255,210,63,0.2)}
+.ach-badge.locked .ach-icon{filter:grayscale(1);opacity:.3}
+.ach-name{font-size:9px;font-weight:700;color:var(--text-dim);text-align:center;line-height:1.2}
+.ach-badge.unlocked .ach-name{color:var(--gold)}
+
+/* ══════════════════════════════════════
+   SESSION SCREENS
+══════════════════════════════════════ */
+.s-header{padding:11px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-shrink:0;background:var(--surface)}
+.s-close{width:32px;height:32px;border-radius:50%;border:none;background:var(--surface2);cursor:pointer;font-size:16px;color:var(--text-muted);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .s-prog-wrap{flex:1;display:flex;flex-direction:column;gap:3px}
-.s-phase-label{font-size:10px;color:#888;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
-.s-prog{height:5px;background:#F0EDE8;border-radius:3px;overflow:hidden}
-.s-prog-fill{height:100%;background:#E05F00;border-radius:3px;transition:width .3s}
-.s-right{font-size:12px;font-weight:700;color:#E05F00;white-space:nowrap;flex-shrink:0}
+.s-phase-label{font-size:10px;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.s-prog{height:5px;background:var(--surface2);border-radius:3px;overflow:hidden}
+.s-prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:3px;transition:width .3s}
+.s-right{font-size:12px;font-weight:700;color:var(--gold);white-space:nowrap;flex-shrink:0}
 
 /* ── INTRO ── */
-.intro-body{flex:1;padding:20px 18px;display:flex;flex-direction:column;align-items:center;gap:14px}
-.intro-emo{font-size:68px;line-height:1;margin-bottom:4px}
-.intro-pill{font-size:10px;font-weight:800;color:#E05F00;background:#FFF5EE;padding:4px 12px;border-radius:20px;text-transform:uppercase;letter-spacing:.1em}
-.intro-h{font-size:24px;font-weight:800;color:#1A1A1A;text-align:center;line-height:1.2}
-.intro-sub{font-size:13px;color:#888;text-align:center;line-height:1.6}
-.intro-card{width:100%;background:#F8F7F5;border-radius:16px;padding:14px 16px}
-.intro-card h4{font-size:11px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px}
-.intro-row{display:flex;align-items:center;gap:10px;padding:5px 0;font-size:13px;color:#1A1A1A}
-.intro-row-ico{width:28px;height:28px;border-radius:8px;background:#FFF5EE;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
-.timer-note{font-size:12px;color:#AAA;text-align:center}
-.btn-start{width:100%;padding:15px;border-radius:14px;border:none;background:#E05F00;color:#fff;font-size:16px;font-weight:800;cursor:pointer;letter-spacing:.2px}
-.btn-start:active{background:#C45000}
-.session-done-note{width:100%;background:#F0FDF4;border-radius:12px;padding:10px 14px;font-size:12px;color:#16A34A;text-align:center}
+.intro-body{flex:1;padding:22px 18px;display:flex;flex-direction:column;align-items:center;gap:16px;background:var(--bg)}
+.intro-emo{font-size:72px;line-height:1;margin-bottom:4px;filter:drop-shadow(0 4px 12px rgba(0,0,0,.5))}
+.intro-pill{font-size:10px;font-weight:800;color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-border);padding:4px 14px;border-radius:20px;text-transform:uppercase;letter-spacing:.12em}
+.intro-h{font-size:24px;font-weight:900;color:var(--text);text-align:center;line-height:1.2}
+.intro-sub{font-size:13px;color:var(--text-muted);text-align:center;line-height:1.6}
+.intro-card{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px}
+.intro-card h4{font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.intro-row{display:flex;align-items:center;gap:10px;padding:5px 0;font-size:13px;color:var(--text)}
+.intro-row-ico{width:28px;height:28px;border-radius:8px;background:var(--gold-dim);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.btn-start{width:100%;padding:16px;border-radius:var(--radius);border:none;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0D0B1A;font-size:16px;font-weight:900;cursor:pointer;letter-spacing:.3px;box-shadow:var(--glow-gold)}
+.btn-start:active{opacity:.88}
+.session-done-note{width:100%;background:var(--green-dim);border:1px solid rgba(74,222,128,0.25);border-radius:12px;padding:10px 14px;font-size:12px;color:var(--green);text-align:center}
 
 /* ── FLASHCARD ── */
-.flash-body{flex:1;padding:16px 16px 20px;display:flex;flex-direction:column;align-items:center;gap:16px}
+.flash-body{flex:1;padding:16px 16px 20px;display:flex;flex-direction:column;align-items:center;gap:14px;background:var(--bg)}
 .flash-dots{display:flex;gap:5px}
-.f-dot{width:8px;height:8px;border-radius:50%;background:#E0DDD8;transition:all .2s}
-.f-dot.active{background:#E05F00;transform:scale(1.25)}
-.f-dot.done{background:#E05F00}
-.flash-card{width:100%;border-radius:20px;border:2px solid #E0DDD8;padding:32px 20px;text-align:center;cursor:pointer;min-height:210px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:border-color .2s,background .2s;background:#fff}
-.flash-card.flipped{border-color:#E05F00;background:#FFF9F5}
-.f-nl{font-size:30px;font-weight:800;color:#1A1A1A;line-height:1.2}
-.f-pron{font-size:13px;color:#AAA;font-style:italic;margin-top:2px}
-.f-it{font-size:20px;font-weight:700;color:#E05F00;display:none}
-.f-ex{font-size:12px;color:#999;font-style:italic;display:none;margin-top:4px;line-height:1.5}
-.f-tap{font-size:11px;color:#CCC;margin-top:6px}
+.f-dot{width:8px;height:8px;border-radius:50%;background:var(--surface2);transition:all .2s}
+.f-dot.active{background:var(--gold);transform:scale(1.3)}
+.f-dot.done{background:var(--gold);opacity:.5}
+.flash-img-area{width:100%;max-width:320px;height:110px;border-radius:18px;background:linear-gradient(135deg,var(--surface),var(--surface2));border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:60px;flex-shrink:0;position:relative}
+.flash-img-area .speak-fab{position:absolute;bottom:8px;right:8px;width:34px;height:34px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;color:#0D0B1A;box-shadow:var(--glow-gold)}
+.flash-card{width:100%;border-radius:20px;border:2px solid var(--border);background:var(--surface);padding:22px 18px;text-align:center;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;transition:border-color .2s,background .2s;min-height:130px}
+.flash-card.flipped{border-color:var(--gold);background:linear-gradient(135deg,var(--surface),rgba(255,210,63,0.06))}
+.f-nl{font-size:28px;font-weight:900;color:var(--text);line-height:1.2}
+.f-pron{font-size:13px;color:var(--text-muted);font-style:italic}
+.f-it{font-size:19px;font-weight:700;color:var(--gold);display:none}
+.f-ex{font-size:12px;color:var(--text-muted);font-style:italic;display:none;margin-top:2px;line-height:1.5}
+.f-tap{font-size:11px;color:var(--text-dim);margin-top:4px}
 .flash-nav{display:flex;gap:10px;width:100%;margin-top:auto}
-.btn-back{padding:13px 18px;border-radius:12px;border:1.5px solid #E0DDD8;background:#fff;font-size:14px;color:#888;cursor:pointer;font-weight:600}
-.btn-fwd{flex:1;padding:13px;border-radius:12px;border:none;background:#E05F00;color:#fff;font-size:15px;font-weight:800;cursor:pointer}
+.btn-back{padding:13px 18px;border-radius:12px;border:1px solid var(--border);background:var(--surface);font-size:14px;color:var(--text-muted);cursor:pointer;font-weight:600}
+.btn-fwd{flex:1;padding:13px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0D0B1A;font-size:15px;font-weight:900;cursor:pointer}
 .btn-fwd:active,.btn-start:active{opacity:.88}
 
-/* ── MULTIPLE CHOICE ── */
-.mc-body{flex:1;padding:16px 16px 20px;display:flex;flex-direction:column;gap:14px}
-.mc-q-label{font-size:12px;color:#888;font-weight:600}
-.mc-word{font-size:28px;font-weight:800;color:#1A1A1A;line-height:1.2}
-.mc-pron{font-size:12px;color:#BBB;font-style:italic;margin-top:1px}
-.mc-opts{display:flex;flex-direction:column;gap:9px;margin-top:4px}
-.mc-opt{padding:15px 16px;border-radius:13px;border:2px solid #E0DDD8;background:#fff;font-size:15px;font-weight:600;color:#1A1A1A;cursor:pointer;text-align:left;transition:all .1s;line-height:1.3}
-.mc-opt:active:not(:disabled){transform:scale(.98)}
-.mc-opt.ok{border-color:#22C55E!important;background:#F0FDF4!important;color:#16A34A!important}
-.mc-opt.no{border-color:#EF4444!important;background:#FEF2F2!important;color:#DC2626!important}
-.mc-opt:disabled{cursor:default}
-.mc-fb{padding:12px 14px;border-radius:11px;font-size:13px;font-weight:600;display:none;line-height:1.5}
-.mc-fb.show{display:block}
-.mc-fb.ok{background:#F0FDF4;color:#16A34A}
-.mc-fb.no{background:#FEF2F2;color:#DC2626}
-.btn-continue{width:100%;padding:13px;border-radius:12px;border:none;background:#E05F00;color:#fff;font-size:15px;font-weight:800;cursor:pointer;display:none;margin-top:4px}
-.btn-continue.show{display:block}
-.btn-continue:active{background:#C45000}
+/* ── SPEAK BUTTON ── */
+.speak-btn{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:var(--gold-dim);border:1px solid var(--gold-border);cursor:pointer;font-size:14px;vertical-align:middle;margin-left:6px;flex-shrink:0}
+.speak-btn:active{background:var(--gold-dim)}
+.speak-btn.playing{background:var(--gold);border-color:var(--gold)}
 
-/* ── FILL BLANK ── */
-.fill-sentence{font-size:18px;font-weight:600;color:#1A1A1A;line-height:1.6;padding:16px;background:#F8F7F5;border-radius:14px;text-align:center}
-.fill-blank{display:inline-block;border-bottom:2.5px solid #E05F00;min-width:80px;color:#E05F00;font-weight:800}
+/* ── MULTIPLE CHOICE ── */
+.mc-body{flex:1;padding:14px 16px 18px;display:flex;flex-direction:column;gap:12px;background:var(--bg)}
+.mc-q-label{font-size:12px;color:var(--text-muted);font-weight:600}
+.mc-word-row{display:flex;align-items:center;gap:8px}
+.mc-word{font-size:28px;font-weight:900;color:var(--text);line-height:1.2;flex:1}
+.mc-pron{font-size:12px;color:var(--text-muted);font-style:italic;margin-top:1px}
+.mc-img{font-size:38px;width:56px;height:56px;border-radius:14px;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.mc-opts{display:flex;flex-direction:column;gap:9px;margin-top:4px}
+.mc-opt{padding:14px 16px;border-radius:13px;border:2px solid var(--border);background:var(--surface);font-size:15px;font-weight:600;color:var(--text);cursor:pointer;text-align:left;transition:all .1s;line-height:1.3}
+.mc-opt:active:not(:disabled){transform:scale(.98)}
+.mc-opt.ok{border-color:var(--green)!important;background:var(--green-dim)!important;color:var(--green)!important}
+.mc-opt.no{border-color:var(--red)!important;background:var(--red-dim)!important;color:var(--red)!important}
+.mc-opt:disabled{cursor:default}
+.mc-fb{padding:12px 14px;border-radius:11px;font-size:13px;font-weight:600;display:none;line-height:1.5;border:1px solid transparent}
+.mc-fb.show{display:block}
+.mc-fb.ok{background:var(--green-dim);color:var(--green);border-color:rgba(74,222,128,0.25)}
+.mc-fb.no{background:var(--red-dim);color:var(--red);border-color:rgba(248,113,113,0.25)}
+.btn-continue{width:100%;padding:14px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0D0B1A;font-size:15px;font-weight:900;cursor:pointer;display:none;margin-top:4px}
+.btn-continue.show{display:block}
+
+/* ── LISTEN ── */
+.listen-box{display:flex;flex-direction:column;align-items:center;gap:14px;padding:26px 20px;background:var(--surface);border:1px solid var(--border);border-radius:20px;width:100%}
+.listen-icon{font-size:56px}
+.listen-btn{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;cursor:pointer;font-size:28px;display:flex;align-items:center;justify-content:center;box-shadow:var(--glow-gold);color:#0D0B1A}
+.listen-btn:active{transform:scale(.92)}
+.listen-btn.playing{animation:pulse 0.6s infinite alternate}
+@keyframes pulse{from{box-shadow:var(--glow-gold)}to{box-shadow:0 0 40px rgba(255,210,63,0.6)}}
+.listen-hint{font-size:12px;color:var(--text-muted);text-align:center}
 
 /* ── PHRASES ── */
-.phrase-body{flex:1;padding:16px 16px 20px;display:flex;flex-direction:column;gap:12px}
-.phrase-num{font-size:11px;color:#BBB;font-weight:600;text-align:center}
-.phrase-ctx{font-size:10px;font-weight:800;color:#E05F00;text-transform:uppercase;letter-spacing:.09em;background:#FFF5EE;display:inline-block;padding:3px 10px;border-radius:10px;align-self:flex-start}
-.phrase-nl{font-size:19px;font-weight:700;color:#1A1A1A;line-height:1.4}
-.phrase-pron-box{background:#F8F7F5;border-radius:10px;padding:9px 12px;font-size:12px;color:#888;font-style:italic;border-left:3px solid #E05F00}
-.btn-reveal{padding:13px;border-radius:12px;border:2px solid #E05F00;background:#fff;color:#E05F00;font-size:14px;font-weight:800;cursor:pointer;text-align:center}
-.phrase-it-box{background:#FFF5EE;border-radius:12px;padding:14px 16px;display:none}
+.phrase-body{flex:1;padding:14px 16px 18px;display:flex;flex-direction:column;gap:12px;background:var(--bg)}
+.phrase-num{font-size:11px;color:var(--text-muted);font-weight:600;text-align:center}
+.phrase-ctx{font-size:10px;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;background:var(--gold-dim);border:1px solid var(--gold-border);display:inline-block;padding:3px 10px;border-radius:10px;align-self:flex-start}
+.phrase-scene{font-size:44px;text-align:center;padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:16px;position:relative}
+.phrase-scene .speak-btn{position:absolute;bottom:8px;right:8px}
+.phrase-nl{font-size:19px;font-weight:700;color:var(--text);line-height:1.4}
+.phrase-pron-box{background:var(--surface);border-radius:10px;padding:9px 12px;font-size:12px;color:var(--text-muted);font-style:italic;border-left:3px solid var(--gold)}
+.btn-reveal{padding:13px;border-radius:12px;border:2px solid var(--gold-border);background:var(--gold-dim);color:var(--gold);font-size:14px;font-weight:800;cursor:pointer;text-align:center}
+.phrase-it-box{background:var(--purple-dim);border:1px solid var(--purple-border);border-radius:12px;padding:14px 16px;display:none}
 .phrase-it-box.show{display:block}
-.phrase-it-label{font-size:10px;font-weight:800;color:#E05F00;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px}
-.phrase-it-text{font-size:17px;font-weight:600;color:#1A1A1A;line-height:1.4}
+.phrase-it-label{font-size:10px;font-weight:800;color:var(--purple2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px}
+.phrase-it-text{font-size:17px;font-weight:600;color:var(--text);line-height:1.4}
 
 /* ── RESULTS ── */
-.result-body{flex:1;padding:20px 18px 28px;display:flex;flex-direction:column;align-items:center;gap:16px}
-.result-stars{font-size:48px;line-height:1;letter-spacing:4px}
-.result-h{font-size:23px;font-weight:800;color:#1A1A1A;text-align:center}
-.result-sub{font-size:13px;color:#888;text-align:center;line-height:1.6}
-.result-xp-box{background:#FFF5EE;border-radius:16px;padding:14px 28px;text-align:center;width:100%}
-.result-xp-num{font-size:36px;font-weight:800;color:#E05F00}
-.result-xp-label{font-size:12px;color:#888;margin-top:2px}
+.result-body{flex:1;padding:22px 18px 30px;display:flex;flex-direction:column;align-items:center;gap:18px;background:var(--bg)}
+.result-stars{font-size:50px;line-height:1;letter-spacing:5px}
+.result-h{font-size:24px;font-weight:900;color:var(--text);text-align:center}
+.result-sub{font-size:13px;color:var(--text-muted);text-align:center;line-height:1.6}
+.result-xp-box{background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:var(--radius);padding:16px 28px;text-align:center;width:100%}
+.result-xp-num{font-size:38px;font-weight:900;color:var(--gold)}
+.result-xp-label{font-size:12px;color:var(--text-muted);margin-top:3px}
 .result-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%}
-.result-stat{background:#F8F7F5;border-radius:12px;padding:12px;text-align:center}
-.result-stat-num{font-size:22px;font-weight:800;color:#1A1A1A}
-.result-stat-lbl{font-size:11px;color:#888;margin-top:2px}
-.btn-next{width:100%;padding:15px;border-radius:14px;border:none;background:#E05F00;color:#fff;font-size:16px;font-weight:800;cursor:pointer}
-.btn-retry{width:100%;padding:13px;border-radius:14px;border:1.5px solid #E0DDD8;background:#fff;font-size:14px;font-weight:600;color:#888;cursor:pointer;margin-top:4px}
-.btn-next:active{background:#C45000}
+.result-stat{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:14px;text-align:center}
+.result-stat-num{font-size:24px;font-weight:900;color:var(--text)}
+.result-stat-lbl{font-size:11px;color:var(--text-muted);margin-top:2px}
+.btn-next{width:100%;padding:16px;border-radius:var(--radius);border:none;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0D0B1A;font-size:16px;font-weight:900;cursor:pointer;box-shadow:var(--glow-gold)}
+.btn-retry{width:100%;padding:13px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);font-size:14px;font-weight:600;color:var(--text-muted);cursor:pointer;margin-top:4px}
+.btn-next:active{opacity:.88}
 
-/* ── MODAL CONFIRM ── */
-#modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end;justify-content:center;z-index:999;padding-bottom:env(safe-area-inset-bottom)}
+/* ── MODAL ── */
+#modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:flex-end;justify-content:center;z-index:999;padding-bottom:env(safe-area-inset-bottom)}
 #modal-overlay.show{display:flex}
-#modal-box{background:#fff;border-radius:20px 20px 0 0;padding:20px 18px 28px;width:100%;max-width:480px}
-#modal-box h3{font-size:17px;font-weight:800;margin-bottom:6px}
-#modal-box p{font-size:13px;color:#888;margin-bottom:18px;line-height:1.6}
+#modal-box{background:var(--surface);border:1px solid var(--border);border-radius:24px 24px 0 0;padding:22px 18px 32px;width:100%;max-width:480px}
+#modal-box h3{font-size:18px;font-weight:900;margin-bottom:6px;color:var(--text)}
+#modal-box p{font-size:13px;color:var(--text-muted);margin-bottom:20px;line-height:1.6}
 .modal-btns{display:flex;flex-direction:column;gap:9px}
-.btn-modal-exit{padding:14px;border-radius:13px;border:none;background:#F2F0EB;color:#1A1A1A;font-size:15px;font-weight:700;cursor:pointer}
-.btn-modal-stay{padding:14px;border-radius:13px;border:none;background:#E05F00;color:#fff;font-size:15px;font-weight:700;cursor:pointer}
+.btn-modal-exit{padding:14px;border-radius:13px;border:none;background:var(--surface2);color:var(--text);font-size:15px;font-weight:700;cursor:pointer}
+.btn-modal-stay{padding:14px;border-radius:13px;border:none;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0D0B1A;font-size:15px;font-weight:700;cursor:pointer}
 
-/* ── COMPLETE SCREEN ── */
-.congrats-body{flex:1;padding:28px 20px;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center}
-.congrats-emo{font-size:72px;line-height:1}
-.congrats-h{font-size:26px;font-weight:800;color:#1A1A1A}
-.congrats-sub{font-size:14px;color:#888;line-height:1.7}
+/* ── CONGRATS ── */
+.congrats-body{flex:1;padding:30px 20px;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center;background:var(--bg)}
+.congrats-emo{font-size:76px;line-height:1;filter:drop-shadow(0 4px 16px rgba(255,210,63,0.4))}
+.congrats-h{font-size:28px;font-weight:900;color:var(--text)}
+.congrats-sub{font-size:14px;color:var(--text-muted);line-height:1.7}
 .congrats-stat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;width:100%}
-.c-stat{background:#F8F7F5;border-radius:12px;padding:12px 8px;text-align:center}
-.c-stat-num{font-size:22px;font-weight:800;color:#E05F00}
-.c-stat-lbl{font-size:10px;color:#888;margin-top:2px}
+.c-stat{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:14px 8px;text-align:center}
+.c-stat-num{font-size:24px;font-weight:900;color:var(--gold)}
+.c-stat-lbl{font-size:10px;color:var(--text-muted);margin-top:3px}
+
+/* ── AUDIO BADGE ── */
+.audio-badge{display:inline-block;background:var(--gold-dim);border:1px solid var(--gold-border);color:var(--gold);font-size:9px;font-weight:800;padding:2px 6px;border-radius:8px;vertical-align:middle;margin-left:4px;letter-spacing:.04em}
+
+/* ══════════════════════════════════════
+   FANTASY GAMIFICATION
+══════════════════════════════════════ */
+#levelup-overlay{position:fixed;inset:0;background:rgba(6,4,20,.95);display:none;align-items:center;justify-content:center;z-index:9999;flex-direction:column;padding:24px}
+#levelup-overlay.show{display:flex;animation:luIn .38s cubic-bezier(.17,.67,.35,1.3)}
+@keyframes luIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+.lu-stars-row{font-size:28px;letter-spacing:6px;margin-bottom:8px;animation:sparkleAnim 1.2s infinite alternate}
+@keyframes sparkleAnim{from{filter:brightness(1)}to{filter:brightness(1.6) drop-shadow(0 0 10px gold)}}
+.lu-box{background:linear-gradient(160deg,#1a1035,#0e0820);border:1.5px solid var(--gold-border);border-radius:24px;padding:30px 24px 24px;max-width:320px;width:100%;text-align:center;box-shadow:var(--glow-gold),0 0 60px rgba(130,80,255,.2)}
+.lu-rank-label{font-size:10px;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.18em;margin-bottom:10px}
+.lu-rank-icon{font-size:76px;margin:4px 0 10px;animation:bounceAnim .55s ease infinite alternate;display:block}
+@keyframes bounceAnim{from{transform:translateY(0) scale(1)}to{transform:translateY(-8px) scale(1.06)}}
+.lu-rank-name{font-size:28px;font-weight:900;color:var(--text);margin-bottom:6px}
+.lu-rank-desc{font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:18px}
+.lu-xp-pill{background:var(--gold-dim);border:1.5px solid var(--gold-border);border-radius:20px;padding:6px 20px;display:inline-flex;align-items:baseline;gap:5px;margin-bottom:20px}
+.lu-xp-num{font-size:24px;font-weight:900;color:var(--gold)}
+.lu-xp-lab{font-size:11px;color:var(--text-muted)}
+.btn-lu-cont{width:100%;padding:15px;border-radius:var(--radius);background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0D0B1A;font-size:16px;font-weight:900;border:none;cursor:pointer;box-shadow:var(--glow-gold)}
+
+/* ── ACHIEVEMENT TOAST ── */
+#ach-toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--surface);border:1.5px solid var(--gold-border);border-radius:18px;padding:10px 16px;display:flex;align-items:center;gap:10px;z-index:9998;opacity:0;transition:all .35s;pointer-events:none;white-space:nowrap;box-shadow:var(--glow-gold)}
+#ach-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.ach-t-icon{font-size:26px}
+.ach-t-info strong{display:block;font-size:13px;font-weight:800;color:var(--text)}
+.ach-t-info span{font-size:11px;color:var(--text-muted)}
+
+/* ══ COMPARE OVERLAY ══ */
+#compare-overlay{position:fixed;inset:0;background:rgba(6,4,20,.95);display:none;align-items:center;justify-content:center;z-index:9998;padding:20px;flex-direction:column}
+#compare-overlay.show{display:flex;animation:luIn .35s cubic-bezier(.17,.67,.35,1.3)}
+.cmp-box{background:linear-gradient(160deg,#1a1035,#0e0820);border:1.5px solid var(--gold-border);border-radius:24px;padding:24px 18px 20px;width:100%;max-width:340px}
+.cmp-title{font-size:11px;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.15em;margin-bottom:16px;text-align:center}
+.cmp-vs-row{display:flex;align-items:stretch;gap:8px;margin-bottom:14px}
+.cmp-player{flex:1;background:rgba(255,255,255,.04);border-radius:14px;padding:14px 8px;text-align:center;transition:all .2s;border:1px solid var(--border)}
+.cmp-player.winner{background:var(--gold-dim);border:1.5px solid var(--gold-border)}
+.cmp-p-av{font-size:30px;margin-bottom:4px}
+.cmp-p-name{font-size:10px;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em}
+.cmp-p-rank{font-size:12px;font-weight:800;color:var(--text);margin-top:4px}
+.cmp-p-xp{font-size:22px;font-weight:900;color:var(--gold);margin-top:4px}
+.cmp-p-xp-lbl{font-size:9px;color:var(--text-dim)}
+.cmp-p-stat{font-size:10px;color:var(--text-muted);margin-top:5px}
+.cmp-vs-mid{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--text-dim);flex-shrink:0}
+.cmp-challenge-strip{background:rgba(255,100,0,.1);border:1px solid rgba(255,120,0,.25);border-radius:11px;padding:10px 12px;font-size:12px;color:var(--text-muted);margin-bottom:12px;line-height:1.45}
+.cmp-challenge-strip strong{color:var(--gold2)}
+.btn-cmp-ch{width:100%;padding:13px;border-radius:13px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0D0B1A;font-size:14px;font-weight:900;border:none;cursor:pointer;margin-bottom:9px}
+.btn-cmp-cl{width:100%;padding:10px;border-radius:13px;background:rgba(255,255,255,.05);color:var(--text-muted);font-size:13px;font-weight:600;border:1px solid var(--border);cursor:pointer}
+
+/* ══ CHALLENGE NOTIFICATION ══ */
+#challenge-notif{position:fixed;inset:0;background:rgba(6,4,20,.95);display:none;align-items:center;justify-content:center;z-index:9997;padding:20px;flex-direction:column}
+#challenge-notif.show{display:flex;animation:luIn .35s cubic-bezier(.17,.67,.35,1.3)}
+.chall-box{background:linear-gradient(160deg,#1a1035,#0e0820);border:1.5px solid rgba(255,140,0,.4);border-radius:24px;padding:28px 22px;width:100%;max-width:320px;text-align:center}
+.chall-icon-big{font-size:52px;margin-bottom:8px}
+.chall-from{font-size:10px;font-weight:800;color:var(--gold2);text-transform:uppercase;letter-spacing:.14em;margin-bottom:6px}
+.chall-title{font-size:19px;font-weight:900;color:var(--text);line-height:1.3;margin-bottom:6px}
+.chall-detail{font-size:12px;color:var(--text-muted);line-height:1.55;margin-bottom:20px}
+.btn-chall-go{width:100%;padding:15px;border-radius:14px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0D0B1A;font-size:14px;font-weight:900;border:none;cursor:pointer;margin-bottom:9px}
+.btn-chall-later{width:100%;padding:11px;border-radius:14px;background:rgba(255,255,255,.05);color:var(--text-muted);font-size:13px;font-weight:600;border:1px solid var(--border);cursor:pointer}
 </style>
 </head>
 <body>
 <div id="app">
 
-  <!-- ═══ TOPBAR ═══ -->
+  <!-- TOPBAR -->
   <div id="topbar">
-    <div class="logo">🇳🇱 KEKKOLANDA</div>
-    <div class="tb-pill" id="tb-streak">🔥 <span id="s-num">0</span></div>
-    <div class="tb-pill" id="tb-xp">⭐ <span id="xp-num">0</span></div>
+    <div class="logo">⚔️ KEKKOLANDA</div>
+    <button class="user-badge" id="user-badge-tb" onclick="backToUserSelect()" style="display:none" title="Cambia eroe"><span id="user-emoji-tb">⚔️</span><span id="user-name-tb" style="margin-left:3px"></span></button>
+    <div class="tb-pill">🔥 <span id="s-num">0</span></div>
+    <div class="rank-pill"><span id="rank-icon-tb">🌱</span> <span id="xp-num">0</span></div>
+    <button class="cmp-icon-btn" id="cmp-btn-tb" onclick="showCompare()" style="display:none" title="Sfida">⚔️</button>
   </div>
 
-  <!-- ═══ SCREEN: HOME ═══ -->
-  <div class="screen on" id="screen-home">
+  <!-- USER SELECTION -->
+  <div class="screen on" id="screen-user">
+    <div class="usr-logo">⚔️ KEKKOLANDA</div>
+    <div class="usr-tagline">Scegli il tuo eroe</div>
+    <div class="usr-cards" id="usr-cards"></div>
+  </div>
+
+  <!-- HOME -->
+  <div class="screen" id="screen-home">
     <div id="map-hero">
-      <h2>Il tuo percorso 🇳🇱</h2>
-      <p>Completa ogni sessione per sbloccare il livello successivo</p>
+      <div class="fantasy-hero-top">
+        <div id="hero-avatar" class="fantasy-avatar">🌱</div>
+        <div class="fantasy-hero-info">
+          <div id="hero-rank-title" class="fantasy-rank-title">🌱 Apprendista</div>
+          <div id="hero-rank-sub" class="fantasy-rank-sub">Muovi i primi passi nel regno olandese!</div>
+        </div>
+      </div>
+      <div class="xp-meta">
+        <div class="xp-meta-l" id="hero-xp-cur">0 XP totali</div>
+        <div class="xp-meta-r" id="hero-xp-next">Prossimo rango a 150 XP</div>
+      </div>
       <div id="xp-bar-wrap"><div id="xp-bar-fill" style="width:0%"></div></div>
-      <div id="xp-bar-label">0 / 100 XP — Livello 1</div>
+      <div class="daily-quest-strip">
+        <div class="dq-icon" id="dq-icon">⚔️</div>
+        <div class="dq-text" id="dq-text">Missione del giorno: studia 1 lezione</div>
+        <div class="dq-bar-wrap"><div class="dq-bar-fill" id="dq-bar" style="width:0%"></div></div>
+      </div>
     </div>
     <div id="level-map"></div>
+    <div id="achievements-section">
+      <div class="ach-title">🏆 Conquiste</div>
+      <div class="ach-grid" id="ach-grid"></div>
+    </div>
   </div>
 
-  <!-- ═══ SCREEN: INTRO ═══ -->
+  <!-- INTRO -->
   <div class="screen" id="screen-intro">
     <div class="s-header">
-      <button class="s-close" onclick="askClose()">✕</button>
+      <button class="s-close" onclick="goHome()">✕</button>
       <div class="s-prog-wrap">
-        <div class="s-phase-label">Pronto per iniziare?</div>
+        <div class="s-phase-label">Preparazione</div>
         <div class="s-prog"><div class="s-prog-fill" style="width:0%"></div></div>
       </div>
-      <div class="s-right">⏱ 10 min</div>
     </div>
     <div class="intro-body">
-      <div class="intro-emo" id="i-icon"></div>
-      <div class="intro-pill" id="i-tag"></div>
-      <div class="intro-h" id="i-title"></div>
-      <div class="intro-sub" id="i-sub"></div>
+      <div class="intro-emo" id="i-icon">📖</div>
+      <div class="intro-pill" id="i-tag">A1.1 — Lezione 1/10</div>
+      <div class="intro-h" id="i-title">Primi Passi</div>
+      <div class="intro-sub" id="i-sub">Saluti di base</div>
       <div class="intro-card">
-        <h4>Cosa imparerai oggi</h4>
-        <div class="intro-row"><div class="intro-row-ico">📖</div><span id="i-wcount"></span></div>
-        <div class="intro-row"><div class="intro-row-ico">💬</div><span id="i-pcount"></span></div>
-        <div class="intro-row"><div class="intro-row-ico">🔍</div><span>4 esercizi di riconoscimento</span></div>
-        <div class="intro-row"><div class="intro-row-ico">🎯</div><span>Quiz finale — 5 domande</span></div>
+        <h4>📚 Questa lezione include</h4>
+        <div class="intro-row"><div class="intro-row-ico">🗣️</div><span id="i-wcount">8 parole con pronuncia audio</span></div>
+        <div class="intro-row"><div class="intro-row-ico">💬</div><span id="i-pcount">3 frasi pratiche</span></div>
+        <div class="intro-row"><div class="intro-row-ico">🧠</div><span>Quiz finale con 5 domande</span></div>
       </div>
-      <div id="i-done-note" class="session-done-note" style="display:none">✓ Hai già completato questo livello. Ripetilo per migliorare il punteggio!</div>
-      <div class="timer-note">La sessione dura circa 10 minuti</div>
-      <button class="btn-start" onclick="startSession()">Inizia la sessione →</button>
+      <div class="session-done-note" id="i-done-note" style="display:none">✅ Hai già completato questa lezione! Rifalla per migliorare il punteggio.</div>
+      <button class="btn-start" onclick="startSession()">⚔️ Inizia la missione!</button>
     </div>
   </div>
 
-  <!-- ═══ SCREEN: FLASHCARD ═══ -->
+  <!-- FLASHCARD -->
   <div class="screen" id="screen-flash">
     <div class="s-header">
       <button class="s-close" onclick="askClose()">✕</button>
       <div class="s-prog-wrap">
-        <div class="s-phase-label">📖 Vocabolario nuovo</div>
+        <div class="s-phase-label">Vocabolario</div>
         <div class="s-prog"><div class="s-prog-fill" id="fp-bar" style="width:0%"></div></div>
       </div>
       <div class="s-right" id="fp-timer">10:00</div>
     </div>
     <div class="flash-body">
       <div class="flash-dots" id="fp-dots"></div>
+      <div class="flash-img-area">
+        <span id="fp-emoji">🌍</span>
+        <button class="speak-fab" id="fp-speak" onclick="speakCurrent()">🔊</button>
+      </div>
       <div class="flash-card" id="fp-card" onclick="flipCard()">
         <div class="f-nl" id="fp-nl"></div>
         <div class="f-pron" id="fp-pron"></div>
         <div class="f-it" id="fp-it"></div>
         <div class="f-ex" id="fp-ex"></div>
-        <div class="f-tap" id="fp-tap">Tocca per vedere la traduzione</div>
+        <div class="f-tap" id="fp-tap">Tocca per scoprire ✨</div>
       </div>
       <div class="flash-nav">
         <button class="btn-back" onclick="flashNav(-1)">← Indietro</button>
@@ -239,32 +462,60 @@ body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,
     </div>
   </div>
 
-  <!-- ═══ SCREEN: MULTIPLE CHOICE ═══ -->
+  <!-- MULTIPLE CHOICE -->
   <div class="screen" id="screen-mc">
     <div class="s-header">
       <button class="s-close" onclick="askClose()">✕</button>
       <div class="s-prog-wrap">
-        <div class="s-phase-label" id="mc-phase-label">🔍 Riconosci la parola</div>
+        <div class="s-phase-label">Quiz Parole</div>
         <div class="s-prog"><div class="s-prog-fill" id="mc-bar" style="width:0%"></div></div>
       </div>
       <div class="s-right" id="mc-right">1/4</div>
     </div>
     <div class="mc-body">
       <div class="mc-q-label" id="mc-qlabel"></div>
-      <div class="mc-word" id="mc-word"></div>
-      <div class="mc-pron" id="mc-pron"></div>
+      <div class="mc-word-row">
+        <div>
+          <div class="mc-word" id="mc-word"></div>
+          <div class="mc-pron" id="mc-pron"></div>
+        </div>
+        <div class="mc-img" id="mc-img"></div>
+      </div>
+      <button class="speak-btn" id="mc-speak" onclick="speakMCWord()">🔊</button>
       <div class="mc-opts" id="mc-opts"></div>
       <div class="mc-fb" id="mc-fb"></div>
       <button class="btn-continue" id="mc-cont" onclick="nextMC()">Continua →</button>
     </div>
   </div>
 
-  <!-- ═══ SCREEN: PHRASES ═══ -->
+  <!-- LISTEN -->
+  <div class="screen" id="screen-listen">
+    <div class="s-header">
+      <button class="s-close" onclick="askClose()">✕</button>
+      <div class="s-prog-wrap">
+        <div class="s-phase-label">Ascolto</div>
+        <div class="s-prog"><div class="s-prog-fill" id="ls-bar" style="width:0%"></div></div>
+      </div>
+      <div class="s-right" id="ls-right">1/3</div>
+    </div>
+    <div class="mc-body">
+      <div class="listen-box">
+        <div class="listen-icon" id="ls-emoji">🎧</div>
+        <button class="listen-btn" id="ls-play-btn" onclick="playListenWord()">🔊</button>
+        <div class="listen-hint">Ascolta e scegli la traduzione!</div>
+      </div>
+      <div class="mc-opts" id="ls-opts"></div>
+      <div class="mc-fb" id="ls-fb"></div>
+      <button class="btn-continue" id="ls-cont" onclick="nextListen()">Continua →</button>
+    </div>
+  </div>
+
+  <!-- PHRASES -->
   <div class="screen" id="screen-phrase">
     <div class="s-header">
       <button class="s-close" onclick="askClose()">✕</button>
       <div class="s-prog-wrap">
-        <div class="s-phase-label">💬 Frasi pratiche</div>
+        <div class="s-phase-label">Frasi Pratiche</div>
         <div class="s-prog"><div class="s-prog-fill" id="pp-bar" style="width:0%"></div></div>
       </div>
       <div class="s-right" id="pp-right">1/3</div>
@@ -272,14 +523,17 @@ body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,
     <div class="phrase-body">
       <div class="phrase-num" id="pp-num"></div>
       <div class="phrase-ctx" id="pp-ctx"></div>
+      <div class="phrase-scene">
+        <span id="pp-emoji">💬</span>
+        <button class="speak-btn" id="pp-speak" onclick="speakPhraseNL()">🔊</button>
+      </div>
       <div class="phrase-nl" id="pp-nl"></div>
       <div class="phrase-pron-box" id="pp-pron"></div>
-      <button class="btn-reveal" id="pp-revbtn" onclick="revealPhrase()">🇮🇹 Scopri la traduzione</button>
+      <button class="btn-reveal" id="pp-revbtn" onclick="revealPhrase()">✨ Mostra traduzione</button>
       <div class="phrase-it-box" id="pp-itbox">
-        <div class="phrase-it-label">In italiano</div>
+        <div class="phrase-it-label">Traduzione 🇮🇹</div>
         <div class="phrase-it-text" id="pp-it"></div>
       </div>
-      <div style="flex:1"></div>
       <div class="flash-nav">
         <button class="btn-back" onclick="phraseNav(-1)">← Indietro</button>
         <button class="btn-fwd" id="pp-fwd" onclick="phraseNav(1)">Avanti →</button>
@@ -287,376 +541,530 @@ body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,
     </div>
   </div>
 
-  <!-- ═══ SCREEN: QUIZ ═══ -->
+  <!-- QUIZ -->
   <div class="screen" id="screen-quiz">
     <div class="s-header">
       <button class="s-close" onclick="askClose()">✕</button>
       <div class="s-prog-wrap">
-        <div class="s-phase-label">🎯 Quiz finale</div>
+        <div class="s-phase-label">Sfida Finale</div>
         <div class="s-prog"><div class="s-prog-fill" id="qz-bar" style="width:0%"></div></div>
       </div>
       <div class="s-right" id="qz-score">0/5</div>
     </div>
     <div class="mc-body">
-      <div class="mc-q-label" id="qz-qlabel">Scegli la risposta corretta</div>
-      <div class="mc-word" id="qz-word"></div>
-      <div class="mc-pron" id="qz-pron"></div>
+      <div class="mc-q-label" id="qz-qlabel"></div>
+      <div class="mc-word-row">
+        <div>
+          <div class="mc-word" id="qz-word"></div>
+          <div class="mc-pron" id="qz-pron"></div>
+        </div>
+        <div class="mc-img" id="qz-img"></div>
+      </div>
+      <button class="speak-btn" id="qz-speak" onclick="speakQuizWord()">🔊</button>
       <div class="mc-opts" id="qz-opts"></div>
       <div class="mc-fb" id="qz-fb"></div>
       <button class="btn-continue" id="qz-cont" onclick="nextQuiz()">Continua →</button>
     </div>
   </div>
 
-  <!-- ═══ SCREEN: RESULTS ═══ -->
+  <!-- RESULTS -->
   <div class="screen" id="screen-result">
     <div class="s-header">
       <button class="s-close" onclick="goHome()">✕</button>
       <div class="s-prog-wrap">
-        <div class="s-phase-label">Sessione completata!</div>
-        <div class="s-prog"><div class="s-prog-fill" style="width:100%;background:#22C55E"></div></div>
+        <div class="s-phase-label">Risultati</div>
+        <div class="s-prog"><div class="s-prog-fill" style="width:100%"></div></div>
       </div>
-      <div class="s-right" style="color:#22C55E">✓ Fine</div>
+      <div class="s-right">✔️</div>
     </div>
     <div class="result-body">
-      <div class="result-stars" id="r-stars"></div>
-      <div class="result-h" id="r-title"></div>
+      <div class="result-stars" id="r-stars">⭐⭐⭐</div>
+      <div class="result-h" id="r-title">Ottimo lavoro!</div>
       <div class="result-sub" id="r-sub"></div>
       <div class="result-xp-box">
         <div class="result-xp-num" id="r-xp">+0</div>
-        <div class="result-xp-label">punti XP guadagnati</div>
+        <div class="result-xp-label">XP guadagnati ✨</div>
       </div>
       <div class="result-grid">
-        <div class="result-stat"><div class="result-stat-num" id="r-score"></div><div class="result-stat-lbl">Quiz corrette</div></div>
-        <div class="result-stat"><div class="result-stat-num" id="r-streak"></div><div class="result-stat-lbl">Giorni di fila</div></div>
+        <div class="result-stat"><div class="result-stat-num" id="r-score"></div><div class="result-stat-lbl">⚡ Risposte corrette</div></div>
+        <div class="result-stat"><div class="result-stat-num" id="r-streak"></div><div class="result-stat-lbl">🔥 Streak giorni</div></div>
       </div>
-      <button class="btn-next" id="r-btn" onclick="goHome()">Torna alla mappa →</button>
-      <button class="btn-retry" onclick="startSession()">↺ Riprova per più stelle</button>
+      <button class="btn-next" id="r-btn" onclick="goHome()">🏰 Torna alla mappa</button>
+      <button class="btn-retry" onclick="openLevel(S.lvIdx)">↩️ Riprova</button>
     </div>
   </div>
 
-  <!-- ═══ SCREEN: COMPLETED ALL ═══ -->
+  <!-- CONGRATS -->
   <div class="screen" id="screen-congrats">
     <div class="congrats-body">
-      <div class="congrats-emo">🎓</div>
-      <div class="congrats-h">Hai completato il corso A1/A2!</div>
-      <div class="congrats-sub">Complimenti Francesco! Hai imparato le basi dell'olandese. Continua a praticare con le lezioni già completate per consolidare tutto.</div>
+      <div class="congrats-emo">🏆</div>
+      <div class="congrats-h">Missione Completata!</div>
+      <div class="congrats-sub" id="cg-sub">Hai completato tutte le lezioni disponibili!<br>Sei un vero guerriero dell'olandese! 🇳🇱</div>
       <div class="congrats-stat-grid">
-        <div class="c-stat"><div class="c-stat-num" id="cg-xp"></div><div class="c-stat-lbl">XP totali</div></div>
-        <div class="c-stat"><div class="c-stat-num" id="cg-streak"></div><div class="c-stat-lbl">Streak 🔥</div></div>
-        <div class="c-stat"><div class="c-stat-num">10</div><div class="c-stat-lbl">Livelli</div></div>
+        <div class="c-stat"><div class="c-stat-num" id="cg-xp">0</div><div class="c-stat-lbl">✨ XP totali</div></div>
+        <div class="c-stat"><div class="c-stat-num" id="cg-streak">0</div><div class="c-stat-lbl">🔥 Streak</div></div>
       </div>
-      <button class="btn-next" onclick="goHome()" style="width:100%">← Rivedi le lezioni</button>
+      <div style="font-size:48px;margin:8px 0" id="cg-rank-icon">👑</div>
+      <button class="btn-next" onclick="goHome()">🏰 Torna alla mappa</button>
     </div>
   </div>
 
-  <!-- ═══ MODAL CONFIRM EXIT ═══ -->
-  <div id="modal-overlay" onclick="closeModal()">
-    <div id="modal-box" onclick="event.stopPropagation()">
-      <h3>Uscire dalla sessione?</h3>
-      <p>I progressi di questa sessione non verranno salvati. Potrai ricominciare da capo.</p>
+  <!-- MODAL -->
+  <div id="modal-overlay">
+    <div id="modal-box">
+      <h3>⚔️ Abbandonare la quest?</h3>
+      <p>Perderai i progressi di questa sessione. Sei sicuro?</p>
       <div class="modal-btns">
         <button class="btn-modal-exit" onclick="confirmExit()">Sì, esci</button>
-        <button class="btn-modal-stay" onclick="closeModal()">Continua a studiare</button>
+        <button class="btn-modal-stay" onclick="closeModal()">No, continua!</button>
       </div>
     </div>
   </div>
 
-</div><!-- end #app -->
+  <!-- LEVEL UP -->
+  <div id="levelup-overlay">
+    <div class="lu-stars-row">✦ ✧ ✦ ✧ ✦</div>
+    <div class="lu-box">
+      <div class="lu-rank-label">⚔️ Nuovo Rango Sbloccato!</div>
+      <div class="lu-rank-icon" id="lu-icon">🌱</div>
+      <div class="lu-rank-name" id="lu-name">Apprendista</div>
+      <div class="lu-rank-desc" id="lu-desc">Stai muovendo i primi passi!</div>
+      <div class="lu-xp-pill"><span class="lu-xp-num" id="lu-xp">0</span><span class="lu-xp-lab">XP totali</span></div>
+      <button class="btn-lu-cont" onclick="closeLevelUp()">✨ Continua l'avventura!</button>
+    </div>
+  </div>
 
+  <!-- ACHIEVEMENT TOAST -->
+  <div id="ach-toast">
+    <div class="ach-t-icon" id="ach-t-icon">🏅</div>
+    <div class="ach-t-info">
+      <strong id="ach-t-name">Conquista sbloccata!</strong>
+      <span id="ach-t-desc"></span>
+    </div>
+  </div>
+
+  <!-- COMPARE OVERLAY -->
+  <div id="compare-overlay">
+    <div class="cmp-box">
+      <div class="cmp-title">⚔️ Classifica Eroi</div>
+      <div class="cmp-vs-row">
+        <div class="cmp-player" id="cmp-p1"></div>
+        <div class="cmp-vs-mid">VS</div>
+        <div class="cmp-player" id="cmp-p2"></div>
+      </div>
+      <div class="cmp-challenge-strip" id="cmp-challenge-info" style="display:none"></div>
+      <button class="btn-cmp-ch" onclick="sendChallenge()">⚔️ Sfida!</button>
+      <button class="btn-cmp-cl" onclick="closeCompare()">Chiudi</button>
+    </div>
+  </div>
+
+  <!-- CHALLENGE NOTIF -->
+  <div id="challenge-notif">
+    <div class="chall-box">
+      <div class="chall-icon-big">⚔️</div>
+      <div class="chall-from" id="chall-from">Sfida ricevuta!</div>
+      <div class="chall-title" id="chall-title"></div>
+      <div class="chall-detail" id="chall-detail"></div>
+      <button class="btn-chall-go" id="chall-go-btn" onclick="acceptChallenge(0)">⚔️ Accetta la sfida!</button>
+      <button class="btn-chall-later" onclick="dismissChallenge()">Più tardi</button>
+    </div>
+  </div>
+
+</div>
 <script>
-// ════════════════════════════════════════════
-// DATI DEI LIVELLI
-// ════════════════════════════════════════════
+
 const LEVELS = [
 {id:1,title:"Primi Passi",sub:"Saluti di base",icon:"👋",tag:"A1.1",
  words:[
-  {nl:"hallo",pron:"hallò",it:"ciao / salve",ex:"Hallo! Hoe gaat het?"},
-  {nl:"doei",pron:"dùi",it:"ciao (congedo)",ex:"Doei! Tot morgen!"},
-  {nl:"goedemorgen",pron:"chùde-mòrchen",it:"buongiorno (mattina)",ex:"Goedemorgen, iedereen!"},
-  {nl:"goedenavond",pron:"chùde-aavond",it:"buonasera",ex:"Goedenavond! Welkom!"},
-  {nl:"goedenacht",pron:"chùde-nàcht",it:"buonanotte",ex:"Slaap lekker! Goedenacht!"},
-  {nl:"dank je",pron:"dank ye",it:"grazie (informale)",ex:"Dank je wel voor alles!"},
-  {nl:"ja / nee",pron:"yaa / nee",it:"sì / no",ex:"Ja, dat is goed. Nee, dank je."},
-  {nl:"tot ziens",pron:"tot ziens",it:"arrivederci",ex:"Tot ziens! Tot morgen!"},
+  {nl:"hallo",pron:"hallò",it:"ciao / salve",ex:"Hallo! Hoe gaat het?",emoji:"👋"},
+  {nl:"doei",pron:"dùi",it:"ciao (congedo)",ex:"Doei! Tot morgen!",emoji:"🙋"},
+  {nl:"goedemorgen",pron:"chùde-mòrchen",it:"buongiorno",ex:"Goedemorgen iedereen!",emoji:"🌅"},
+  {nl:"goedenavond",pron:"chùde-aavond",it:"buonasera",ex:"Goedenavond! Welkom!",emoji:"🌆"},
+  {nl:"goedenacht",pron:"chùde-nàcht",it:"buonanotte",ex:"Slaap lekker! Goedenacht!",emoji:"🌙"},
+  {nl:"dank je",pron:"dank ye",it:"grazie",ex:"Dank je wel voor alles!",emoji:"🙏"},
+  {nl:"ja",pron:"yaa",it:"sì",ex:"Ja, dat is goed!",emoji:"✅"},
+  {nl:"tot ziens",pron:"tot ziens",it:"arrivederci",ex:"Tot ziens! Tot morgen!",emoji:"🚶"},
  ],
  phrases:[
-  {nl:"Hallo! Hoe gaat het?",pron:"Hallò! Hù chaat et?",it:"Ciao! Come stai?",ctx:"Con amici / al lavoro"},
-  {nl:"Goed, dank je! En jij?",pron:"Chut, dank ye! En yei?",it:"Bene, grazie! E tu?",ctx:"Risposta standard"},
-  {nl:"Tot ziens! Doei!",pron:"Tot ziens! Dùi!",it:"Arrivederci! Ciao!",ctx:"Congedarsi"},
+  {nl:"Hallo! Hoe gaat het?",pron:"Hallò! Hù chaat et?",it:"Ciao! Come stai?",ctx:"Con amici / al lavoro",emoji:"👋"},
+  {nl:"Goed, dank je! En jij?",pron:"Chut, dank ye! En yei?",it:"Bene, grazie! E tu?",ctx:"Risposta standard",emoji:"😊"},
+  {nl:"Tot ziens! Doei!",pron:"Tot ziens! Dùi!",it:"Arrivederci! Ciao!",ctx:"Congedarsi",emoji:"🚶"},
  ],
  quiz:[
-  {q:"Come si dice 'ciao' (per salutare) in olandese?",opts:["doei","hallo","ja","nee"],ans:1,exp:"'Hallo' si usa per salutare. 'Doei' si usa per congedarsi!"},
-  {q:"'Goedemorgen' significa:",opts:["buonasera","buonanotte","buongiorno","arrivederci"],ans:2,exp:"Goedemorgen = buongiorno. Goedenavond = buonasera. Goedenacht = buonanotte."},
-  {q:"Come si dice 'grazie' (informale)?",opts:["alsjeblieft","hallo","dank je","tot ziens"],ans:2,exp:"'Dank je' = grazie (informale). 'Dank u wel' è la forma formale."},
-  {q:"Cosa risponde quando ti chiedono 'Hoe gaat het?'",opts:["Doei!","Goed, dank je!","Goedenacht!","Hallo!"],ans:1,exp:"'Goed, dank je!' = Bene, grazie! È la risposta standard alla domanda 'Come stai?'"},
-  {q:"Come si dice 'arrivederci' in olandese?",opts:["hallo","goedemorgen","doei / tot ziens","ja"],ans:2,exp:"'Doei' è informale (ciao), 'tot ziens' è più formale (arrivederci). Entrambi si usano al congedo."},
+  {q:"Come si dice 'ciao' per salutare?",opts:["doei","hallo","ja","nee"],ans:1,exp:"'Hallo' si usa per salutare. 'Doei' per congedarsi!",nl:"hallo",emoji:"👋"},
+  {q:"'Goedemorgen' significa:",opts:["buonasera","buonanotte","buongiorno","ciao"],ans:2,exp:"Goedemorgen = buongiorno. Goedenavond = buonasera.",nl:"goedemorgen",emoji:"🌅"},
+  {q:"Come si dice 'grazie'?",opts:["alsjeblieft","hallo","dank je","tot ziens"],ans:2,exp:"'Dank je' = grazie (informale). 'Dank u wel' è la forma formale.",nl:"dank je",emoji:"🙏"},
+  {q:"Cosa rispondo a 'Hoe gaat het?'?",opts:["Doei!","Goed, dank je!","Goedenacht!","Hallo!"],ans:1,exp:"'Goed, dank je!' = Bene, grazie! È la risposta standard.",nl:"goed",emoji:"😊"},
+  {q:"Come si dice 'arrivederci'?",opts:["hallo","goedemorgen","tot ziens","ja"],ans:2,exp:"'Tot ziens' = arrivederci (formale). 'Doei' = ciao (informale).",nl:"tot ziens",emoji:"🙋"},
  ]},
 
 {id:2,title:"Chi Sei?",sub:"Presentazioni",icon:"🙋",tag:"A1.2",
  words:[
-  {nl:"ik / jij / hij / zij",pron:"ik / yei / hei / zei",it:"io / tu / lui / lei",ex:"Ik ben Francesco."},
-  {nl:"ik heet...",pron:"ik heet",it:"mi chiamo...",ex:"Ik heet Francesco."},
-  {nl:"ik ben...",pron:"ik ben",it:"sono...",ex:"Ik ben Italiaans."},
-  {nl:"ik kom uit...",pron:"ik kom àut",it:"vengo da...",ex:"Ik kom uit Italië."},
-  {nl:"ik woon in...",pron:"ik voon in",it:"abito a...",ex:"Ik woon in Amsterdam."},
-  {nl:"ik spreek...",pron:"ik spreek",it:"parlo...",ex:"Ik spreek een beetje Nederlands."},
-  {nl:"aangenaam",pron:"aanche-naam",it:"piacere (di conoscerti)",ex:"Aangenaam kennis te maken!"},
-  {nl:"waar kom jij vandaan?",pron:"vaar kom yei van-daan?",it:"da dove vieni?",ex:"Waar kom jij vandaan?"},
+  {nl:"ik",pron:"ik",it:"io",ex:"Ik ben Francesco.",emoji:"🧑"},
+  {nl:"jij",pron:"yei",it:"tu",ex:"Hoe heet jij?",emoji:"👤"},
+  {nl:"ik heet",pron:"ik heet",it:"mi chiamo",ex:"Ik heet Francesco.",emoji:"💬"},
+  {nl:"ik kom uit",pron:"ik kom àut",it:"vengo da",ex:"Ik kom uit Italië.",emoji:"🌍"},
+  {nl:"ik woon in",pron:"ik voon in",it:"abito a",ex:"Ik woon in Amsterdam.",emoji:"🏠"},
+  {nl:"ik spreek",pron:"ik spreek",it:"parlo",ex:"Ik spreek een beetje Nederlands.",emoji:"🗣️"},
+  {nl:"aangenaam",pron:"aanche-naam",it:"piacere di conoscerti",ex:"Aangenaam!",emoji:"🤝"},
+  {nl:"waar kom jij vandaan",pron:"vaar kom yei van-daan",it:"da dove vieni",ex:"Waar kom jij vandaan?",emoji:"🗺️"},
  ],
  phrases:[
-  {nl:"Ik heet Francesco.",pron:"Ik heet Francesco.",it:"Mi chiamo Francesco.",ctx:"Presentarsi"},
-  {nl:"Ik kom uit Italië.",pron:"Ik kom àut Itaalie.",it:"Vengo dall'Italia.",ctx:"Dire la provenienza"},
-  {nl:"Ik spreek een beetje Nederlands.",pron:"Ik spreek en beetye Needer-lands.",it:"Parlo un po' olandese.",ctx:"Ammettere il livello"},
+  {nl:"Ik heet Francesco.",pron:"Ik heet Francesco.",it:"Mi chiamo Francesco.",ctx:"Presentarsi",emoji:"💬"},
+  {nl:"Ik kom uit Italië.",pron:"Ik kom àut Itaalie.",it:"Vengo dall'Italia.",ctx:"Dire la provenienza",emoji:"🇮🇹"},
+  {nl:"Ik spreek een beetje Nederlands.",pron:"Ik spreek en beetye Needer-lands.",it:"Parlo un po' olandese.",ctx:"Ammettere il livello",emoji:"🗣️"},
  ],
  quiz:[
-  {q:"Come si dice 'mi chiamo' in olandese?",opts:["ik ben","ik woon","ik heet","ik kom"],ans:2,exp:"'Ik heet...' = mi chiamo. Anche 'ik ben...' è corretto ma 'ik heet' è più preciso per il nome."},
-  {q:"Come si dice 'vengo dall'Italia'?",opts:["Ik woon in Italië","Ik spreek Italiaans","Ik kom uit Italië","Ik ben Italië"],ans:2,exp:"'Ik kom uit...' = vengo da. Letteralmente 'esco da'."},
-  {q:"Cosa significa 'aangenaam'?",opts:["arrivederci","piacere di conoscerti","grazie","ciao"],ans:1,exp:"'Aangenaam' = piacere di conoscerti. Si usa quando ci si presenta."},
-  {q:"Come si chiede 'Da dove vieni?'?",opts:["Hoe heet jij?","Waar woon jij?","Hoe gaat het?","Waar kom jij vandaan?"],ans:3,exp:"'Waar kom jij vandaan?' = da dove vieni? 'Waar' = dove."},
-  {q:"Come si dice 'parlo un po' olandese'?",opts:["Ik woon in Nederland","Ik leer Nederlands","Ik spreek een beetje Nederlands","Ik heet Nederlands"],ans:2,exp:"'Ik spreek een beetje Nederlands' = parlo un po' olandese. 'Een beetje' = un po'."},
+  {q:"Come si dice 'mi chiamo'?",opts:["ik ben","ik woon","ik heet","ik kom"],ans:2,exp:"'Ik heet...' = mi chiamo. È il modo più diretto per presentarsi.",nl:"ik heet",emoji:"💬"},
+  {q:"Come si dice 'vengo dall'Italia'?",opts:["Ik woon in Italië","Ik spreek Italiaans","Ik kom uit Italië","Ik ben Italië"],ans:2,exp:"'Ik kom uit...' = vengo da. Letteralmente 'esco da'.",nl:"ik kom uit Italië",emoji:"🌍"},
+  {q:"Cosa significa 'aangenaam'?",opts:["arrivederci","piacere di conoscerti","grazie","ciao"],ans:1,exp:"'Aangenaam' = piacere di conoscerti.",nl:"aangenaam",emoji:"🤝"},
+  {q:"Come si chiede 'da dove vieni?'?",opts:["Hoe heet jij?","Waar woon jij?","Hoe gaat het?","Waar kom jij vandaan?"],ans:3,exp:"'Waar kom jij vandaan?' = da dove vieni?",nl:"waar kom jij vandaan",emoji:"🗺️"},
+  {q:"Come si dice 'parlo un po' olandese'?",opts:["Ik woon in Nederland","Ik leer Nederlands","Ik spreek een beetje Nederlands","Ik heet Nederlands"],ans:2,exp:"'Ik spreek een beetje Nederlands' = parlo un po' olandese.",nl:"ik spreek een beetje Nederlands",emoji:"🗣️"},
  ]},
 
 {id:3,title:"La Famiglia",sub:"Relazioni e persone",icon:"👨‍👩‍👧",tag:"A1.3",
  words:[
-  {nl:"de vader",pron:"de vaader",it:"il padre",ex:"Mijn vader heet Luca."},
-  {nl:"de moeder",pron:"de muuder",it:"la madre",ex:"Mijn moeder is verpleegster."},
-  {nl:"de broer",pron:"de brur",it:"il fratello",ex:"Ik heb één broer."},
-  {nl:"de zus",pron:"de zus",it:"la sorella",ex:"Mijn zus woont in Rome."},
-  {nl:"het kind",pron:"et kind",it:"il bambino / il figlio",ex:"Ze heeft twee kinderen."},
-  {nl:"de opa / de oma",pron:"de opa / de oma",it:"il nonno / la nonna",ex:"Mijn opa is 80 jaar oud."},
-  {nl:"mijn / jouw",pron:"mein / yàuw",it:"mio/mia / tuo/tua",ex:"Mijn naam is Francesco."},
-  {nl:"hoe oud ben jij?",pron:"hù àud ben yei?",it:"quanti anni hai?",ex:"Hoe oud ben jij? Ik ben 35."},
+  {nl:"de vader",pron:"de vaader",it:"il padre",ex:"Mijn vader heet Luca.",emoji:"👨"},
+  {nl:"de moeder",pron:"de muuder",it:"la madre",ex:"Mijn moeder is verpleegster.",emoji:"👩"},
+  {nl:"de broer",pron:"de brur",it:"il fratello",ex:"Ik heb één broer.",emoji:"👦"},
+  {nl:"de zus",pron:"de zus",it:"la sorella",ex:"Mijn zus woont in Rome.",emoji:"👧"},
+  {nl:"het kind",pron:"et kind",it:"il bambino",ex:"Ze heeft twee kinderen.",emoji:"👶"},
+  {nl:"de opa",pron:"de opa",it:"il nonno",ex:"Mijn opa is 80 jaar oud.",emoji:"👴"},
+  {nl:"de oma",pron:"de oma",it:"la nonna",ex:"Mijn oma woont in Napels.",emoji:"👵"},
+  {nl:"mijn",pron:"mein",it:"mio / mia",ex:"Mijn naam is Francesco.",emoji:"💙"},
  ],
  phrases:[
-  {nl:"Dit is mijn vader.",pron:"Dit is mein vaader.",it:"Questo è mio padre.",ctx:"Presentare qualcuno"},
-  {nl:"Ik heb twee broers en één zus.",pron:"Ik heb tvee bruurs en een zus.",it:"Ho due fratelli e una sorella.",ctx:"Parlare della famiglia"},
-  {nl:"Hoe oud ben jij?",pron:"Hù àud ben yei?",it:"Quanti anni hai?",ctx:"Chiedere l'età"},
+  {nl:"Dit is mijn vader.",pron:"Dit is mein vaader.",it:"Questo è mio padre.",ctx:"Presentare qualcuno",emoji:"👨"},
+  {nl:"Ik heb twee broers.",pron:"Ik heb tvee bruurs.",it:"Ho due fratelli.",ctx:"Parlare della famiglia",emoji:"👦"},
+  {nl:"Hoe oud ben jij?",pron:"Hù àud ben yei?",it:"Quanti anni hai?",ctx:"Chiedere l'età",emoji:"🎂"},
  ],
  quiz:[
-  {q:"Come si dice 'il padre'?",opts:["de moeder","de broer","de vader","de opa"],ans:2,exp:"'De vader' = il padre. 'De moeder' = la madre."},
-  {q:"Quale articolo usa 'kind' (bambino)?",opts:["de","een","het","mijn"],ans:2,exp:"'Het kind' = il bambino. 'Kind' è un het-woord (nome neutro). Il plurale è 'kinderen'."},
-  {q:"Come si dice 'mia sorella'?",opts:["mijn broer","mijn zus","mijn moeder","mijn oma"],ans:1,exp:"'Mijn zus' = mia sorella. 'Mijn broer' = mio fratello."},
-  {q:"'Ik heb één broer' significa:",opts:["Ho una sorella","Ho un fratello","Ho un figlio","Ho un nonno"],ans:1,exp:"'Broer' = fratello. 'Ik heb één broer' = ho un fratello."},
-  {q:"Come si dice 'quanti anni hai?'?",opts:["Hoe heet jij?","Waar woon jij?","Hoe oud ben jij?","Hoe gaat het?"],ans:2,exp:"'Hoe oud ben jij?' = quanti anni hai? Letteralmente 'quanto vecchio sei?'"},
+  {q:"Come si dice 'il padre'?",opts:["de moeder","de broer","de vader","de opa"],ans:2,exp:"'De vader' = il padre.",nl:"de vader",emoji:"👨"},
+  {q:"Quale articolo usa 'kind'?",opts:["de","een","het","mijn"],ans:2,exp:"'Het kind' = il bambino. 'Kind' è un het-woord.",nl:"het kind",emoji:"👶"},
+  {q:"Come si dice 'mia sorella'?",opts:["mijn broer","mijn zus","mijn moeder","mijn oma"],ans:1,exp:"'Mijn zus' = mia sorella.",nl:"mijn zus",emoji:"👧"},
+  {q:"'Ik heb één broer' significa:",opts:["Ho una sorella","Ho un fratello","Ho un figlio","Ho un nonno"],ans:1,exp:"'Broer' = fratello.",nl:"ik heb één broer",emoji:"👦"},
+  {q:"Come si dice 'quanti anni hai?'?",opts:["Hoe heet jij?","Waar woon jij?","Hoe oud ben jij?","Hoe gaat het?"],ans:2,exp:"'Hoe oud ben jij?' = quanti anni hai?",nl:"hoe oud ben jij",emoji:"🎂"},
  ]},
 
 {id:4,title:"Numeri e Tempo",sub:"Contare, ore e giorni",icon:"🕐",tag:"A1.4",
  words:[
-  {nl:"1–5: één twee drie vier vijf",pron:"een tvee drie veer veif",it:"uno due tre quattro cinque",ex:"Ik heb vijf broers!"},
-  {nl:"6–10: zes zeven acht negen tien",pron:"zes zeeven acht neecheen tien",it:"sei sette otto nove dieci",ex:"De trein komt om tien uur."},
-  {nl:"20 / 30 / 100",pron:"tvintich / dertich / hondert",it:"venti / trenta / cento",ex:"Ik ben dertig jaar oud."},
-  {nl:"hoe laat is het?",pron:"hù laat is et?",it:"che ore sono?",ex:"Hoe laat is het? Het is drie uur."},
-  {nl:"half + uur",pron:"half",it:"mezza — ATTENZIONE: half drie = 2:30!",ex:"Het is half drie. (= 2:30!)"},
-  {nl:"maandag / dinsdag",pron:"maandag / dinsdag",it:"lunedì / martedì",ex:"De vergadering is maandag."},
-  {nl:"vrijdag / zaterdag / zondag",pron:"vreidag / zaaterdag / zondag",it:"venerdì / sabato / domenica",ex:"Op vrijdag werken we."},
-  {nl:"morgen / gisteren / vandaag",pron:"mòrchen / chisteren / vandaach",it:"domani / ieri / oggi",ex:"Vandaag is het maandag."},
+  {nl:"één twee drie vier vijf",pron:"een tvee drie veer veif",it:"uno due tre quattro cinque",ex:"Ik heb vijf broers!",emoji:"🔢"},
+  {nl:"zes zeven acht negen tien",pron:"zes zeeven acht neecheen tien",it:"sei sette otto nove dieci",ex:"De bus om tien uur.",emoji:"🔟"},
+  {nl:"twintig dertig honderd",pron:"tvintich dertich hondert",it:"venti trenta cento",ex:"Ik ben dertig jaar oud.",emoji:"💯"},
+  {nl:"hoe laat is het",pron:"hù laat is et",it:"che ore sono?",ex:"Hoe laat is het?",emoji:"🕐"},
+  {nl:"half drie",pron:"half drie",it:"le DUE e mezza (= 2:30!)",ex:"Het is half drie = 2:30!",emoji:"⏰"},
+  {nl:"maandag dinsdag",pron:"maandag dinsdag",it:"lunedì martedì",ex:"Vergadering op maandag.",emoji:"📅"},
+  {nl:"vrijdag zaterdag zondag",pron:"vreidag zaaterdag zondag",it:"venerdì sabato domenica",ex:"Op vrijdag werken we.",emoji:"🎉"},
+  {nl:"vandaag morgen gisteren",pron:"vandaach mòrchen chisteren",it:"oggi domani ieri",ex:"Vandaag is het maandag.",emoji:"📆"},
  ],
  phrases:[
-  {nl:"Hoe laat is het?",pron:"Hù laat is et?",it:"Che ore sono?",ctx:"Chiedere l'ora"},
-  {nl:"Het is half drie.",pron:"Et is half drie.",it:"Sono le due e mezza.",ctx:"Attenzione: 'half' = mezzo PRIMA dell'ora!"},
-  {nl:"Ik ben 35 jaar oud.",pron:"Ik ben dertich-veif yaar àud.",it:"Ho 35 anni.",ctx:"Dire la propria età"},
+  {nl:"Hoe laat is het?",pron:"Hù laat is et?",it:"Che ore sono?",ctx:"Chiedere l'ora",emoji:"🕐"},
+  {nl:"Het is half drie.",pron:"Et is half drie.",it:"Sono le DUE e mezza! (2:30)",ctx:"Attenzione: half = mezzo PRIMA!",emoji:"⏰"},
+  {nl:"Ik ben 35 jaar oud.",pron:"Ik ben dertich-veif yaar àud.",it:"Ho 35 anni.",ctx:"Dire la propria età",emoji:"🎂"},
  ],
  quiz:[
-  {q:"Quanto vale 'vijf'?",opts:["3","4","5","6"],ans:2,exp:"Vijf = 5. Één, twee, drie, vier, vijf = 1,2,3,4,5."},
-  {q:"'Half drie' in olandese significa:",opts:["Le tre e mezza","Le due e mezza","Le tre in punto","Le due in punto"],ans:1,exp:"ATTENZIONE! 'Half drie' = metà prima delle tre = 2:30. Il sistema è opposto all'italiano!"},
-  {q:"Come si dice 'lunedì'?",opts:["vrijdag","zondag","maandag","dinsdag"],ans:2,exp:"Maandag = lunedì. Vrijdag = venerdì. Zondag = domenica."},
-  {q:"Cosa significa 'vandaag'?",opts:["domani","ieri","oggi","adesso"],ans:2,exp:"'Vandaag' = oggi. 'Morgen' = domani. 'Gisteren' = ieri."},
-  {q:"Come si dice 'Che ore sono?'?",opts:["Hoeveel kost het?","Hoe laat is het?","Hoe oud ben jij?","Hoe gaat het?"],ans:1,exp:"'Hoe laat is het?' = che ore sono? Letteralmente 'come tardi è?'"},
+  {q:"Quanto vale 'vijf'?",opts:["3","4","5","6"],ans:2,exp:"Vijf = 5.",nl:"vijf",emoji:"🖐️"},
+  {q:"'Half drie' significa:",opts:["Le tre e mezza","Le due e mezza","Le tre","Le due"],ans:1,exp:"ATTENZIONE! Half drie = metà prima delle tre = 2:30!",nl:"half drie",emoji:"⏰"},
+  {q:"Come si dice 'lunedì'?",opts:["vrijdag","zondag","maandag","dinsdag"],ans:2,exp:"Maandag = lunedì.",nl:"maandag",emoji:"📅"},
+  {q:"Cosa significa 'vandaag'?",opts:["domani","ieri","oggi","adesso"],ans:2,exp:"'Vandaag' = oggi.",nl:"vandaag",emoji:"📆"},
+  {q:"Come si chiede 'Che ore sono?'?",opts:["Hoeveel kost het?","Hoe laat is het?","Hoe oud ben jij?","Hoe gaat het?"],ans:1,exp:"'Hoe laat is het?' = che ore sono?",nl:"hoe laat is het",emoji:"🕐"},
  ]},
 
 {id:5,title:"Cibo e Bar",sub:"Ordinare e mangiare",icon:"🍽️",tag:"A1.5",
  words:[
-  {nl:"het brood / de kaas",pron:"et broot / de kaas",it:"il pane / il formaggio",ex:"Ik eet brood met kaas."},
-  {nl:"de koffie / het bier",pron:"de kòffie / et bier",it:"il caffè / la birra",ex:"Een koffie en een biertje!"},
-  {nl:"het water / de wijn",pron:"et vaater / de vein",it:"l'acqua / il vino",ex:"Mag ik water, alstublieft?"},
-  {nl:"de vis / het vlees",pron:"de vis / et vlees",it:"il pesce / la carne",ex:"Ik eet geen vlees."},
-  {nl:"lekker",pron:"lekker",it:"buono / delizioso (usatissimo!)",ex:"Dit is heel erg lekker!"},
-  {nl:"ik wil graag...",pron:"ik vil chraach",it:"vorrei...",ex:"Ik wil graag een koffie."},
-  {nl:"de rekening",pron:"de reekening",it:"il conto",ex:"De rekening, alstublieft!"},
-  {nl:"eet smakelijk!",pron:"eet smaak-elik",it:"buon appetito!",ex:"Eet smakelijk!"},
+  {nl:"het brood",pron:"et broot",it:"il pane",ex:"Ik eet brood met kaas.",emoji:"🍞"},
+  {nl:"de kaas",pron:"de kaas",it:"il formaggio",ex:"Nederland is beroemd om de kaas!",emoji:"🧀"},
+  {nl:"de koffie",pron:"de kòffie",it:"il caffè",ex:"Een kop koffie, alstublieft.",emoji:"☕"},
+  {nl:"het bier",pron:"et bier",it:"la birra",ex:"Een biertje, alstublieft!",emoji:"🍺"},
+  {nl:"het water",pron:"et vaater",it:"l'acqua",ex:"Mag ik water?",emoji:"💧"},
+  {nl:"lekker",pron:"lekker",it:"buono / delizioso",ex:"Dit is heel erg lekker!",emoji:"😋"},
+  {nl:"de rekening",pron:"de reekening",it:"il conto",ex:"De rekening, alstublieft!",emoji:"🧾"},
+  {nl:"eet smakelijk",pron:"eet smaak-elik",it:"buon appetito",ex:"Eet smakelijk!",emoji:"🍽️"},
  ],
  phrases:[
-  {nl:"Ik wil graag een kop koffie.",pron:"Ik vil chraach en kop koffie.",it:"Vorrei una tazza di caffè.",ctx:"Al bar"},
-  {nl:"De rekening, alstublieft.",pron:"De reekening, alstu-bleeft.",it:"Il conto, per favore.",ctx:"Al ristorante"},
-  {nl:"Eet smakelijk! Proost!",pron:"Eet smaak-elik! Proost!",it:"Buon appetito! Salute!",ctx:"A tavola"},
+  {nl:"Ik wil graag een kop koffie.",pron:"Ik vil chraach en kop koffie.",it:"Vorrei una tazza di caffè.",ctx:"Al bar",emoji:"☕"},
+  {nl:"De rekening, alstublieft.",pron:"De reekening, alstu-bleeft.",it:"Il conto, per favore.",ctx:"Al ristorante",emoji:"🧾"},
+  {nl:"Eet smakelijk! Proost!",pron:"Eet smaak-elik! Proost!",it:"Buon appetito! Salute!",ctx:"A tavola",emoji:"🍽️"},
  ],
  quiz:[
-  {q:"Cosa significa 'lekker'?",opts:["caro","delizioso / buono","piccante","salato"],ans:1,exp:"'Lekker' è una delle parole più usate in olandese. Significa buono, delizioso, ma anche 'bello' in senso generico!"},
-  {q:"Come si ordina 'vorrei una birra'?",opts:["Ik heb een bier","Ik eet een bier","Ik wil graag een bier","Ik drink een bier"],ans:2,exp:"'Ik wil graag...' = vorrei... Letteralmente 'voglio volentieri'. Essenziale al bar!"},
-  {q:"'De rekening, alstublieft' significa:",opts:["Un tavolo per due, prego","Il menù, prego","Il conto, per favore","Ancora un giro, prego"],ans:2,exp:"'De rekening' = il conto. 'Alstublieft' = per favore (formale)."},
-  {q:"Come si dice 'buon appetito'?",opts:["Proost!","Slaap lekker!","Eet smakelijk!","Welkom!"],ans:2,exp:"'Eet smakelijk!' = buon appetito! 'Proost!' = salute (brindisi). Entrambi utilissimi!"},
-  {q:"Quale articolo usa 'bier' (birra)?",opts:["de","een","het","di"],ans:2,exp:"'Het bier' = la birra. Ma nel parlato si dice spesso 'een biertje' (il diminutivo!)."},
+  {q:"Cosa significa 'lekker'?",opts:["caro","delizioso / buono","piccante","salato"],ans:1,exp:"'Lekker' = delizioso, buono. Una delle parole più usate!",nl:"lekker",emoji:"😋"},
+  {q:"Come si ordina 'vorrei una birra'?",opts:["Ik heb een bier","Ik eet een bier","Ik wil graag een bier","Ik drink een bier"],ans:2,exp:"'Ik wil graag...' = vorrei...",nl:"ik wil graag een bier",emoji:"🍺"},
+  {q:"'De rekening' significa:",opts:["il menù","il tavolo","il conto","il bicchiere"],ans:2,exp:"'De rekening' = il conto.",nl:"de rekening",emoji:"🧾"},
+  {q:"Come si dice 'buon appetito'?",opts:["Proost!","Slaap lekker!","Eet smakelijk!","Welkom!"],ans:2,exp:"'Eet smakelijk!' = buon appetito!",nl:"eet smakelijk",emoji:"🍽️"},
+  {q:"Quale articolo usa 'bier'?",opts:["de","een","het","di"],ans:2,exp:"'Het bier' = la birra.",nl:"het bier",emoji:"🍺"},
  ]},
 
 {id:6,title:"In Città",sub:"Orientarsi e spostarsi",icon:"🏙️",tag:"A1.6",
  words:[
-  {nl:"de stad / het centrum",pron:"de stad / et sèntrum",it:"la città / il centro",ex:"Ik woon in het centrum."},
-  {nl:"de fiets",pron:"de fiets",it:"la bicicletta",ex:"Ik ga met de fiets naar werk."},
-  {nl:"de bus / de trein",pron:"de bus / de trein",it:"l'autobus / il treno",ex:"De trein naar Utrecht."},
-  {nl:"links / rechts",pron:"links / rechts",it:"a sinistra / a destra",ex:"Sla links af bij het licht."},
-  {nl:"rechtdoor",pron:"recht-door",it:"dritto / sempre dritto",ex:"Ga rechtdoor en dan rechts."},
-  {nl:"dichtbij / ver",pron:"dicht-bei / ver",it:"vicino / lontano",ex:"Het station is dichtbij!"},
-  {nl:"waar is...?",pron:"vaar is...?",it:"dov'è...?",ex:"Waar is het station?"},
-  {nl:"de winkel",pron:"de vinkel",it:"il negozio",ex:"De supermarkt is op de hoek."},
+  {nl:"de stad",pron:"de stad",it:"la città",ex:"Amsterdam is een mooie stad.",emoji:"🏙️"},
+  {nl:"de fiets",pron:"de fiets",it:"la bicicletta",ex:"Ik ga met de fiets.",emoji:"🚲"},
+  {nl:"de bus",pron:"de bus",it:"l'autobus",ex:"De bus naar Utrecht.",emoji:"🚌"},
+  {nl:"de trein",pron:"de trein",it:"il treno",ex:"De trein is laat.",emoji:"🚂"},
+  {nl:"links",pron:"links",it:"a sinistra",ex:"Sla links af.",emoji:"◀️"},
+  {nl:"rechts",pron:"rechts",it:"a destra",ex:"Sla rechts af.",emoji:"▶️"},
+  {nl:"rechtdoor",pron:"recht-door",it:"dritto",ex:"Ga rechtdoor!",emoji:"⬆️"},
+  {nl:"dichtbij",pron:"dicht-bei",it:"vicino",ex:"Het is dichtbij!",emoji:"📍"},
  ],
  phrases:[
-  {nl:"Waar is het centraal station?",pron:"Vaar is et sen-traal sta-syon?",it:"Dov'è la stazione centrale?",ctx:"Orientarsi in città"},
-  {nl:"Rechtdoor en dan links.",pron:"Recht-door en dan links.",it:"Dritto e poi a sinistra.",ctx:"Dare indicazioni"},
-  {nl:"Is het ver? Nee, dichtbij!",pron:"Is et ver? Nee, dicht-bei!",it:"È lontano? No, è vicino!",ctx:"Chiedere la distanza"},
+  {nl:"Waar is het station?",pron:"Vaar is et sta-syon?",it:"Dov'è la stazione?",ctx:"Orientarsi",emoji:"🚂"},
+  {nl:"Rechtdoor en dan links.",pron:"Recht-door en dan links.",it:"Dritto e poi a sinistra.",ctx:"Dare indicazioni",emoji:"🗺️"},
+  {nl:"Is het ver? Nee, dichtbij!",pron:"Is et ver? Nee, dicht-bei!",it:"È lontano? No, è vicino!",ctx:"Distanza",emoji:"📍"},
  ],
  quiz:[
-  {q:"Come si dice 'la bicicletta'?",opts:["de bus","de trein","de fiets","de auto"],ans:2,exp:"'De fiets' = la bicicletta. In Olanda ci sono più bici che persone — impara subito questa parola!"},
-  {q:"'Rechtdoor' significa:",opts:["a destra","a sinistra","dritto","indietro"],ans:2,exp:"'Rechtdoor' = diritto/sempre dritto. 'Rechts' = a destra (simile!), 'links' = a sinistra."},
-  {q:"Come si chiede 'Dov'è la stazione?'?",opts:["Is het ver?","Mag ik rijden?","Waar is het station?","Hoe kom ik hier?"],ans:2,exp:"'Waar is het station?' = dov'è la stazione? 'Waar' = dove."},
-  {q:"Cosa significa 'dichtbij'?",opts:["lontano","vicino","al semaforo","a destra"],ans:1,exp:"'Dichtbij' = vicino. 'Ver' = lontano. Utili entrambi quando chiedi indicazioni!"},
-  {q:"Come si dice 'il negozio'?",opts:["de stad","de winkel","de straat","de bus"],ans:1,exp:"'De winkel' = il negozio. 'Supermarkt' = supermercato. 'Bakker' = panettiere."},
+  {q:"Come si dice 'la bicicletta'?",opts:["de bus","de trein","de fiets","de auto"],ans:2,exp:"'De fiets' = la bicicletta. In Olanda ci sono più bici che persone!",nl:"de fiets",emoji:"🚲"},
+  {q:"'Rechtdoor' significa:",opts:["a destra","a sinistra","dritto","indietro"],ans:2,exp:"'Rechtdoor' = diritto.",nl:"rechtdoor",emoji:"⬆️"},
+  {q:"Come si chiede 'dov'è la stazione?'?",opts:["Is het ver?","Mag ik rijden?","Waar is het station?","Hoe kom ik hier?"],ans:2,exp:"'Waar is het station?' = dov'è la stazione?",nl:"waar is het station",emoji:"🚂"},
+  {q:"Cosa significa 'dichtbij'?",opts:["lontano","vicino","al semaforo","a destra"],ans:1,exp:"'Dichtbij' = vicino. 'Ver' = lontano.",nl:"dichtbij",emoji:"📍"},
+  {q:"Come si dice 'a sinistra'?",opts:["rechtdoor","rechts","links","terug"],ans:2,exp:"'Links' = a sinistra. 'Rechts' = a destra.",nl:"links",emoji:"◀️"},
  ]},
 
 {id:7,title:"La Casa",sub:"Trovare un appartamento",icon:"🏠",tag:"A1.7",
  words:[
-  {nl:"het huis / het appartement",pron:"et hàus / et appartement",it:"la casa / l'appartamento",ex:"Ik zoek een appartement."},
-  {nl:"de kamer / de slaapkamer",pron:"de kaamer / de slaap-kaamer",it:"la stanza / la camera da letto",ex:"Ik zoek een kamer."},
-  {nl:"de keuken / de badkamer",pron:"de keukhen / de bad-kaamer",it:"la cucina / il bagno",ex:"Er is één badkamer."},
-  {nl:"de huur",pron:"de hüür",it:"l'affitto",ex:"Hoeveel is de huur per maand?"},
-  {nl:"vrij / beschikbaar",pron:"vrei / be-schikbaar",it:"libero / disponibile",ex:"Is de kamer nog vrij?"},
-  {nl:"per maand",pron:"per maand",it:"al mese",ex:"De huur is 900 euro per maand."},
-  {nl:"zijn de kosten inbegrepen?",pron:"zein de kosten inbegrepen?",it:"le spese sono incluse?",ex:"Zijn gas en water inbegrepen?"},
-  {nl:"ik wil het huren",pron:"ik vil et hüren",it:"voglio affittarlo",ex:"Ik wil het appartement huren."},
+  {nl:"het huis",pron:"et hàus",it:"la casa",ex:"Ik zoek een huis.",emoji:"🏠"},
+  {nl:"het appartement",pron:"et appartement",it:"l'appartamento",ex:"Ik zoek een appartement.",emoji:"🏢"},
+  {nl:"de kamer",pron:"de kaamer",it:"la stanza",ex:"Een kamer te huur.",emoji:"🛏️"},
+  {nl:"de keuken",pron:"de keukhen",it:"la cucina",ex:"De keuken is groot.",emoji:"🍳"},
+  {nl:"de badkamer",pron:"de bad-kaamer",it:"il bagno",ex:"Er is één badkamer.",emoji:"🛁"},
+  {nl:"de huur",pron:"de hüür",it:"l'affitto",ex:"De huur is 900 euro.",emoji:"💰"},
+  {nl:"vrij",pron:"vrei",it:"libero / disponibile",ex:"Is de kamer nog vrij?",emoji:"✅"},
+  {nl:"zoeken",pron:"zuuken",it:"cercare",ex:"Ik zoek een appartement.",emoji:"🔍"},
  ],
  phrases:[
-  {nl:"Ik zoek een appartement.",pron:"Ik zuk en appartement.",it:"Cerco un appartamento.",ctx:"Agenzia / annunci"},
-  {nl:"Hoeveel is de huur per maand?",pron:"Huveel is de hüür per maand?",it:"Quanto è l'affitto al mese?",ctx:"Informarsi sull'affitto"},
-  {nl:"Zijn gas en water inbegrepen?",pron:"Zein chas en vaater inbegrepen?",it:"Gas e acqua sono inclusi?",ctx:"Prima di firmare"},
+  {nl:"Ik zoek een appartement.",pron:"Ik zuk en appartement.",it:"Cerco un appartamento.",ctx:"Agenzia / annunci",emoji:"🏠"},
+  {nl:"Hoeveel is de huur per maand?",pron:"Huveel is de hüür per maand?",it:"Quanto è l'affitto al mese?",ctx:"Informarsi",emoji:"💰"},
+  {nl:"Zijn gas en water inbegrepen?",pron:"Zein chas en vaater inbegrepen?",it:"Gas e acqua sono inclusi?",ctx:"Prima di firmare",emoji:"📋"},
  ],
  quiz:[
-  {q:"Come si dice 'cerco un appartamento'?",opts:["Ik heb een appartement","Ik koop een appartement","Ik zoek een appartement","Ik verkoop een huis"],ans:2,exp:"'Zoeken' = cercare. 'Ik zoek' = cerco. Fondamentale appena arrivi in Olanda!"},
-  {q:"Cosa significa 'de huur'?",opts:["il garage","il proprietario","l'affitto","il contratto"],ans:2,exp:"'De huur' = l'affitto. 'Huren' = affittare (verbo). 'De huurder' = l'inquilino."},
-  {q:"Come si chiede 'le spese sono incluse?'?",opts:["Is de kamer vrij?","Zijn de kosten inbegrepen?","Hoeveel is de huur?","Wanneer is het beschikbaar?"],ans:1,exp:"'Zijn de kosten inbegrepen?' = le spese sono incluse? Sempre da chiedere prima di firmare!"},
-  {q:"Quale articolo usa 'huis'?",opts:["de","een","het","geen"],ans:2,exp:"'Het huis' = la casa. 'Huis' è un het-woord (nome neutro)."},
-  {q:"Cosa significa 'vrij'?",opts:["caro","piccolo","libero / disponibile","nuovo"],ans:2,exp:"'Vrij' = libero/disponibile. 'Is de kamer nog vrij?' = la stanza è ancora disponibile?"},
+  {q:"Come si dice 'cerco un appartamento'?",opts:["Ik heb","Ik koop","Ik zoek een appartement","Ik verkoop"],ans:2,exp:"'Zoeken' = cercare. 'Ik zoek' = cerco.",nl:"ik zoek een appartement",emoji:"🔍"},
+  {q:"Cosa significa 'de huur'?",opts:["il garage","il proprietario","l'affitto","il contratto"],ans:2,exp:"'De huur' = l'affitto.",nl:"de huur",emoji:"💰"},
+  {q:"'Vrij' significa:",opts:["caro","piccolo","disponibile","nuovo"],ans:2,exp:"'Vrij' = libero/disponibile.",nl:"vrij",emoji:"✅"},
+  {q:"Quale articolo usa 'huis'?",opts:["de","een","het","geen"],ans:2,exp:"'Het huis' = la casa.",nl:"het huis",emoji:"🏠"},
+  {q:"Come si dice 'la cucina'?",opts:["de badkamer","de keuken","de kamer","de gang"],ans:1,exp:"'De keuken' = la cucina.",nl:"de keuken",emoji:"🍳"},
  ]},
 
-{id:8,title:"Grammatica: de/het",sub:"Il segreto degli articoli",icon:"📐",tag:"A1.8",
+{id:8,title:"Articoli",sub:"de, het e i plurali",icon:"📐",tag:"A1.8",
  words:[
-  {nl:"de → nome comune (~75%)",pron:"de",it:"Persone, mestieri, piante, animali",ex:"de man, de vrouw, de auto, de fiets"},
-  {nl:"het → nome neutro (~25%)",pron:"et",it:"Nomi neutri — memorizza!",ex:"het huis, het kind, het boek, het werk"},
-  {nl:"een → articolo indet.",pron:"en",it:"Un/una — uguale per tutti",ex:"een man, een huis, een kind"},
-  {nl:"plurale → sempre DE",pron:"de",it:"Tutti i plurali usano 'de'!",ex:"de mannen, de huizen, de kinderen"},
-  {nl:"naam → namen (plurale -en)",pron:"naamen",it:"plurale più comune: aggiungi -en",ex:"de naam → de namen"},
-  {nl:"tafel → tafels (plurale -s)",pron:"taafels",it:"plurale -s per parole in -el, -er, -en",ex:"de tafel → de tafels"},
-  {nl:"kind → kinderen (irr.)",pron:"kinderen",it:"plurale irregolare — impara a memoria",ex:"het kind → de kinderen"},
-  {nl:"adjettivo + -e",pron:"-e",it:"Aggettivo prende -e tranne: een + het-nome",ex:"de grote man / een groot huis"},
+  {nl:"de",pron:"de",it:"articolo maschile/femminile (~75%)",ex:"de man, de vrouw, de auto",emoji:"📘"},
+  {nl:"het",pron:"et",it:"articolo neutro (~25%)",ex:"het huis, het kind, het boek",emoji:"📗"},
+  {nl:"een",pron:"en",it:"un / una (per tutti)",ex:"een man, een huis, een kind",emoji:"📄"},
+  {nl:"plurale con -en",pron:"-en",it:"plurale più comune",ex:"man → mannen, boek → boeken",emoji:"📚"},
+  {nl:"plurale con -s",pron:"-s",it:"per parole in -el/-er/-en",ex:"tafel → tafels, kamer → kamers",emoji:"📑"},
+  {nl:"kinderen",pron:"kinderen",it:"plurale irregolare di kind",ex:"het kind → de kinderen",emoji:"👨‍👩‍👧‍👦"},
+  {nl:"plurale = sempre DE",pron:"de",it:"tutti i plurali usano DE!",ex:"de huizen, de boeken, de kinderen",emoji:"💡"},
+  {nl:"groot huis / grote man",pron:"chroot / chroote",it:"aggettivo: -e tranne een+het-nome",ex:"een groot huis, de grote man",emoji:"📝"},
  ],
  phrases:[
-  {nl:"De vrouw koopt het boek.",pron:"De vràuw koopt et buk.",it:"La donna compra il libro.",ctx:"de (donna) + het (libro)"},
-  {nl:"De kinderen spelen in het park.",pron:"De kinderen speelen in et park.",it:"I bambini giocano nel parco.",ctx:"Plurale = sempre 'de'!"},
-  {nl:"Het is een groot huis.",pron:"Et is en croot hàus.",it:"È una grande casa.",ctx:"een + het-nome → aggettivo senza -e!"},
+  {nl:"De vrouw koopt het boek.",pron:"De vràuw koopt et buk.",it:"La donna compra il libro.",ctx:"de + het in una frase",emoji:"📘"},
+  {nl:"De kinderen spelen buiten.",pron:"De kinderen speelen bàuten.",it:"I bambini giocano fuori.",ctx:"Plurale = sempre 'de'!",emoji:"👨‍👩‍👧‍👦"},
+  {nl:"Het is een groot huis.",pron:"Et is en croot hàus.",it:"È una grande casa.",ctx:"een + het-nome → senza -e!",emoji:"🏠"},
  ],
  quiz:[
-  {q:"Quale articolo si usa con 'auto' (macchina)?",opts:["het","een","de","di"],ans:2,exp:"'De auto' = la macchina. Auto è un de-woord."},
-  {q:"Quale articolo si usa con 'boek' (libro)?",opts:["de","een","het","gli"],ans:2,exp:"'Het boek' = il libro. 'Boek' è un het-woord — memorizzalo!"},
-  {q:"Qual è il plurale di 'het kind'?",opts:["de kinds","de kinden","de kinderen","het kinderen"],ans:2,exp:"'Kind → kinderen' è irregolare. E nota: al plurale si usa sempre 'de', mai 'het'!"},
-  {q:"Tutti i plurali in olandese usano:",opts:["het","de","een","dipende"],ans:1,exp:"Tutti i plurali olandesi usano sempre 'de', anche se il singolare era 'het'. Grande semplificazione!"},
-  {q:"Come si dice 'una grande casa'?",opts:["een grote huis","een groot huis","het grote huis","de groot huis"],ans:1,exp:"'Een groot huis' — con een + het-nome, l'aggettivo NON prende la -e finale. Eccezione importante!"},
+  {q:"Quale articolo usa 'auto'?",opts:["het","een","de","di"],ans:2,exp:"'De auto' = la macchina.",nl:"de auto",emoji:"🚗"},
+  {q:"Quale articolo usa 'boek'?",opts:["de","een","het","gli"],ans:2,exp:"'Het boek' = il libro.",nl:"het boek",emoji:"📗"},
+  {q:"Plurale di 'het kind'?",opts:["de kinds","de kinden","de kinderen","het kinderen"],ans:2,exp:"Kind → kinderen (irregolare). Al plurale sempre 'de'!",nl:"de kinderen",emoji:"👨‍👩‍👧‍👦"},
+  {q:"Tutti i plurali usano:",opts:["het","de","een","dipende"],ans:1,exp:"Tutti i plurali usano sempre 'de'!",nl:"de",emoji:"💡"},
+  {q:"Come si dice 'una grande casa'?",opts:["een grote huis","een groot huis","het grote huis","de groot huis"],ans:1,exp:"'Een groot huis' — con een+het-nome, aggettivo senza -e!",nl:"een groot huis",emoji:"🏠"},
  ]},
 
 {id:9,title:"La Routine",sub:"La giornata quotidiana",icon:"⏰",tag:"A2.1",
  words:[
-  {nl:"opstaan",pron:"op-staan",it:"alzarsi",ex:"Ik sta op om 7 uur."},
-  {nl:"douchen",pron:"dùschen",it:"fare la doccia",ex:"Elke dag douche ik."},
-  {nl:"het ontbijt",pron:"et ont-beit",it:"la colazione",ex:"Ik ontbijt om 8 uur."},
-  {nl:"werken / thuis werken",pron:"verken / tàus verken",it:"lavorare / lavorare da casa",ex:"Vandaag werk ik thuis."},
-  {nl:"het avondeten",pron:"et aavond-eeten",it:"la cena",ex:"We eten om 18 uur."},
-  {nl:"slapen",pron:"slaapen",it:"dormire",ex:"Ik slaap 8 uur per nacht."},
-  {nl:"elke dag / altijd",pron:"elke dach / alteid",it:"ogni giorno / sempre",ex:"Ik fiets elke dag naar kantoor."},
-  {nl:"wat doe jij vanavond?",pron:"vat du yei van-aavond?",it:"cosa fai stasera?",ex:"Wat doe jij vanavond?"},
+  {nl:"opstaan",pron:"op-staan",it:"alzarsi",ex:"Ik sta op om 7 uur.",emoji:"⏰"},
+  {nl:"douchen",pron:"dùschen",it:"fare la doccia",ex:"Elke dag douche ik.",emoji:"🚿"},
+  {nl:"het ontbijt",pron:"et ont-beit",it:"la colazione",ex:"Ik ontbijt om 8 uur.",emoji:"🥐"},
+  {nl:"werken",pron:"verken",it:"lavorare",ex:"Ik werk van 9 tot 17 uur.",emoji:"💻"},
+  {nl:"thuis werken",pron:"tàus verken",it:"lavorare da casa",ex:"Vandaag werk ik thuis.",emoji:"🏠"},
+  {nl:"het avondeten",pron:"et aavond-eeten",it:"la cena",ex:"We eten om 18 uur.",emoji:"🍽️"},
+  {nl:"slapen",pron:"slaapen",it:"dormire",ex:"Ik slaap 8 uur per nacht.",emoji:"😴"},
+  {nl:"elke dag",pron:"elke dach",it:"ogni giorno",ex:"Ik fiets elke dag.",emoji:"🔄"},
  ],
  phrases:[
-  {nl:"Ik sta op om 7 uur.",pron:"Ik staa op om zeeven üür.",it:"Mi alzo alle 7.",ctx:"Parlare della routine"},
-  {nl:"Vandaag werk ik thuis.",pron:"Vandaach verk ik tàus.",it:"Oggi lavoro da casa.",ctx:"Comunicare ai colleghi"},
-  {nl:"Wat doe jij vanavond?",pron:"Vat du yei van-aavond?",it:"Cosa fai stasera?",ctx:"Conversazione informale"},
+  {nl:"Ik sta op om 7 uur.",pron:"Ik staa op om zeeven üür.",it:"Mi alzo alle 7.",ctx:"Parlare della routine",emoji:"⏰"},
+  {nl:"Vandaag werk ik thuis.",pron:"Vandaach verk ik tàus.",it:"Oggi lavoro da casa.",ctx:"Ai colleghi",emoji:"💻"},
+  {nl:"Wat doe jij vanavond?",pron:"Vat du yei van-aavond?",it:"Cosa fai stasera?",ctx:"Conversazione",emoji:"🌆"},
  ],
  quiz:[
-  {q:"Cosa significa 'opstaan'?",opts:["dormire","mangiare","alzarsi","lavorare"],ans:2,exp:"'Opstaan' = alzarsi. 'Ik sta op' = mi alzo. I verbi separabili si dividono nella frase!"},
-  {q:"Come si dice 'lavoro da casa'?",opts:["Ik werk in kantoor","Ik werk thuis","Ik slaap thuis","Ik eet thuis"],ans:1,exp:"'Ik werk thuis' = lavoro da casa. Molto comune in Olanda dove lo smart working è diffusissimo!"},
-  {q:"Cosa significa 'elke dag'?",opts:["ogni settimana","ogni ora","ogni giorno","ogni mese"],ans:2,exp:"'Elke dag' = ogni giorno. 'Elke week' = ogni settimana. 'Elke maand' = ogni mese."},
-  {q:"Come si dice 'la colazione'?",opts:["avondeten","ontbijt","lunch","diner"],ans:1,exp:"'Ontbijt' = colazione. 'Avondeten' = cena. 'Lunch' = pranzo (uguale all'inglese!)."},
-  {q:"Come si chiede 'cosa fai stasera?'?",opts:["Hoe gaat het vanavond?","Wat doe jij vanavond?","Waar ben jij vanavond?","Kom jij vanavond?"],ans:1,exp:"'Wat doe jij vanavond?' = cosa fai stasera? 'Wat' = cosa, 'doe' = fai, 'vanavond' = stasera."},
+  {q:"Cosa significa 'opstaan'?",opts:["dormire","mangiare","alzarsi","lavorare"],ans:2,exp:"'Opstaan' = alzarsi.",nl:"opstaan",emoji:"⏰"},
+  {q:"Come si dice 'lavoro da casa'?",opts:["Ik werk in kantoor","Ik werk thuis","Ik slaap thuis","Ik eet thuis"],ans:1,exp:"'Ik werk thuis' = lavoro da casa.",nl:"ik werk thuis",emoji:"🏠"},
+  {q:"'Elke dag' significa:",opts:["ogni settimana","ogni ora","ogni giorno","ogni mese"],ans:2,exp:"'Elke dag' = ogni giorno.",nl:"elke dag",emoji:"🔄"},
+  {q:"Come si dice 'la colazione'?",opts:["avondeten","ontbijt","lunch","diner"],ans:1,exp:"'Ontbijt' = colazione.",nl:"ontbijt",emoji:"🥐"},
+  {q:"Cosa significa 'slapen'?",opts:["mangiare","lavorare","dormire","correre"],ans:2,exp:"'Slapen' = dormire.",nl:"slapen",emoji:"😴"},
  ]},
 
 {id:10,title:"Il Lavoro",sub:"Professioni e ufficio",icon:"💼",tag:"A2.2",
  words:[
-  {nl:"het werk / de baan",pron:"et verk / de baan",it:"il lavoro / il posto di lavoro",ex:"Ik zoek een nieuwe baan."},
-  {nl:"het kantoor",pron:"et kan-toor",it:"l'ufficio",ex:"Ik ga naar kantoor."},
-  {nl:"de collega / de baas",pron:"de kollega / de baas",it:"il/la collega / il capo",ex:"Mijn collega's zijn aardig."},
-  {nl:"de vergadering",pron:"de ver-chadering",it:"la riunione",ex:"Ik heb een vergadering."},
-  {nl:"het salaris",pron:"et salaaris",it:"lo stipendio",ex:"Wat is het salaris?"},
-  {nl:"solliciteren",pron:"sollis-i-teren",it:"candidarsi / fare domanda",ex:"Ik wil solliciteren."},
-  {nl:"de deadline / het cv",pron:"de dedlein / et see-vee",it:"la scadenza / il curriculum",ex:"Stuur je cv naar ons."},
-  {nl:"wanneer kan ik beginnen?",pron:"vaneer kan ik be-chinnen?",it:"quando posso iniziare?",ex:"Wanneer kan ik beginnen?"},
+  {nl:"de baan",pron:"de baan",it:"il posto di lavoro",ex:"Ik zoek een nieuwe baan.",emoji:"💼"},
+  {nl:"het kantoor",pron:"et kan-toor",it:"l'ufficio",ex:"Ik ga naar kantoor.",emoji:"🏢"},
+  {nl:"de collega",pron:"de kollega",it:"il/la collega",ex:"Mijn collega's zijn aardig.",emoji:"👔"},
+  {nl:"de vergadering",pron:"de ver-chadering",it:"la riunione",ex:"Ik heb een vergadering.",emoji:"📊"},
+  {nl:"het salaris",pron:"et salaaris",it:"lo stipendio",ex:"Wat is het salaris?",emoji:"💶"},
+  {nl:"solliciteren",pron:"sollis-i-teren",it:"candidarsi",ex:"Ik wil solliciteren.",emoji:"📝"},
+  {nl:"het cv",pron:"et see-vee",it:"il curriculum",ex:"Stuur je cv naar ons.",emoji:"📋"},
+  {nl:"de deadline",pron:"de dedlein",it:"la scadenza",ex:"De deadline is vrijdag.",emoji:"⏳"},
  ],
  phrases:[
-  {nl:"Ik zoek een nieuwe baan.",pron:"Ik zuk en nieuwe baan.",it:"Cerco un nuovo lavoro.",ctx:"Colloquio / LinkedIn"},
-  {nl:"Wat is het salaris?",pron:"Vat is et salaaris?",it:"Qual è lo stipendio?",ctx:"Colloquio di lavoro"},
-  {nl:"Ik heb een vergadering om 10 uur.",pron:"Ik heb en ver-chadering om tien üür.",it:"Ho una riunione alle 10.",ctx:"Sul posto di lavoro"},
+  {nl:"Ik zoek een nieuwe baan.",pron:"Ik zuk en nieuwe baan.",it:"Cerco un nuovo lavoro.",ctx:"Colloquio / LinkedIn",emoji:"💼"},
+  {nl:"Wat is het salaris?",pron:"Vat is et salaaris?",it:"Qual è lo stipendio?",ctx:"Colloquio di lavoro",emoji:"💶"},
+  {nl:"Ik heb een vergadering om 10 uur.",pron:"Ik heb en ver-chadering om tien üür.",it:"Ho una riunione alle 10.",ctx:"Sul posto di lavoro",emoji:"📊"},
  ],
  quiz:[
-  {q:"Come si dice 'cerco un lavoro'?",opts:["Ik heb een baan","Ik zoek een baan","Ik verlaat de baan","Ik werk goed"],ans:1,exp:"'Ik zoek een baan' = cerco un lavoro. 'Zoeken' = cercare."},
-  {q:"Cosa significa 'de vergadering'?",opts:["lo stipendio","la pausa pranzo","la riunione","il contratto"],ans:2,exp:"'De vergadering' = la riunione. 'Ik heb een vergadering' = ho una riunione."},
-  {q:"Come si dice 'lo stipendio'?",opts:["het cv","het salaris","de baan","het kantoor"],ans:1,exp:"'Het salaris' = lo stipendio. Simile all'italiano! 'Wat is het salaris?' = qual è lo stipendio?"},
-  {q:"Cosa significa 'solliciteren'?",opts:["lavorare","candidarsi / fare domanda","licenziarsi","promuoversi"],ans:1,exp:"'Solliciteren' = candidarsi/fare domanda di lavoro. 'Een sollicitatiegesprek' = un colloquio."},
-  {q:"Come si chiede 'quando posso iniziare?'?",opts:["Wat is het salaris?","Hoeveel uur per week?","Wanneer kan ik beginnen?","Is er een proeftijd?"],ans:2,exp:"'Wanneer kan ik beginnen?' = quando posso iniziare? 'Wanneer' = quando."},
+  {q:"Come si dice 'cerco un lavoro'?",opts:["Ik heb een baan","Ik zoek een baan","Ik verlaat de baan","Ik werk goed"],ans:1,exp:"'Ik zoek een baan' = cerco un lavoro.",nl:"ik zoek een baan",emoji:"💼"},
+  {q:"Cosa significa 'de vergadering'?",opts:["lo stipendio","la pausa","la riunione","il contratto"],ans:2,exp:"'De vergadering' = la riunione.",nl:"de vergadering",emoji:"📊"},
+  {q:"Come si dice 'lo stipendio'?",opts:["het cv","het salaris","de baan","het kantoor"],ans:1,exp:"'Het salaris' = lo stipendio.",nl:"het salaris",emoji:"💶"},
+  {q:"Cosa significa 'solliciteren'?",opts:["lavorare","candidarsi","licenziarsi","promuoversi"],ans:1,exp:"'Solliciteren' = candidarsi.",nl:"solliciteren",emoji:"📝"},
+  {q:"Come si chiede 'quando posso iniziare?'?",opts:["Wat is het salaris?","Hoeveel uur per week?","Wanneer kan ik beginnen?","Is er een proeftijd?"],ans:2,exp:"'Wanneer kan ik beginnen?' = quando posso iniziare?",nl:"wanneer kan ik beginnen",emoji:"🤝"},
  ]},
 ];
 
-// ════════════════════════════════════════════
-// STATE
-// ════════════════════════════════════════════
-function load(){try{return JSON.parse(localStorage.getItem('kk_v2')||'{}')}catch(e){return{}}}
-function save(){localStorage.setItem('kk_v2',JSON.stringify(S))}
 
-const _s = load();
+// ═══════════════════════════════════════════════
+// AUDIO — TTS + SOUND EFFECTS
+// ═══════════════════════════════════════════════
+let _audioCtx = null;
+function getAudioCtx(){
+  if(!_audioCtx){
+    try { _audioCtx = new (window.AudioContext||window.webkitAudioContext)(); } catch(e){}
+  }
+  return _audioCtx;
+}
+
+function speakDutch(text, onEnd){
+  if(!text) return;
+  try {
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'nl-NL';
+    u.rate = 0.88;
+    u.pitch = 1;
+    // Try to pick a Dutch voice if available
+    const voices = window.speechSynthesis.getVoices();
+    const nlVoice = voices.find(v=>v.lang.startsWith('nl'));
+    if(nlVoice) u.voice = nlVoice;
+    if(onEnd) u.onend = onEnd;
+    window.speechSynthesis.speak(u);
+  } catch(e){ if(onEnd) onEnd(); }
+}
+// Pre-load voices when they become available
+if(window.speechSynthesis){
+  window.speechSynthesis.onvoiceschanged = ()=>{ window.speechSynthesis.getVoices(); };
+}
+
+function playTone(type){
+  try {
+    const ctx = getAudioCtx();
+    if(!ctx) return;
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
+    const now = ctx.currentTime;
+    if(type==='correct'){
+      o.type='sine'; o.frequency.value=880;
+      g.gain.setValueAtTime(0,now);
+      g.gain.linearRampToValueAtTime(0.18,now+0.03);
+      g.gain.exponentialRampToValueAtTime(0.001,now+0.35);
+      o.start(now); o.stop(now+0.36);
+      // Second ping
+      const o2=ctx.createOscillator(), g2=ctx.createGain();
+      o2.connect(g2); g2.connect(ctx.destination);
+      o2.type='sine'; o2.frequency.value=1100;
+      g2.gain.setValueAtTime(0,now+0.12);
+      g2.gain.linearRampToValueAtTime(0.12,now+0.16);
+      g2.gain.exponentialRampToValueAtTime(0.001,now+0.42);
+      o2.start(now+0.12); o2.stop(now+0.44);
+    } else if(type==='wrong'){
+      o.type='sawtooth'; o.frequency.value=220;
+      g.gain.setValueAtTime(0,now);
+      g.gain.linearRampToValueAtTime(0.15,now+0.04);
+      g.gain.exponentialRampToValueAtTime(0.001,now+0.38);
+      o.start(now); o.stop(now+0.4);
+    } else if(type==='flip'){
+      o.type='sine'; o.frequency.value=660;
+      g.gain.setValueAtTime(0,now);
+      g.gain.linearRampToValueAtTime(0.1,now+0.02);
+      g.gain.exponentialRampToValueAtTime(0.001,now+0.18);
+      o.start(now); o.stop(now+0.2);
+    } else if(type==='level'){
+      // Short fanfare
+      [523,659,784].forEach((f,i)=>{
+        const oo=ctx.createOscillator(), gg=ctx.createGain();
+        oo.connect(gg); gg.connect(ctx.destination);
+        oo.type='triangle'; oo.frequency.value=f;
+        const t=now+i*0.12;
+        gg.gain.setValueAtTime(0,t);
+        gg.gain.linearRampToValueAtTime(0.18,t+0.04);
+        gg.gain.exponentialRampToValueAtTime(0.001,t+0.28);
+        oo.start(t); oo.stop(t+0.3);
+      });
+      return;
+    }
+  } catch(e){}
+}
+
+// ═══════════════════════════════════════════════
+// USER PROFILES & STATE
+// ═══════════════════════════════════════════════
+let currentUser = null;
+const USER_PROFILES = {
+  'FRANCESCO': {emoji:'⚔️', color:'#FFD23F'},
+  'ANNALIA':   {emoji:'🔮', color:'#C4A8F0'}
+};
+function otherUser(){return currentUser==='FRANCESCO'?'ANNALIA':'FRANCESCO';}
+function loadUser(name){try{return JSON.parse(localStorage.getItem('kk_v3_'+name)||'{}')}catch(e){return{}}}
+function save(){if(!currentUser)return;localStorage.setItem('kk_v3_'+currentUser,JSON.stringify({xp:S.xp,streak:S.streak,lastStudy:S.lastStudy,completed:S.completed,unlockedAch:S.unlockedAch||[]}))}
+
 const S = {
-  xp: _s.xp||0,
-  streak: _s.streak||0,
-  lastStudy: _s.lastStudy||null,
-  completed: _s.completed||{},  // {id: stars}
-  lvIdx: null,
-  // session
-  phase:0, step:0,
-  flipped:false,
-  revealed:false,
-  answered:false,
-  quizScore:0,
-  mcQs:[],
-  timerSec:600,
-  timerInt:null,
+  xp:0, streak:0, lastStudy:null,
+  completed:{}, unlockedAch:[],
+  lvIdx:null,
+  phase:0, step:0, flipped:false, revealed:false, answered:false,
+  quizScore:0, mcQs:[], listenQs:[],
+  timerSec:600, timerInt:null,
+  currentNL:'',
 };
 
-// ════════════════════════════════════════════
-// UTILITY
-// ════════════════════════════════════════════
+// ═══════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════
 function $id(id){return document.getElementById(id)}
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));$id(id).classList.add('on')}
 function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
-function stars(n){return n>=3?'⭐⭐⭐':n===2?'⭐⭐':n===1?'⭐':'☆☆☆'}
 function starsOf(lvId){return S.completed[lvId]||0}
 function isUnlocked(i){return i===0||!!S.completed[LEVELS[i-1].id]}
 function isDone(i){return !!S.completed[LEVELS[i].id]}
 function xpLevel(){return Math.floor(S.xp/100)+1}
-function xpPct(){return (S.xp%100)}
 
 function updateTopBar(){
   $id('s-num').textContent=S.streak;
   $id('xp-num').textContent=S.xp;
-  const pct=xpPct();
-  $id('xp-bar-fill').style.width=pct+'%';
-  $id('xp-bar-label').textContent=`${S.xp%100}/100 XP — Livello ${xpLevel()}`;
+  const rank=getFantasyRank(S.xp);
+  $id('rank-icon-tb').textContent=rank.icon;
+  updateFantasyHero();
+  renderAchievements();
 }
 
-// ════════════════════════════════════════════
+// ═══════════════════════════════════════════════
+// SPEAK HELPERS
+// ═══════════════════════════════════════════════
+function speakCurrent(){ speakDutch(S.currentNL); animSpeakBtn('fp-speak'); }
+function speakMCWord(){ speakDutch($id('mc-word').textContent); animSpeakBtn('mc-speak'); }
+function speakQuizWord(){ speakDutch($id('qz-word').textContent); animSpeakBtn('qz-speak'); }
+function speakPhraseNL(){ speakDutch($id('pp-nl').textContent); }
+function playListenWord(){
+  const q = S.listenQs[S.step];
+  if(!q) return;
+  const btn = $id('ls-play-btn');
+  btn.classList.add('playing');
+  speakDutch(q.nl, ()=>{ btn.classList.remove('playing'); });
+}
+
+function animSpeakBtn(id){
+  const btn=$id(id);
+  if(!btn) return;
+  btn.classList.add('playing');
+  setTimeout(()=>btn.classList.remove('playing'), 800);
+}
+
+// ═══════════════════════════════════════════════
 // HOME / MAP
-// ════════════════════════════════════════════
+// ═══════════════════════════════════════════════
 function goHome(){
   clearTimer();
   updateTopBar();
@@ -677,51 +1085,49 @@ function renderMap(){
     }
     const node=document.createElement('div');
     node.className='lv-node'+(done?' done':cur?' current':!unlocked?' locked':'');
-    let badge=cur&&i>0?'<div class="new-badge">NUOVO</div>':'';
-    let stHtml=done?`<div class="lv-stars">${stars(st)}</div>`:'';
-    let right=!unlocked?`<div class="lv-lock">🔒</div>`:`<div class="lv-arr">→</div>`;
-    node.innerHTML=`${badge}
+    node.innerHTML=`
+      ${cur&&i>0?'<div class="new-badge">NUOVO</div>':''}
       <div class="lv-icon">${lv.icon}</div>
       <div class="lv-info">
         <div class="lv-tag">${lv.tag}</div>
         <div class="lv-title">${lv.title}</div>
         <div class="lv-sub">${lv.sub}</div>
-        ${stHtml}
-      </div>${right}`;
+        ${done?`<div class="lv-stars">${'⭐'.repeat(st)+'☆'.repeat(3-st)}</div>`:''}
+      </div>
+      ${!unlocked?'<div class="lv-lock">🔒</div>':'<div class="lv-arr">→</div>'}`;
     if(unlocked) node.onclick=()=>openLevel(i);
     map.appendChild(node);
   });
-  setTimeout(()=>{const cur=document.querySelector('.lv-node.current');if(cur)cur.scrollIntoView({behavior:'smooth',block:'center'})},80);
+  setTimeout(()=>{const c=document.querySelector('.lv-node.current');if(c)c.scrollIntoView({behavior:'smooth',block:'center'})},80);
 }
 
-// ════════════════════════════════════════════
-// OPEN LEVEL INTRO
-// ════════════════════════════════════════════
+// ═══════════════════════════════════════════════
+// INTRO
+// ═══════════════════════════════════════════════
 function openLevel(i){
   S.lvIdx=i;
   const lv=LEVELS[i];
   $id('i-icon').textContent=lv.icon;
-  $id('i-tag').textContent=lv.tag+' — Lezione '+(i+1)+' di '+LEVELS.length;
+  $id('i-tag').textContent=lv.tag+' — Lezione '+(i+1)+'/'+LEVELS.length;
   $id('i-title').textContent=lv.title;
   $id('i-sub').textContent=lv.sub;
-  $id('i-wcount').textContent=lv.words.length+' nuove parole con pronuncia';
+  $id('i-wcount').textContent=lv.words.length+' parole con immagine e pronuncia audio';
   $id('i-pcount').textContent=lv.phrases.length+' frasi pratiche contestualizzate';
-  const dn=$id('i-done-note');
-  dn.style.display=isDone(i)?'block':'none';
+  $id('i-done-note').style.display=isDone(i)?'block':'none';
   show('screen-intro');
 }
 
-// ════════════════════════════════════════════
+// ═══════════════════════════════════════════════
 // SESSION
-// ════════════════════════════════════════════
+// ═══════════════════════════════════════════════
 function startSession(){
   S.phase=0; S.step=0; S.flipped=false; S.revealed=false;
   S.answered=false; S.quizScore=0; S.timerSec=600;
   S.mcQs=buildMCQ();
+  S.listenQs=buildListenQ();
   startFlash();
 }
 
-// Timer
 function startTimer(elId){
   clearTimer();
   S.timerInt=setInterval(()=>{
@@ -734,79 +1140,89 @@ function startTimer(elId){
 }
 function clearTimer(){if(S.timerInt){clearInterval(S.timerInt);S.timerInt=null;}}
 
-// ── PHASE 0: FLASHCARDS ──
+// ── FLASHCARDS ──
 function startFlash(){
   S.phase=0; S.step=0; S.flipped=false;
   show('screen-flash');
   startTimer('fp-timer');
   renderFlash();
 }
+
 function renderFlash(){
   const ws=LEVELS[S.lvIdx].words, w=ws[S.step];
+  S.currentNL = w.nl;
   $id('fp-bar').style.width=Math.round(S.step/ws.length*100)+'%';
-  // dots
   const d=$id('fp-dots');
   d.innerHTML=ws.map((_,i)=>`<div class="f-dot${i===S.step?' active':i<S.step?' done':''}"></div>`).join('');
-  // card
+  $id('fp-emoji').textContent=w.emoji||'📖';
   $id('fp-card').className='flash-card';
   $id('fp-nl').textContent=w.nl;
   $id('fp-pron').textContent='/ '+w.pron+' /';
   $id('fp-it').textContent='🇮🇹 '+w.it;
-  $id('fp-ex').textContent='📌 Es: '+w.ex;
+  $id('fp-ex').textContent='📌 '+w.ex;
   $id('fp-it').style.display='none';
   $id('fp-ex').style.display='none';
   $id('fp-tap').style.display='block';
   S.flipped=false;
-  const last=S.step>=ws.length-1;
-  $id('fp-fwd').textContent=last?'Agli esercizi →':'Avanti →';
+  $id('fp-fwd').textContent=S.step>=ws.length-1?'Agli esercizi →':'Avanti →';
+  // Auto-speak after brief delay
+  setTimeout(()=>speakDutch(w.nl), 300);
 }
+
 function flipCard(){
   if(S.flipped) return;
   S.flipped=true;
+  playTone('flip');
   $id('fp-card').classList.add('flipped');
   $id('fp-it').style.display='block';
   $id('fp-ex').style.display='block';
   $id('fp-tap').style.display='none';
+  // Speak again on flip
+  speakDutch(S.currentNL);
 }
+
 function flashNav(d){
   const ws=LEVELS[S.lvIdx].words;
   if(d>0){
     S.step++;
     if(S.step>=ws.length){startMC();return;}
-  } else {
-    if(S.step>0) S.step--;
-  }
+  } else { if(S.step>0) S.step--; }
   renderFlash();
 }
 
-// ── PHASE 1: MULTIPLE CHOICE (dynamic) ──
+// ── MULTIPLE CHOICE ──
 function buildMCQ(){
   const ws=LEVELS[S.lvIdx].words;
   const pool=shuffle(ws).slice(0,Math.min(4,ws.length));
   return pool.map(w=>{
     const wrong=shuffle(ws.filter(x=>x.it!==w.it)).slice(0,3).map(x=>x.it);
     const opts=shuffle([w.it,...wrong]);
-    return {type:'nl_it',word:w.nl,pron:w.pron,opts,correct:w.it,q:'Cosa significa questa parola?'};
+    return {word:w.nl, pron:w.pron, emoji:w.emoji||'📖', opts, correct:w.it};
   });
 }
+
 function startMC(){
   S.phase=1; S.step=0; S.answered=false;
   show('screen-mc');
-  $id('mc-phase-label').textContent='🔍 Riconosci la parola';
   renderMC();
 }
+
 function renderMC(){
   const q=S.mcQs[S.step], tot=S.mcQs.length;
   $id('mc-bar').style.width=Math.round(S.step/tot*100)+'%';
   $id('mc-right').textContent=(S.step+1)+'/'+tot;
-  $id('mc-qlabel').textContent=q.q;
+  $id('mc-qlabel').textContent='Cosa significa questa parola olandese?';
   $id('mc-word').textContent=q.word;
   $id('mc-pron').textContent='/ '+q.pron+' /';
+  $id('mc-img').textContent=q.emoji;
   $id('mc-opts').innerHTML=q.opts.map((o,i)=>`<button class="mc-opt" onclick="selectMC(${i})">${o}</button>`).join('');
   $id('mc-fb').className='mc-fb';
   $id('mc-cont').className='btn-continue';
   S.answered=false;
+  // Auto-speak
+  setTimeout(()=>speakDutch(q.word), 200);
 }
+
 function selectMC(i){
   if(S.answered) return; S.answered=true;
   const q=S.mcQs[S.step];
@@ -815,29 +1231,88 @@ function selectMC(i){
   const ok=q.opts[i]===q.correct;
   btns[i].classList.add(ok?'ok':'no');
   if(!ok){const ci=q.opts.indexOf(q.correct);if(ci>=0)btns[ci].classList.add('ok');}
+  playTone(ok?'correct':'wrong');
   const fb=$id('mc-fb');
   fb.className='mc-fb show '+(ok?'ok':'no');
   fb.textContent=(ok?'✓ Esatto! ':'✗ Sbagliato. ')+q.word+' = '+q.correct;
   $id('mc-cont').className='btn-continue show';
 }
+
 function nextMC(){
   S.step++;
-  if(S.step>=S.mcQs.length){startPhrase();return;}
+  if(S.step>=S.mcQs.length){startListen();return;}
   renderMC();
 }
 
-// ── PHASE 2: PHRASES ──
+// ── LISTEN EXERCISE ──
+function buildListenQ(){
+  const ws=LEVELS[S.lvIdx].words;
+  const pool=shuffle(ws).slice(0,3);
+  return pool.map(w=>{
+    const wrong=shuffle(ws.filter(x=>x.it!==w.it)).slice(0,3).map(x=>x.it);
+    const opts=shuffle([w.it,...wrong]);
+    return {nl:w.nl, emoji:w.emoji||'🎧', opts, correct:w.it};
+  });
+}
+
+function startListen(){
+  S.phase=2; S.step=0; S.answered=false;
+  show('screen-listen');
+  renderListen();
+}
+
+function renderListen(){
+  const q=S.listenQs[S.step], tot=S.listenQs.length;
+  $id('ls-bar').style.width=Math.round(S.step/tot*100)+'%';
+  $id('ls-right').textContent=(S.step+1)+'/'+tot;
+  $id('ls-emoji').textContent=q.emoji;
+  $id('ls-opts').innerHTML=q.opts.map((o,i)=>`<button class="mc-opt" onclick="selectListen(${i})">${o}</button>`).join('');
+  $id('ls-fb').className='mc-fb';
+  $id('ls-cont').className='btn-continue';
+  S.answered=false;
+  // Auto-play after 400ms
+  setTimeout(()=>{
+    const btn=$id('ls-play-btn');
+    btn.classList.add('playing');
+    speakDutch(q.nl, ()=>btn.classList.remove('playing'));
+  }, 400);
+}
+
+function selectListen(i){
+  if(S.answered) return; S.answered=true;
+  const q=S.listenQs[S.step];
+  const btns=document.querySelectorAll('#ls-opts .mc-opt');
+  btns.forEach(b=>b.disabled=true);
+  const ok=q.opts[i]===q.correct;
+  btns[i].classList.add(ok?'ok':'no');
+  if(!ok){const ci=q.opts.indexOf(q.correct);if(ci>=0)btns[ci].classList.add('ok');}
+  playTone(ok?'correct':'wrong');
+  const fb=$id('ls-fb');
+  fb.className='mc-fb show '+(ok?'ok':'no');
+  fb.textContent=(ok?'✓ Esatto! ':'✗ La parola era: ')+q.nl+' = '+q.correct;
+  $id('ls-cont').className='btn-continue show';
+}
+
+function nextListen(){
+  S.step++;
+  if(S.step>=S.listenQs.length){startPhrase();return;}
+  renderListen();
+}
+
+// ── PHRASES ──
 function startPhrase(){
-  S.phase=2; S.step=0; S.revealed=false;
+  S.phase=3; S.step=0; S.revealed=false;
   show('screen-phrase');
   renderPhrase();
 }
+
 function renderPhrase(){
   const ps=LEVELS[S.lvIdx].phrases, p=ps[S.step];
   $id('pp-bar').style.width=Math.round(S.step/ps.length*100)+'%';
   $id('pp-right').textContent=(S.step+1)+'/'+ps.length;
   $id('pp-num').textContent='Frase '+(S.step+1)+' di '+ps.length;
   $id('pp-ctx').textContent=p.ctx;
+  $id('pp-emoji').textContent=p.emoji||'💬';
   $id('pp-nl').textContent=p.nl;
   $id('pp-pron').textContent='/ '+p.pron+' /';
   $id('pp-it').textContent=p.it;
@@ -845,42 +1320,49 @@ function renderPhrase(){
   $id('pp-revbtn').style.display='block';
   S.revealed=false;
   $id('pp-fwd').textContent=S.step>=ps.length-1?'Al quiz →':'Avanti →';
+  setTimeout(()=>speakDutch(p.nl), 400);
 }
+
 function revealPhrase(){
   $id('pp-itbox').className='phrase-it-box show';
   $id('pp-revbtn').style.display='none';
   S.revealed=true;
 }
+
 function phraseNav(d){
   const ps=LEVELS[S.lvIdx].phrases;
   if(d>0){
     S.step++;
     if(S.step>=ps.length){startQuiz();return;}
-  } else {
-    if(S.step>0) S.step--;
-  }
+  } else { if(S.step>0) S.step--; }
   renderPhrase();
 }
 
-// ── PHASE 3: QUIZ ──
+// ── QUIZ ──
 function startQuiz(){
-  S.phase=3; S.step=0; S.quizScore=0; S.answered=false;
+  S.phase=4; S.step=0; S.quizScore=0; S.answered=false;
   show('screen-quiz');
   renderQuiz();
 }
+
 function renderQuiz(){
   const qs=LEVELS[S.lvIdx].quiz, q=qs[S.step], tot=qs.length;
   $id('qz-bar').style.width=Math.round(S.step/tot*100)+'%';
   $id('qz-score').textContent=S.quizScore+'/'+tot;
   $id('qz-qlabel').textContent=q.q;
-  $id('qz-word').textContent=q.show||'';
+  $id('qz-word').textContent=q.nl||'';
   $id('qz-pron').textContent='';
+  $id('qz-img').textContent=q.emoji||'';
+  const speakBtn=$id('qz-speak');
+  speakBtn.style.display=q.nl?'flex':'none';
   $id('qz-opts').innerHTML=q.opts.map((o,i)=>`<button class="mc-opt" onclick="selectQuiz(${i})">${o}</button>`).join('');
   $id('qz-fb').className='mc-fb';
   $id('qz-cont').className='btn-continue';
   $id('qz-cont').textContent=S.step<qs.length-1?'Continua →':'Vedi risultati →';
   S.answered=false;
+  if(q.nl) setTimeout(()=>speakDutch(q.nl), 250);
 }
+
 function selectQuiz(i){
   if(S.answered) return; S.answered=true;
   const q=LEVELS[S.lvIdx].quiz[S.step];
@@ -890,21 +1372,21 @@ function selectQuiz(i){
   if(ok) S.quizScore++;
   btns[i].classList.add(ok?'ok':'no');
   if(!ok) btns[q.ans].classList.add('ok');
+  playTone(ok?'correct':'wrong');
   $id('qz-score').textContent=S.quizScore+'/'+(S.step+1);
   const fb=$id('qz-fb');
   fb.className='mc-fb show '+(ok?'ok':'no');
   fb.textContent=(ok?'✓ Corretto! ':'✗ Risposta errata. ')+q.exp;
   $id('qz-cont').className='btn-continue show';
 }
+
 function nextQuiz(){
   S.step++;
   if(S.step>=LEVELS[S.lvIdx].quiz.length){showResult();return;}
   renderQuiz();
 }
 
-// ════════════════════════════════════════════
-// RESULTS
-// ════════════════════════════════════════════
+// ── RESULTS ──
 function showResult(){
   clearTimer();
   const lv=LEVELS[S.lvIdx], tot=lv.quiz.length, sc=S.quizScore;
@@ -912,35 +1394,43 @@ function showResult(){
   let st=pct>=1?3:pct>=0.8?2:pct>=0.6?1:0;
   let xpGain=st===3?100:st===2?75:st===1?50:0;
   const prev=starsOf(lv.id);
+  const oldXp=S.xp;
   if(st>prev){S.completed[lv.id]=st; S.xp+=xpGain;}
-  // streak
   const today=new Date().toDateString();
   if(S.lastStudy!==today){
     const yest=new Date(Date.now()-86400000).toDateString();
     S.streak=S.lastStudy===yest?S.streak+1:1;
     S.lastStudy=today;
   }
-  save(); updateTopBar();
-  const titles=['Riprova!','Bene!','Ottimo!','Perfetto! 🎉'];
+  save();
+  checkChallengeCompleted(lv.id, st);
+  updateTopBar();
+  if(st>0) playTone('level');
+  // Fantasy rank-up check
+  if(st>prev && xpGain>0) checkLevelUp(oldXp, S.xp);
+  // Achievement check
+  checkAchievements();
+  const rank=getFantasyRank(S.xp);
+  const titles=['Riprova, guerriero!','Bene! ⚔️','Ottimo! 🧙','Perfetto! 👑'];
   const subs=[
-    `${sc}/${tot} corrette — serve almeno 3/5 per sbloccare il livello successivo.`,
-    `${sc}/${tot} corrette — hai sbloccato il livello successivo!`,
-    `${sc}/${tot} corrette — quasi perfetto! Riprova per 3 stelle.`,
-    `${sc}/${tot} corrette — lezione dominata! ⭐⭐⭐`,
+    `${sc}/${tot} corrette — serve almeno 3/5 per sbloccare il prossimo livello.`,
+    `${sc}/${tot} — il tuo cammino da ${rank.title} continua!`,
+    `${sc}/${tot} — quasi perfetto, ${rank.title}!`,
+    `${sc}/${tot} — lezione dominata! Il tuo potere cresce! ⭐⭐⭐`
   ];
-  $id('r-stars').textContent=st===0?'😅':st===1?'⭐':st===2?'⭐⭐':'⭐⭐⭐';
+  const rankEmoji=st===0?'😅':st===3?rank.icon:'⭐';
+  $id('r-stars').textContent=st===0?'😅':`${rankEmoji} ${'⭐'.repeat(st)+'☆'.repeat(3-st)}`;
   $id('r-title').textContent=titles[st];
   $id('r-sub').textContent=subs[st];
-  $id('r-xp').textContent='+'+(xpGain>0||st>prev?xpGain:0);
+  $id('r-xp').textContent='+'+(st>prev?xpGain:0);
   $id('r-score').textContent=sc+'/'+tot;
   $id('r-streak').textContent=S.streak+'🔥';
-  const nextI=S.lvIdx+1;
-  const btn=$id('r-btn');
+  const nextI=S.lvIdx+1, btn=$id('r-btn');
   if(st>0&&nextI<LEVELS.length){
-    btn.textContent='Prossimo: '+LEVELS[nextI].title+' →';
+    btn.textContent='Prossima missione: '+LEVELS[nextI].title+' →';
     btn.onclick=()=>openLevel(nextI);
   } else if(st>0&&nextI>=LEVELS.length){
-    btn.textContent='Vedi completamento →';
+    btn.textContent='👑 Vedi il completamento →';
     btn.onclick=showCongrats;
   } else {
     btn.textContent='Torna alla mappa →';
@@ -952,21 +1442,368 @@ function showResult(){
 function showCongrats(){
   $id('cg-xp').textContent=S.xp;
   $id('cg-streak').textContent=S.streak;
+  const rank=getFantasyRank(S.xp);
+  $id('cg-rank-icon').textContent=rank.icon;
   show('screen-congrats');
+  playLevelUpFanfare();
 }
 
-// ════════════════════════════════════════════
-// MODAL CLOSE CONFIRM
-// ════════════════════════════════════════════
+// ── MODAL ──
 function askClose(){$id('modal-overlay').classList.add('show')}
 function closeModal(){$id('modal-overlay').classList.remove('show')}
 function confirmExit(){closeModal();goHome();}
 
-// ════════════════════════════════════════════
-// INIT
-// ════════════════════════════════════════════
-updateTopBar();
-renderMap();
+// ═══════════════════════════════════════════════
+// FANTASY GAMIFICATION SYSTEM
+// ═══════════════════════════════════════════════
+
+const FANTASY_RANKS = [
+  {minXP:0,   icon:"🌱", title:"Apprendista",      color:"#7EB56A", desc:"Stai muovendo i primi passi nel regno olandese!"},
+  {minXP:150, icon:"⚗️", title:"Alchimista",        color:"#6AB5B5", desc:"Trasformi le parole in vera comprensione!"},
+  {minXP:350, icon:"⚔️", title:"Avventuriero",      color:"#5B8FD4", desc:"Esplori coraggiosamente il regno olandese!"},
+  {minXP:600, icon:"🏰", title:"Cavaliere",         color:"#9B6FD4", desc:"Difendi il tuo sapere con onore e coraggio!"},
+  {minXP:900, icon:"🧙", title:"Mago delle Parole", color:"#D46FAA", desc:"La magia della lingua ti appartiene davvero!"},
+  {minXP:1300,icon:"👑", title:"Gran Maestro",      color:"#FFD23F", desc:"Hai conquistato il cuore dell'Olanda! 🇳🇱"},
+];
+
+const ACHIEVEMENTS = [
+  {id:"first",   icon:"🎯", name:"Prima lezione!",   desc:"Prima sessione completata!",     cond:()=>Object.keys(S.completed).length>=1},
+  {id:"trio",    icon:"🔥", name:"Tripletta!",        desc:"3 livelli completati!",           cond:()=>Object.keys(S.completed).length>=3},
+  {id:"halfway", icon:"🗺️", name:"Metà del viaggio", desc:"5 livelli completati!",           cond:()=>Object.keys(S.completed).length>=5},
+  {id:"scholar", icon:"📚", name:"Studioso",          desc:"8 livelli completati!",           cond:()=>Object.keys(S.completed).length>=8},
+  {id:"master",  icon:"🏆", name:"Maestro A1/A2!",   desc:"Corso completo!",                 cond:()=>Object.keys(S.completed).length>=10},
+  {id:"streak3", icon:"⚡", name:"Fiamma x3",         desc:"3 giorni di fila!",               cond:()=>S.streak>=3},
+  {id:"streak7", icon:"💫", name:"Fuoco sacro x7",   desc:"7 giorni di fila!",               cond:()=>S.streak>=7},
+  {id:"xp500",   icon:"💎", name:"500 XP!",           desc:"Raggiunto 500 XP!",               cond:()=>S.xp>=500},
+  {id:"perfect", icon:"⭐", name:"Tre stelle!",       desc:"Prima lezione con 3 stelle!",     cond:()=>Object.values(S.completed).some(v=>v>=3)},
+  {id:"allin",   icon:"🌟", name:"Campione!",         desc:"5 lezioni con 3 stelle!",         cond:()=>Object.values(S.completed).filter(v=>v>=3).length>=5},
+];
+
+function getFantasyRank(xp) {
+  let rank = FANTASY_RANKS[0];
+  for (const r of FANTASY_RANKS) {
+    if (xp >= r.minXP) rank = r; else break;
+  }
+  return rank;
+}
+
+function getRankIndex(xp) {
+  let idx = 0;
+  for (let i = 0; i < FANTASY_RANKS.length; i++) {
+    if (xp >= FANTASY_RANKS[i].minXP) idx = i; else break;
+  }
+  return idx;
+}
+
+function updateFantasyHero() {
+  const rank = getFantasyRank(S.xp);
+  const idx = getRankIndex(S.xp);
+
+  const avatarEl = $id('hero-avatar');
+  const titleEl  = $id('hero-rank-title');
+  const subEl    = $id('hero-rank-sub');
+  const curEl    = $id('hero-xp-cur');
+  const nextEl   = $id('hero-xp-next');
+  const barFill  = $id('xp-bar-fill');
+
+  if (!avatarEl) return;
+
+  avatarEl.textContent  = rank.icon;
+  titleEl.textContent   = rank.icon + ' ' + rank.title;
+  subEl.textContent     = rank.desc;
+  curEl.textContent     = S.xp + ' XP totali';
+
+  const nextRank = FANTASY_RANKS[idx + 1];
+  if (nextRank) {
+    nextEl.textContent = 'Prossimo rango: ' + nextRank.minXP + ' XP';
+    const span = nextRank.minXP - rank.minXP;
+    const done = S.xp - rank.minXP;
+    const pct  = Math.min(100, Math.round(done / span * 100));
+    barFill.style.width = pct + '%';
+  } else {
+    nextEl.textContent  = '👑 Rango massimo raggiunto!';
+    barFill.style.width = '100%';
+  }
+
+  // Daily quest strip
+  const todayDone = S.lastStudy === new Date().toDateString();
+  $id('dq-text').textContent  = todayDone ? '✅ Missione completata oggi! Torna domani.' : '⚔️ Missione del giorno: studia 1 lezione';
+  $id('dq-bar').style.width   = todayDone ? '100%' : '0%';
+  $id('dq-icon').textContent  = todayDone ? '✅' : '⚔️';
+}
+
+function renderAchievements() {
+  const grid = $id('ach-grid');
+  if (!grid) return;
+  if (!S.unlockedAch) S.unlockedAch = [];
+  grid.innerHTML = ACHIEVEMENTS.map(a => {
+    const unlocked = S.unlockedAch.includes(a.id);
+    return `<div class="ach-badge ${unlocked ? 'unlocked' : 'locked'}" title="${a.desc}">
+      <div class="ach-icon">${a.icon}</div>
+      <div class="ach-name">${a.name}</div>
+    </div>`;
+  }).join('');
+}
+
+function checkAchievements() {
+  if (!S.unlockedAch) S.unlockedAch = [];
+  const newOnes = [];
+  for (const a of ACHIEVEMENTS) {
+    if (!S.unlockedAch.includes(a.id) && a.cond()) {
+      S.unlockedAch.push(a.id);
+      newOnes.push(a);
+    }
+  }
+  if (newOnes.length > 0) {
+    save();
+    renderAchievements();
+    // Show toast for first new achievement
+    setTimeout(() => showAchToast(newOnes[0]), 800);
+    // Queue additional toasts
+    for (let i = 1; i < newOnes.length; i++) {
+      setTimeout(() => showAchToast(newOnes[i]), 800 + i * 3500);
+    }
+  }
+}
+
+function showAchToast(ach) {
+  $id('ach-t-icon').textContent = ach.icon;
+  $id('ach-t-name').textContent = ach.name;
+  $id('ach-t-desc').textContent  = ach.desc;
+  const t = $id('ach-toast');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+function checkLevelUp(oldXp, newXp) {
+  const oldIdx = getRankIndex(oldXp);
+  const newIdx = getRankIndex(newXp);
+  if (newIdx > oldIdx) {
+    const newRank = FANTASY_RANKS[newIdx];
+    setTimeout(() => showLevelUpOverlay(newRank), 700);
+    return true;
+  }
+  return false;
+}
+
+function showLevelUpOverlay(rank) {
+  $id('lu-icon').textContent = rank.icon;
+  $id('lu-name').textContent = rank.title;
+  $id('lu-desc').textContent = rank.desc;
+  $id('lu-xp').textContent   = S.xp;
+  $id('levelup-overlay').classList.add('show');
+  playLevelUpFanfare();
+}
+
+function closeLevelUp() {
+  $id('levelup-overlay').classList.remove('show');
+}
+
+function playLevelUpFanfare() {
+  try {
+    const ctx = getAudioCtx();
+    const notes = [523, 659, 784, 1047, 1319];
+    notes.forEach((f, i) => {
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.connect(g); g.connect(ctx.destination);
+      o.type = 'triangle';
+      o.frequency.value = f;
+      const t = ctx.currentTime + i * 0.13;
+      g.gain.setValueAtTime(0, t);
+      g.gain.linearRampToValueAtTime(0.22, t + 0.05);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.3);
+      o.start(t); o.stop(t + 0.32);
+    });
+  } catch(e) {}
+}
+
+// ── USER PROFILES ──
+function renderUserCards(){
+  const wrap = $id('usr-cards');
+  wrap.innerHTML = '';
+  Object.entries(USER_PROFILES).forEach(([name, prof])=>{
+    const data = loadUser(name);
+    const xp = data.xp||0;
+    const rank = getFantasyRank(xp);
+    const lessons = Object.keys(data.completed||{}).length;
+    const streak = data.streak||0;
+    const isGold = name === 'FRANCESCO';
+    const cardClass = isGold ? 'gold-card' : 'purple-card';
+    const classLabel = isGold ? '⚔️ Guerriero' : '🔮 Maga';
+    const card = document.createElement('div');
+    card.className = `usr-card ${cardClass}`;
+    card.innerHTML = `
+      <div class="usr-card-av">${prof.emoji}</div>
+      <div class="usr-card-info">
+        <div class="usr-card-class" style="color:${prof.color}">${classLabel}</div>
+        <div class="usr-card-name" style="color:${prof.color}">${name}</div>
+        <div class="usr-card-rank">${rank.icon} ${rank.title}</div>
+        <div class="usr-card-xp">${xp} XP · ${lessons} lezioni · ${streak}🔥</div>
+      </div>
+      <div class="usr-card-arr" style="color:${prof.color}">→</div>`;
+    card.addEventListener('click', () => selectUser(name));
+    wrap.appendChild(card);
+  });
+}
+
+function selectUser(name){
+  currentUser = name;
+  const data = loadUser(name);
+  S.xp = data.xp||0;
+  S.streak = data.streak||0;
+  S.lastStudy = data.lastStudy||null;
+  S.completed = data.completed||{};
+  S.unlockedAch = data.unlockedAch||[];
+  const prof = USER_PROFILES[name];
+  // Update topbar badge
+  const badge = $id('user-badge-tb');
+  badge.innerHTML = `${prof.emoji} <span style="margin-left:3px">${name}</span>`;
+  badge.style.background = prof.color + '33';
+  badge.style.color = prof.color;
+  badge.style.display = 'inline-flex';
+  $id('cmp-btn-tb').style.display = 'inline-flex';
+  updateTopBar();
+  renderMap();
+  show('screen-home');
+  setTimeout(()=> checkPendingChallenge(), 600);
+}
+
+function backToUserSelect(){
+  currentUser = null;
+  $id('user-badge-tb').style.display = 'none';
+  $id('cmp-btn-tb').style.display = 'none';
+  S.xp=0; S.streak=0; S.lastStudy=null; S.completed={}; S.unlockedAch=[];
+  renderUserCards();
+  show('screen-user');
+}
+
+// ── COMPARE ──
+function showCompare(){
+  const a = currentUser;
+  const b = otherUser();
+  const da = loadUser(a), db = loadUser(b);
+  const pa = USER_PROFILES[a], pb = USER_PROFILES[b];
+  const ra = getFantasyRank(da.xp||0), rb = getFantasyRank(db.xp||0);
+  const la = Object.keys(da.completed||{}).length;
+  const lb = Object.keys(db.completed||{}).length;
+  const winA = (da.xp||0) >= (db.xp||0);
+  // Fill player panels
+  $id('cmp-p1').innerHTML = `
+    <div class="cmp-p-av">${pa.emoji}</div>
+    <div class="cmp-p-name" style="color:${pa.color}">${a}</div>
+    <div class="cmp-p-rank">${ra.icon} ${ra.title}</div>
+    <div class="cmp-p-xp">${da.xp||0}</div>
+    <div class="cmp-p-xp-lbl">XP</div>
+    <div class="cmp-p-stat">${la} lezioni · ${da.streak||0}🔥</div>
+    ${winA?'<div class="cmp-p-stat" style="color:#FFD23F;font-weight:800">👑 In vantaggio!</div>':''}`;
+  $id('cmp-p2').innerHTML = `
+    <div class="cmp-p-av">${pb.emoji}</div>
+    <div class="cmp-p-name" style="color:${pb.color}">${b}</div>
+    <div class="cmp-p-rank">${rb.icon} ${rb.title}</div>
+    <div class="cmp-p-xp">${db.xp||0}</div>
+    <div class="cmp-p-xp-lbl">XP</div>
+    <div class="cmp-p-stat">${lb} lezioni · ${db.streak||0}🔥</div>
+    ${!winA?'<div class="cmp-p-stat" style="color:#FFD23F;font-weight:800">👑 In vantaggio!</div>':''}`;
+  $id('cmp-p1').classList.toggle('winner', winA);
+  $id('cmp-p2').classList.toggle('winner', !winA);
+  // Check for active challenge
+  const challenges = getChallenges();
+  const active = challenges.find(c=> c.from===a && c.to===b && !c.completed);
+  const strip = $id('cmp-challenge-info');
+  if(active){
+    strip.style.display = '';
+    strip.innerHTML = `⚔️ Hai già una sfida aperta su <strong>"${active.lessonTitle}"</strong> — aspetta che ${b} la completi!`;
+  } else {
+    strip.style.display = 'none';
+  }
+  // Update challenge button label
+  const chBtn = document.querySelector('#compare-overlay .btn-cmp-ch');
+  if(chBtn) chBtn.textContent = `⚔️ Sfida ${b}!`;
+  $id('compare-overlay').classList.add('show');
+}
+
+function closeCompare(){
+  $id('compare-overlay').classList.remove('show');
+}
+
+// ── CHALLENGES ──
+function getChallenges(){
+  try{return JSON.parse(localStorage.getItem('kk_challenges')||'[]');}catch(e){return[];}
+}
+function saveChallenges(arr){
+  localStorage.setItem('kk_challenges', JSON.stringify(arr));
+}
+
+function sendChallenge(){
+  closeCompare();
+  const other = otherUser();
+  // Pick a random lesson that current user has completed (with stars)
+  const done = Object.keys(S.completed);
+  if(done.length===0){
+    alert('Completa almeno una lezione prima di lanciare una sfida!'); return;
+  }
+  const lvId = done[Math.floor(Math.random()*done.length)];
+  const lv = LEVELS.find(l=>l.id===lvId);
+  const challenges = getChallenges();
+  // Remove old pending challenges from same sender to same receiver
+  const filtered = challenges.filter(c=>!(c.from===currentUser&&c.to===other&&!c.completed));
+  filtered.push({
+    from: currentUser,
+    to: other,
+    lvIdx: LEVELS.indexOf(lv),
+    lessonId: lvId,
+    lessonTitle: lv?lv.title:'?',
+    stars: S.completed[lvId],
+    createdAt: Date.now(),
+    completed: false
+  });
+  saveChallenges(filtered);
+  const lvTitle = lv?lv.title:lvId;
+  alert(`⚔️ Sfida lanciata a ${other}!\n\nLezione: "${lvTitle}"\nRaggiunta da te con ${S.completed[lvId]}⭐ — puoi fare meglio?`);
+}
+
+function checkPendingChallenge(){
+  const challenges = getChallenges();
+  const pending = challenges.find(c=> c.to===currentUser && !c.completed);
+  if(!pending) return;
+  const fromProf = USER_PROFILES[pending.from];
+  $id('chall-from').textContent = `${fromProf?fromProf.emoji:'⚔️'} ${pending.from} ti sfida!`;
+  $id('chall-title').textContent = `"${pending.lessonTitle}"`;
+  $id('chall-detail').textContent = `Ha raggiunto ${pending.stars}⭐ — puoi fare meglio?`;
+  const goBtn = $id('chall-go-btn');
+  goBtn.textContent = '⚔️ Accetta la sfida! 🔥';
+  goBtn.onclick = ()=> acceptChallenge(pending.lvIdx);
+  $id('challenge-notif').classList.add('show');
+}
+
+function acceptChallenge(lvIdx){
+  $id('challenge-notif').classList.remove('show');
+  openLevel(lvIdx);
+}
+
+function dismissChallenge(){
+  $id('challenge-notif').classList.remove('show');
+}
+
+function checkChallengeCompleted(lvId, stars){
+  const challenges = getChallenges();
+  const idx = challenges.findIndex(c=> c.to===currentUser && c.lessonId===lvId && !c.completed);
+  if(idx===-1) return;
+  const ch = challenges[idx];
+  challenges[idx] = {...ch, completed:true, completedStars:stars, completedAt:Date.now()};
+  saveChallenges(challenges);
+  if(stars > ch.stars){
+    setTimeout(()=> alert(`🏆 Sfida vinta! Hai superato ${ch.from} con ${stars}⭐ contro ${ch.stars}⭐!\n\n${USER_PROFILES[ch.from]?USER_PROFILES[ch.from].emoji:''} ${ch.from} ha perso questa volta! 😄`), 300);
+  } else if(stars === ch.stars){
+    setTimeout(()=> alert(`🤝 Pareggio! Anche tu hai ${stars}⭐ come ${ch.from} — ben fatto!`), 300);
+  } else {
+    setTimeout(()=> alert(`💪 Sfida completata con ${stars}⭐. ${ch.from} aveva ${ch.stars}⭐ — la prossima volta ce la fai!`), 300);
+  }
+}
+
+// ── INIT ──
+renderUserCards();
+
 </script>
 </body>
 </html>
